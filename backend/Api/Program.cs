@@ -1,0 +1,63 @@
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using SiradigCalc.Infra.Persistence.DbContexts;
+using SiradigCalc.Api.Common;
+using Swashbuckle.AspNetCore.Swagger;
+using SiradigCalc.Application.Queries.Forms;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetFormQuery).Assembly));
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc(Constants.OPENAPI_VERSION_LABEL, new OpenApiInfo
+    {
+        Title = Constants.OPEN_API_TITLE,
+        Version = Constants.OPENAPI_VERSION
+    });
+});
+
+builder.Services
+    .AddDbContext<ISolutionDbContext, SolutionDbContext>(opt =>
+        opt.UseLazyLoadingProxies(false)
+            .UseNpgsql(builder.Configuration.GetConnectionString("PostgresDb")));
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    var swaggerProvider = app.Services.GetRequiredService<ISwaggerProvider>();
+    var swaggerDoc = swaggerProvider.GetSwagger(Constants.OPENAPI_VERSION_LABEL);
+
+    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "OpenApi", Constants.OPENAPI_SPEC_FILE_NAME);
+    Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
+
+    File.WriteAllText(filePath, JsonSerializer.Serialize(swaggerDoc, new JsonSerializerOptions
+    {
+        WriteIndented = true
+    }));
+
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint($"/swagger/{Constants.OPENAPI_VERSION_LABEL}/{Constants.SWAGGER_FILE_NAME}", Constants.OPEN_API_TITLE);
+    });
+}
+
+app.UseHttpsRedirection();
+
+// app.UseAuthorization();
+
+app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ISolutionDbContext>();
+    dbContext.Database.EnsureCreated();
+}
+
+app.Run();

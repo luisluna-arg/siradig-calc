@@ -1,0 +1,12 @@
+*.user
+.idea
+
+/sql
+**/bin
+**/obj
+**/.vs
+
+/**/.vscode
+!/.vscode
+
+**/.env.development
