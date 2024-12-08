@@ -5,6 +5,8 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 using SiradigCalc.Api.Common;
 using Swashbuckle.AspNetCore.Swagger;
 using SiradigCalc.Application.Queries.Forms;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,7 +59,11 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ISolutionDbContext>();
-    dbContext.Database.EnsureCreated();
+    var databaseCreator = dbContext.Database.GetService<IRelationalDatabaseCreator>();
+    if (!databaseCreator.Exists())
+    {
+        dbContext.Database.Migrate();
+    }
 }
 
 app.Run();

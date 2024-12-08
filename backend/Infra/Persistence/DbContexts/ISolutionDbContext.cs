@@ -19,6 +19,8 @@ public interface ISolutionDbContext
     public DbSet<ReceiptValue> ReceiptValues { get; set; }
     public DbSet<FieldTypeMapping> FieldTypeMappings { get; set; }
     public DbSet<ChangeLog> ChangeLogs { get; set; }
+    public DbSet<DataContainerLink> DataContainerLinks { get; set; }
+    public DbSet<DataContainerFieldLink> DataContainerFieldLinks { get; set; }
 
     int SaveChanges();
 

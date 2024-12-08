@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SiradigCalc.Infra.Persistence.DbContexts;
@@ -11,9 +12,11 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 namespace infra.Persistence.Migrations
 {
     [DbContext(typeof(SolutionDbContext))]
-    partial class SolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241208024349_FormLinks")]
+    partial class FormLinks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

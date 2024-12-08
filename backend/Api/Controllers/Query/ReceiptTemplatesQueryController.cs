@@ -21,4 +21,20 @@ public class ReceiptTemplatesQueryController(IMediator mediator) : BaseControlle
     [HttpGet("field-types")]
     public async Task<IActionResult> GetFieldTypes()
         => Ok(await Mediator.Send(new GetDataContainerFieldTypesQuery()));
+
+    [HttpPost("{id}/links")]
+    public async Task<IActionResult> CreateReceiptTemplateLink(Guid id)
+        => Ok(await Mediator.Send(new ReceiptLinksQuery(receiptTemplateId: id)));
+
+    [HttpPost("{id}/links/{formTemplateId}")]
+    public async Task<IActionResult> CreateReceiptTemplateLink(Guid id, Guid formTemplateId)
+        => Ok(await Mediator.Send(new LinkTemplatesQuery(receiptTemplateId: id, formTemplateId: formTemplateId)));
+
+    [HttpPost("{id}/links/{formTemplateId}/{receiptFieldId}/links/{formFieldId}")]
+    public async Task<IActionResult> CreateReceiptTemplateLink(Guid id, Guid formTemplateId, Guid receiptFieldId, Guid formFieldId)
+        => Ok(await Mediator.Send(new LinkFieldTemplatesQuery(
+            receiptTemplateId: id, 
+            formTemplateId: formTemplateId,
+            receiptFieldId: receiptFieldId, 
+            formFieldId: formFieldId)));
 }

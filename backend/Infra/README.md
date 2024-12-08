@@ -31,3 +31,23 @@ dotnet ef migrations add InitialCreate -o Persistence/Migrations --startup-proje
 - `<MigrationName>`: The name of the migration (e.g., `InitialCreate`).
 - `<MigrationsDirectory>`: The folder where migrations should be stored (relative to the `DbContext` project).
 - `<StartupProject>`: The relative path to the startup project (e.g., `../Api`).
+
+
+## 3. Updates
+Use the following command to update the database to the latest migrations
+
+```bash
+dotnet ef database update --startup-project --startup-project <StartupProject>
+```
+
+Or include the migration name to update the database to that migration.
+THIS A DESTRUCTIVE OPERATION, IF YOU ROLLBACK ALL NEW DATA DEPENDING ON THE CURRENT MODEL WILL BE DESTROYED
+```bash
+dotnet ef database update <MigrationName> --startup-project --startup-project <StartupProject>
+```
+
+To remove a migrations run the following command
+The migration being removed doesn't have to be applied for this to run, if it is the migration removal will not be applied
+```bash
+dotnet ef database remove --startup-project --startup-project <StartupProject>
+```
