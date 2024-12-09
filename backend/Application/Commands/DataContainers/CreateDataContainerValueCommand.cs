@@ -10,7 +10,7 @@ public abstract class CreateDataContainerValueCommand() : IRequest<Guid>
     public string Value { get; set; } = string.Empty;
 }
 
-public abstract class CreateDataContainerValueCommandHandler<TCommand, TValue, TField>(ISolutionDbContext context)
+public abstract class CreateDataContainerValueCommandHandler<TCommand, TValue, TField>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
     where TCommand : CreateDataContainerValueCommand
     where TField : BaseDataContainerField, new()
@@ -20,8 +20,8 @@ public abstract class CreateDataContainerValueCommandHandler<TCommand, TValue, T
     {
         var value = CreateInstance(command);
 
-        await context.Set<TValue>().AddAsync(value, cancellationToken);
-        await context.SaveChangesAsync();
+        await dbContext.Set<TValue>().AddAsync(value, cancellationToken);
+        await dbContext.SaveChangesAsync();
 
         return value.Id;
     }

@@ -9,7 +9,7 @@ public class GetReceiptTemplatesQuery()
 {
 }
 
-public class GetReceiptTemplatesQueryHandler(ISolutionDbContext context)
-    : GetDataContainersQueryHandler<GetReceiptTemplatesQuery, ReceiptTemplate, ReceiptField>(context)
+public class GetReceiptTemplatesQueryHandler(ISolutionDbContext dbContext)
+    : GetDataContainersQueryHandler<GetReceiptTemplatesQuery, ReceiptTemplate, ReceiptField>(dbContext)
 {
 }

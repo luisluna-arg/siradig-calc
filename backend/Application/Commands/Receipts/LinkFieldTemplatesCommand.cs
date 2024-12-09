@@ -13,18 +13,18 @@ public class LinkFieldTemplatesCommand(Guid receiptTemplateId, Guid formTemplate
     public Guid FormFieldId { get; } = formFieldId;
 }
 
-public class LinkFieldTemplatesCommandHandler(ISolutionDbContext context)
+public class LinkFieldTemplatesCommandHandler(ISolutionDbContext dbContext)
     : IRequestHandler<LinkFieldTemplatesCommand, Guid>
 {
     public async Task<Guid> Handle(LinkFieldTemplatesCommand request, CancellationToken cancellationToken)
     {
-        var link = await context.DataContainerLinks
+        var link = await dbContext.DataContainerLinks
             .Include(f => f.FormTemplate)
                 .ThenInclude(d => d.Fields)
             .Include(f => f.ReceiptTemplate)
                 .ThenInclude(d => d.Fields)
-            .SingleOrDefaultAsync(l => 
-                l.FormTemplateId == request.FormTemplateId && 
+            .SingleOrDefaultAsync(l =>
+                l.FormTemplateId == request.FormTemplateId &&
                 l.ReceiptTemplateId == request.ReceiptTemplateId &&
                 l.FormTemplate.Fields.Any(f => f.Id == request.FormFieldId) &&
                 l.ReceiptTemplate.Fields.Any(f => f.Id == request.ReceiptTemplateId));
@@ -41,8 +41,8 @@ public class LinkFieldTemplatesCommandHandler(ISolutionDbContext context)
             ReceiptFieldId = request.ReceiptFieldId,
         };
 
-        await context.DataContainerFieldLinks.AddAsync(newLink, cancellationToken);
-        await context.SaveChangesAsync(cancellationToken);
+        await dbContext.DataContainerFieldLinks.AddAsync(newLink, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return newLink.Id;
     }

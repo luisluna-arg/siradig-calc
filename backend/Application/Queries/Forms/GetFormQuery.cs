@@ -9,7 +9,7 @@ public class GetFormQuery(Guid id)
 {
 }
 
-public class GetFormQueryHandler(ISolutionDbContext context)
-    : GetDataContainerInstanceQueryHandler<GetFormQuery, Form, FormField, FormValue, FormTemplate>(context)
+public class GetFormQueryHandler(ISolutionDbContext dbContext)
+    : GetDataContainerInstanceQueryHandler<GetFormQuery, Form, FormField, FormValue, FormTemplate>(dbContext)
 {
 }

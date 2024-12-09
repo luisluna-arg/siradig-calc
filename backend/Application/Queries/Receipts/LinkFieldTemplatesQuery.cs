@@ -13,14 +13,14 @@ public class LinkFieldTemplatesQuery(Guid receiptTemplateId, Guid formTemplateId
     public Guid FormFieldId { get; } = formFieldId;
 }
 
-public class LinkFieldTemplatesQueryHandler(ISolutionDbContext context)
+public class LinkFieldTemplatesQueryHandler(ISolutionDbContext dbContext)
     : IRequestHandler<LinkFieldTemplatesQuery, DataContainerFieldLink?>
 {
     public async Task<DataContainerFieldLink?> Handle(LinkFieldTemplatesQuery request, CancellationToken cancellationToken)
-        => await context.DataContainerFieldLinks
+        => await dbContext.DataContainerFieldLinks
             .Include(f => f.FormField)
             .Include(f => f.ReceiptField)
-            .SingleOrDefaultAsync(l => 
+            .SingleOrDefaultAsync(l =>
                 l.FormFieldId == request.FormFieldId &&
                 l.ReceiptFieldId == request.ReceiptTemplateId);
 }

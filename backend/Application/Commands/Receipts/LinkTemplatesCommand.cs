@@ -11,12 +11,12 @@ public class LinkTemplatesCommand(Guid receiptTemplateId, Guid formTemplateId) :
     public Guid FormTemplateId { get; } = formTemplateId;
 }
 
-public class LinkTemplatesCommandHandler(ISolutionDbContext context)
+public class LinkTemplatesCommandHandler(ISolutionDbContext dbContext)
     : IRequestHandler<LinkTemplatesCommand, Guid>
 {
     public async Task<Guid> Handle(LinkTemplatesCommand request, CancellationToken cancellationToken)
     {
-        var link = await context.DataContainerLinks
+        var link = await dbContext.DataContainerLinks
             .SingleOrDefaultAsync(l => l.FormTemplateId == request.FormTemplateId && l.ReceiptTemplateId == request.ReceiptTemplateId);
 
         if (link != null)
@@ -31,8 +31,8 @@ public class LinkTemplatesCommandHandler(ISolutionDbContext context)
             ReceiptTemplateId = request.ReceiptTemplateId
         };
 
-        await context.DataContainerLinks.AddAsync(newLink, cancellationToken);
-        await context.SaveChangesAsync(cancellationToken);
+        await dbContext.DataContainerLinks.AddAsync(newLink, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return newLink.Id;
     }

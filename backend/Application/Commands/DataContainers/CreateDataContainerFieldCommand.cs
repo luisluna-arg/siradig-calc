@@ -12,7 +12,7 @@ public abstract class CreateDataContainerFieldCommand() : IRequest<Guid>
     public bool IsRequired { get; set; } = true;
 }
 
-public abstract class CreateDataContainerFieldCommandHandler<TCommand, TField>(ISolutionDbContext context)
+public abstract class CreateDataContainerFieldCommandHandler<TCommand, TField>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
     where TCommand : CreateDataContainerFieldCommand
     where TField : BaseDataContainerField, new()
@@ -21,8 +21,8 @@ public abstract class CreateDataContainerFieldCommandHandler<TCommand, TField>(I
     {
         var field = CreateInstance(command);
 
-        await context.Set<TField>().AddAsync(field);
-        await context.SaveChangesAsync();
+        await dbContext.Set<TField>().AddAsync(field);
+        await dbContext.SaveChangesAsync();
 
         return field.Id;
     }

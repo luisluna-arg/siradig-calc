@@ -10,11 +10,11 @@ public class ReceiptLinksQuery(Guid receiptTemplateId) : IRequest<IEnumerable<Da
     public Guid ReceiptTemplateId { get; } = receiptTemplateId;
 }
 
-public class ReceiptLinksQueryHandler(ISolutionDbContext context)
+public class ReceiptLinksQueryHandler(ISolutionDbContext dbContext)
     : IRequestHandler<ReceiptLinksQuery, IEnumerable<DataContainerLink>>
 {
     public async Task<IEnumerable<DataContainerLink>> Handle(ReceiptLinksQuery request, CancellationToken cancellationToken)
-        => await context.DataContainerLinks
+        => await dbContext.DataContainerLinks
             .Include(l => l.FormTemplate)
                 .ThenInclude(l => l.Fields)
             .Include(l => l.ReceiptTemplate)

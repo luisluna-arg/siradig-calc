@@ -13,7 +13,7 @@ public abstract class CreateDataContainerCommand<TValueDto> : IRequest<Guid>
     public List<TValueDto> Values { get; set; } = new();
 }
 
-public abstract class CreateDataContainerCommandHandler<TCommand, TDataContainer, TField, TFieldValue, TDataContainerTemplate>(ISolutionDbContext context)
+public abstract class CreateDataContainerCommandHandler<TCommand, TDataContainer, TField, TFieldValue, TDataContainerTemplate>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
     where TCommand : CreateDataContainerCommand<CreateValueDto>
     where TField : BaseDataContainerField, new()
@@ -29,9 +29,9 @@ public abstract class CreateDataContainerCommandHandler<TCommand, TDataContainer
         var entityValues = command.Values.Select(MapValue).ToList();
         AssignValuesToEntity(entity, entityValues);
 
-        await AddEntityToDbSet(context, entity, cancellationToken);
+        await AddEntityToDbSet(dbContext, entity, cancellationToken);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return GetEntityId(entity);
     }
@@ -55,9 +55,9 @@ public abstract class CreateDataContainerCommandHandler<TCommand, TDataContainer
         entity.Values = values;
     }
 
-    protected virtual async Task AddEntityToDbSet(ISolutionDbContext context, TDataContainer entity, CancellationToken cancellationToken)
+    protected virtual async Task AddEntityToDbSet(ISolutionDbContext dbContext, TDataContainer entity, CancellationToken cancellationToken)
     {
-        await context.Set<TDataContainer>().AddAsync(entity, cancellationToken);
+        await dbContext.Set<TDataContainer>().AddAsync(entity, cancellationToken);
     }
 
     protected virtual Guid GetEntityId(TDataContainer entity) => entity.Id;

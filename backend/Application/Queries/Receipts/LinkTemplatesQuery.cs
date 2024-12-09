@@ -11,10 +11,10 @@ public class LinkTemplatesQuery(Guid receiptTemplateId, Guid formTemplateId) : I
     public Guid FormTemplateId { get; } = formTemplateId;
 }
 
-public class LinkTemplatesQueryHandler(ISolutionDbContext context)
+public class LinkTemplatesQueryHandler(ISolutionDbContext dbContext)
     : IRequestHandler<LinkTemplatesQuery, DataContainerLink?>
 {
     public async Task<DataContainerLink?> Handle(LinkTemplatesQuery request, CancellationToken cancellationToken)
-        => await context.DataContainerLinks
+        => await dbContext.DataContainerLinks
             .SingleOrDefaultAsync(l => l.FormTemplateId == request.FormTemplateId && l.ReceiptTemplateId == request.ReceiptTemplateId);
 }

@@ -13,7 +13,7 @@ public abstract class CreateDataContainerTemplateCommand() : IRequest<Guid>
     public List<CreateFieldDto> Fields { get; set; } = new();
 }
 
-public abstract class CreateDataContainerTemplateCommandHandler<TCommand, TDataContainer, TField>(ISolutionDbContext context)
+public abstract class CreateDataContainerTemplateCommandHandler<TCommand, TDataContainer, TField>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
     where TCommand : CreateDataContainerTemplateCommand
     where TField : BaseDataContainerField, new()
@@ -23,8 +23,8 @@ public abstract class CreateDataContainerTemplateCommandHandler<TCommand, TDataC
     {
         var fieldContainerTemplate = CreateInstanceBinder(command);
 
-        context.Set<TDataContainer>().Add(fieldContainerTemplate);
-        await context.SaveChangesAsync();
+        dbContext.Set<TDataContainer>().Add(fieldContainerTemplate);
+        await dbContext.SaveChangesAsync();
 
         return fieldContainerTemplate.Id;
     }
