@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SiradigCalc.Core.Entities.Base.DataContainers;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Queries.DataContainers;
 
 public abstract class GetDataContainersQuery<TDataContainerTemplate> : IRequest<IEnumerable<TDataContainerTemplate>>
 {

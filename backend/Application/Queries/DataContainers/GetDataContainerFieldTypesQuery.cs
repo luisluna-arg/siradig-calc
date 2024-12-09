@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SiradigCalc.Application.Dtos;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Queries.DataContainers;
 
 public class GetDataContainerFieldTypesQuery() : IRequest<IEnumerable<FieldTypeDto>>
 {

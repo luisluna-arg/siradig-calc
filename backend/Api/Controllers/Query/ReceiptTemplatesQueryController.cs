@@ -1,10 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SiradigCalc.Api.Controllers.Base;
-using SiradigCalc.Application.Commands.DataContainers;
+using SiradigCalc.Application.Queries.DataContainers;
 using SiradigCalc.Application.Queries.Receipts;
 
-namespace SiradigCalc.Api.Controllers;
+namespace SiradigCalc.Api.Controllers.Query;
 
 [Route("api/receipts/templates")]
 [ApiController]

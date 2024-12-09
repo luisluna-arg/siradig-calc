@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SiradigCalc.Api.Controllers.Base;
 using SiradigCalc.Application.Commands.Forms;
 
-namespace SiradigCalc.Api.Controllers;
+namespace SiradigCalc.Api.Controllers.Command;
 
 [Route("api/forms")]
 [ApiController]

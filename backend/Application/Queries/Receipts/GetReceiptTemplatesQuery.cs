@@ -1,4 +1,4 @@
-using SiradigCalc.Application.Commands.DataContainers;
+using SiradigCalc.Application.Queries.DataContainers;
 using SiradigCalc.Core.Entities.Receipts;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
