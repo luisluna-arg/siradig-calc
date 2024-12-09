@@ -12,8 +12,8 @@ public class FormQueryController(IMediator mediator) : BaseController(mediator)
     [HttpGet("{formId}")]
     public async Task<IActionResult> GetForm(Guid formId)
         => Ok(await Mediator.Send(new GetFormQuery(formId)));
-    
+
     [HttpGet]
-    public async Task<IActionResult> CreateForms()
+    public async Task<IActionResult> GetForms()
         => Ok(await Mediator.Send(new GetFormsQuery()));
 }

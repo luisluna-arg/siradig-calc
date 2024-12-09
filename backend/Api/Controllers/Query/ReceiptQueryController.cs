@@ -12,8 +12,8 @@ public class ReceiptQueryController(IMediator mediator) : BaseController(mediato
     [HttpGet("{receiptId}")]
     public async Task<IActionResult> GetReceipt(Guid receiptId)
         => Ok(await Mediator.Send(new GetReceiptQuery(receiptId)));
-    
+
     [HttpGet]
-    public async Task<IActionResult> CreateReceipts()
+    public async Task<IActionResult> GetReceipts()
         => Ok(await Mediator.Send(new GetReceiptsQuery()));
 }
