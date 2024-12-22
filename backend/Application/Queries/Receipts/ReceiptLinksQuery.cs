@@ -16,9 +16,11 @@ public class ReceiptLinksQueryHandler(ISolutionDbContext dbContext)
     public async Task<IEnumerable<DataContainerLink>> Handle(ReceiptLinksQuery request, CancellationToken cancellationToken)
         => await dbContext.DataContainerLinks
             .Include(l => l.FormTemplate)
-                .ThenInclude(l => l.Fields)
+                .ThenInclude(l => l.Sections)
+                    .ThenInclude(l => l.Fields)
             .Include(l => l.ReceiptTemplate)
-                .ThenInclude(l => l.Fields)
+                .ThenInclude(l => l.Sections)
+                    .ThenInclude(l => l.Fields)
             .Where(l => l.ReceiptTemplateId == request.ReceiptTemplateId)
             .ToListAsync(cancellationToken);
 }

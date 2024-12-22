@@ -10,14 +10,15 @@ public abstract class CreateDataContainerTemplateCommand() : IRequest<Guid>
 {
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public List<CreateFieldDto> Fields { get; set; } = new();
+    public List<CreateSectionDto> Sections { get; set; } = new();
 }
 
-public abstract class CreateDataContainerTemplateCommandHandler<TCommand, TDataContainer, TField>(ISolutionDbContext dbContext)
+public abstract class CreateDataContainerTemplateCommandHandler<TCommand, TDataContainer, TDataContainerSection, TField>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
     where TCommand : CreateDataContainerTemplateCommand
     where TField : BaseDataContainerField, new()
-    where TDataContainer : BaseDataContainer<TField>, new()
+    where TDataContainerSection : BaseDataContainerSection<TField>, new()
+    where TDataContainer : BaseDataContainer<TDataContainerSection, TField>, new()
 {
     public async virtual Task<Guid> Handle(TCommand command, CancellationToken cancellationToken)
     {
@@ -35,12 +36,17 @@ public abstract class CreateDataContainerTemplateCommandHandler<TCommand, TDataC
             Id = Guid.NewGuid(),
             Name = command.Name,
             Description = command.Description,
-            Fields = command.Fields.Select(f => new TField
+            Sections = command.Sections.Select(f => new TDataContainerSection
             {
                 Id = Guid.NewGuid(),
-                Label = f.Label,
-                FieldType = (FieldType)f.FieldType,
-                IsRequired = f.IsRequired
+                Name = f.Name,
+                Fields = f.Fields.Select(f => new TField()
+                {
+                    Id = Guid.NewGuid(),
+                    Label = f.Label,
+                    FieldType = (FieldType)f.FieldType,
+                    IsRequired = f.IsRequired
+                }).ToArray()
             }).ToList()
         };
 }

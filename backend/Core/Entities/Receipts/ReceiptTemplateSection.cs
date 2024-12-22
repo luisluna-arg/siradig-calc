@@ -2,6 +2,6 @@
 
 namespace SiradigCalc.Core.Entities.Receipts;
 
-public class ReceiptTemplate : BaseDataContainer<ReceiptTemplateSection, ReceiptField>
+public class ReceiptTemplateSection : BaseDataContainerSection<ReceiptField>
 {
 }

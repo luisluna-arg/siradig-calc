@@ -1,3 +1,4 @@
+using System.Drawing;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SiradigCalc.Core.Entities;
@@ -20,14 +21,16 @@ public class LinkFieldTemplatesCommandHandler(ISolutionDbContext dbContext)
     {
         var link = await dbContext.DataContainerLinks
             .Include(f => f.FormTemplate)
-                .ThenInclude(d => d.Fields)
+                .ThenInclude(d => d.Sections)
+                    .ThenInclude(d => d.Fields)
             .Include(f => f.ReceiptTemplate)
-                .ThenInclude(d => d.Fields)
+                .ThenInclude(d => d.Sections)
+                    .ThenInclude(d => d.Fields)
             .SingleOrDefaultAsync(l =>
                 l.FormTemplateId == request.FormTemplateId &&
                 l.ReceiptTemplateId == request.ReceiptTemplateId &&
-                l.FormTemplate.Fields.Any(f => f.Id == request.FormFieldId) &&
-                l.ReceiptTemplate.Fields.Any(f => f.Id == request.ReceiptTemplateId));
+                l.FormTemplate.Sections.Any(s => s.Fields.Any(f => f.Id == request.FormFieldId)) &&
+                l.ReceiptTemplate.Sections.Any(s => s.Fields.Any(f => f.Id == request.ReceiptTemplateId)));
 
         if (link != null)
         {

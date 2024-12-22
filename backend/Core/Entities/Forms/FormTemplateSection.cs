@@ -2,6 +2,6 @@
 
 namespace SiradigCalc.Core.Entities.Forms;
 
-public class FormTemplate : BaseDataContainer<FormTemplateSection, FormField>
+public class FormTemplateSection : BaseDataContainerSection<FormField>
 {
 }

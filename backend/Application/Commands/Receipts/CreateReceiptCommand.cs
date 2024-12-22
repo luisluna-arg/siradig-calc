@@ -10,6 +10,6 @@ public class CreateReceiptCommand() : CreateDataContainerCommand<CreateValueDto>
 }
 
 public class CreateReceiptHandler(ISolutionDbContext dbContext)
-    : CreateDataContainerCommandHandler<CreateReceiptCommand, Receipt, ReceiptField, ReceiptValue, ReceiptTemplate>(dbContext)
+    : CreateDataContainerCommandHandler<CreateReceiptCommand, Receipt, ReceiptTemplateSection, ReceiptField, ReceiptValue, ReceiptTemplate>(dbContext)
 {
 }

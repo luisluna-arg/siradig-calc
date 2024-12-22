@@ -1,9 +1,10 @@
 namespace SiradigCalc.Core.Entities.Base.DataContainers;
 
-public abstract class BaseDataContainerInstance<TDataContainer, TDataContainerId, TFieldValue, TField>() : Entity()
-    where TDataContainer : BaseDataContainer<TField>
-    where TFieldValue : BaseDataContainerValue<TField>
+public abstract class BaseDataContainerInstance<TDataContainer, TDataContainerId, TDataContainerSection, TFieldValue, TField>() : Entity()
+    where TDataContainer : BaseDataContainer<TDataContainerSection, TField>
+    where TDataContainerSection : BaseDataContainerSection<TField>
     where TField : BaseDataContainerField
+    where TFieldValue : BaseDataContainerValue<TField>
 {
     public TDataContainerId DataContainerId { get; set; } = default!;
     public TDataContainer DataContainer { get; set; } = null!;

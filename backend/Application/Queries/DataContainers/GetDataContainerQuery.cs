@@ -12,14 +12,16 @@ public abstract class GetDataContainerQuery<TDataContainerTemplate>(Guid id) : I
     public Guid Id { get; set; } = id;
 }
 
-public abstract class GetDataContainerQueryHandler<TQuery, TDataContainerTemplate, TField>(ISolutionDbContext dbContext)
+public abstract class GetDataContainerQueryHandler<TQuery, TDataContainerTemplate, TDataContainerSection, TField>(ISolutionDbContext dbContext)
     : IRequestHandler<TQuery, TDataContainerTemplate?>
     where TQuery : GetDataContainerQuery<TDataContainerTemplate>
     where TField : BaseDataContainerField, new()
-    where TDataContainerTemplate : BaseDataContainer<TField>, new()
+    where TDataContainerSection : BaseDataContainerSection<TField>, new()
+    where TDataContainerTemplate : BaseDataContainer<TDataContainerSection, TField>, new()
 {
     public async virtual Task<TDataContainerTemplate?> Handle(TQuery query, CancellationToken cancellationToken)
         => await dbContext.Set<TDataContainerTemplate>()
-            .Include(d => d.Fields)
+            .Include(d => d.Sections)
+                .ThenInclude(d => d.Fields)
             .SingleOrDefaultAsync(d => d.Id == query.Id, cancellationToken);
 }

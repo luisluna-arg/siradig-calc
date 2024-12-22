@@ -10,6 +10,6 @@ public class GetFormTemplateQuery(Guid id)
 }
 
 public class GetFormTemplateQueryHandler(ISolutionDbContext dbContext)
-    : GetDataContainerQueryHandler<GetFormTemplateQuery, FormTemplate, FormField>(dbContext)
+    : GetDataContainerQueryHandler<GetFormTemplateQuery, FormTemplate, FormTemplateSection, FormField>(dbContext)
 {
 }

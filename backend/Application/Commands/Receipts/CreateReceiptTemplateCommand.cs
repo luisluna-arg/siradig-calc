@@ -9,6 +9,6 @@ public class CreateReceiptTemplateCommand() : CreateDataContainerTemplateCommand
 }
 
 public class CreateReceiptTemplateHandler(ISolutionDbContext dbContext)
-    : CreateDataContainerTemplateCommandHandler<CreateReceiptTemplateCommand, ReceiptTemplate, ReceiptField>(dbContext)
+    : CreateDataContainerTemplateCommandHandler<CreateReceiptTemplateCommand, ReceiptTemplate, ReceiptTemplateSection, ReceiptField>(dbContext)
 {
 }

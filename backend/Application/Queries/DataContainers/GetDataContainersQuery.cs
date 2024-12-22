@@ -9,14 +9,16 @@ public abstract class GetDataContainersQuery<TDataContainerTemplate> : IRequest<
 {
 }
 
-public abstract class GetDataContainersQueryHandler<TQuery, TDataContainerTemplate, TField>(ISolutionDbContext dbContext)
+public abstract class GetDataContainersQueryHandler<TQuery, TDataContainerTemplate, TDataContainerSection, TField>(ISolutionDbContext dbContext)
     : IRequestHandler<TQuery, IEnumerable<TDataContainerTemplate>>
     where TQuery : GetDataContainersQuery<TDataContainerTemplate>
     where TField : BaseDataContainerField, new()
-    where TDataContainerTemplate : BaseDataContainer<TField>, new()
+    where TDataContainerSection : BaseDataContainerSection<TField>, new()
+    where TDataContainerTemplate : BaseDataContainer<TDataContainerSection, TField>, new()
 {
     public async virtual Task<IEnumerable<TDataContainerTemplate>> Handle(TQuery query, CancellationToken cancellationToken)
         => await dbContext.Set<TDataContainerTemplate>()
-            .Include(d => d.Fields)
+            .Include(d => d.Sections)
+                .ThenInclude(d => d.Fields)
             .ToArrayAsync();
 }
