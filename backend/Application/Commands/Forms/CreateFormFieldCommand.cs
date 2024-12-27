@@ -12,3 +12,7 @@ public class CreateFormFieldHandler(ISolutionDbContext dbContext)
     : CreateDataContainerFieldCommandHandler<CreateFormFieldCommand, FormField>(dbContext)
 {
 }
+
+public class CreateFormFieldCommandValidator : CreateDataContainerFieldCommandValidator
+{
+}

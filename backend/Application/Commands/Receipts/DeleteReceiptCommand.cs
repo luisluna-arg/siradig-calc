@@ -12,3 +12,7 @@ public class DeleteReceiptCommandHandler(ISolutionDbContext dbContext)
     : DeleteInstanceCommandHandler<DeleteReceiptCommand, Receipt, Guid>(dbContext)
 {
 }
+
+public class DeleteReceiptCommandValidator : DeleteInstanceCommandValidator<Guid>
+{
+}

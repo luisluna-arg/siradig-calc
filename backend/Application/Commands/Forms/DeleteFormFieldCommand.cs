@@ -12,3 +12,7 @@ public class DeleteFormFieldCommandHandler(ISolutionDbContext dbContext)
     : DeleteInstanceCommandHandler<DeleteFormFieldCommand, FormField, Guid>(dbContext)
 {
 }
+
+public class DeleteFormFieldCommandValidator : DeleteInstanceCommandValidator<Guid>
+{
+}

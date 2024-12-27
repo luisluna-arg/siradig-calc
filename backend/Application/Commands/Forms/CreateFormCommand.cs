@@ -10,7 +10,13 @@ public class CreateFormCommand()
 {
 }
 
+/* TODO Fix so that type parameters match Validator */
 public class CreateFormHandler(ISolutionDbContext dbContext)
     : CreateDataContainerCommandHandler<CreateFormCommand, Form, FormTemplateSection, FormField, FormValue, FormTemplate>(dbContext)
+{
+}
+
+public class CreateFormCommandValidator(ISolutionDbContext dbContext)
+    : CreateDataContainerCommandValidator<CreateFormCommand, CreateValueDto, FormTemplate, FormTemplateSection, FormField>(dbContext)
 {
 }

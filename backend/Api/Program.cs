@@ -1,19 +1,26 @@
-using System.Text.Json;
+using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using SiradigCalc.Infra.Persistence.DbContexts;
-using SiradigCalc.Api.Common;
-using Swashbuckle.AspNetCore.Swagger;
-using SiradigCalc.Application.Queries.Forms;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.OpenApi.Models;
+using SiradigCalc.Api.Common;
+using SiradigCalc.Application.Queries.Forms;
+using SiradigCalc.Application.Validation;
+using SiradigCalc.Infra.Persistence.DbContexts;
+using System.Text.Json;
+using Swashbuckle.AspNetCore.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetFormQuery).Assembly));
+builder.Services.AddMediatR(typeof(Program).Assembly);
+builder.Services.AddMediatR(typeof(GetFormQuery).Assembly);
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetFormQuery>();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc(Constants.OPENAPI_VERSION_LABEL, new OpenApiInfo
@@ -30,13 +37,15 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
-    var swaggerProvider = app.Services.GetRequiredService<ISwaggerProvider>();
-    var swaggerDoc = swaggerProvider.GetSwagger(Constants.OPENAPI_VERSION_LABEL);
-
     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "OpenApi", Constants.OPENAPI_SPEC_FILE_NAME);
     Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
+
+    var swaggerProvider = app.Services.GetRequiredService<ISwaggerProvider>();
+    var swaggerDoc = swaggerProvider.GetSwagger(Constants.OPENAPI_VERSION_LABEL);
 
     File.WriteAllText(filePath, JsonSerializer.Serialize(swaggerDoc, new JsonSerializerOptions
     {

@@ -19,5 +19,11 @@ public abstract class GetDataContainerInstancesQueryHandler<TQuery, TDataContain
     where TDataContainerInstance : BaseDataContainerInstance<TDataContainerTemplate, Guid, TDataContainerSection, TFieldValue, TField>, new()
 {
     public async virtual Task<IEnumerable<TDataContainerInstance>> Handle(TQuery query, CancellationToken cancellationToken)
-        => await dbContext.Set<TDataContainerInstance>().ToArrayAsync();
+        => await dbContext.Set<TDataContainerInstance>()
+            .Include(i => i.DataContainer)
+                .ThenInclude(c => c.Sections)
+                    .ThenInclude(s => s.Fields)
+            .Include(i => i.Values)
+                .ThenInclude(v => v.Field)
+            .ToArrayAsync();
 }

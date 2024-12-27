@@ -1,4 +1,3 @@
-using System.Drawing;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SiradigCalc.Core.Entities;

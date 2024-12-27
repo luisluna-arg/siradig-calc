@@ -12,3 +12,7 @@ public class DeleteFormCommandHandler(ISolutionDbContext dbContext)
     : DeleteInstanceCommandHandler<DeleteFormCommand, Form, Guid>(dbContext)
 {
 }
+
+public class DeleteFormCommandValidator : DeleteInstanceCommandValidator<Guid>
+{
+}

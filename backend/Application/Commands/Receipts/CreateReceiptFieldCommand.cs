@@ -12,3 +12,7 @@ public class CreateReceiptFieldHandler(ISolutionDbContext dbContext)
     : CreateDataContainerFieldCommandHandler<CreateReceiptFieldCommand, ReceiptField>(dbContext)
 {
 }
+
+public class CreateReceiptFieldCommandValidator() : CreateDataContainerFieldCommandValidator()
+{
+}
