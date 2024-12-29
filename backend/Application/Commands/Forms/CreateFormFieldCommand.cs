@@ -1,18 +1,18 @@
-using SiradigCalc.Application.Commands.DataContainers;
+using SiradigCalc.Application.Commands.Records;
 using SiradigCalc.Core.Entities.Forms;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Forms;
 
-public class CreateFormFieldCommand() : CreateDataContainerFieldCommand()
+public class CreateFormFieldCommand() : CreateRecordFieldCommand()
 {
 }
 
 public class CreateFormFieldHandler(ISolutionDbContext dbContext)
-    : CreateDataContainerFieldCommandHandler<CreateFormFieldCommand, FormField>(dbContext)
+    : CreateRecordFieldCommandHandler<CreateFormFieldCommand, FormField>(dbContext)
 {
 }
 
-public class CreateFormFieldCommandValidator : CreateDataContainerFieldCommandValidator
+public class CreateFormFieldCommandValidator : CreateRecordFieldCommandValidator
 {
 }

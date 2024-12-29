@@ -1,17 +1,17 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using SiradigCalc.Core.Entities.Base.DataContainers;
+using SiradigCalc.Core.Entities.Base.Records;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateDataContainerValueCommandValidator<TField, TValue> : AbstractValidator<CreateDataContainerValueCommand>
-    where TField : BaseDataContainerField, new()
-    where TValue : BaseDataContainerValue<TField>, new()
+public abstract class CreateRecordValueCommandValidator<TField, TValue> : AbstractValidator<CreateRecordValueCommand>
+    where TField : BaseRecordField, new()
+    where TValue : BaseRecordValue<TField>, new()
 {
     private const short NAME_SIZE = 100;
 
-    public CreateDataContainerValueCommandValidator(ISolutionDbContext dbContext)
+    public CreateRecordValueCommandValidator(ISolutionDbContext dbContext)
     {
         RuleFor(c => c.FieldId)
             .Cascade(CascadeMode.Stop)

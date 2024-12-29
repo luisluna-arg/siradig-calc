@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Commands.Records;
 
 public class DeleteInstanceCommandValidator<TId> : AbstractValidator<DeleteInstanceCommand<TId>>
 {

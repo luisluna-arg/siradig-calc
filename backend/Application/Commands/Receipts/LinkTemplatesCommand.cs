@@ -16,7 +16,7 @@ public class LinkTemplatesCommandHandler(ISolutionDbContext dbContext)
 {
     public async Task<Guid> Handle(LinkTemplatesCommand request, CancellationToken cancellationToken)
     {
-        var link = await dbContext.DataContainerLinks
+        var link = await dbContext.RecordTemplateLinks
             .SingleOrDefaultAsync(l => l.FormTemplateId == request.FormTemplateId && l.ReceiptTemplateId == request.ReceiptTemplateId);
 
         if (link != null)
@@ -24,14 +24,14 @@ public class LinkTemplatesCommandHandler(ISolutionDbContext dbContext)
             return link.Id;
         }
 
-        var newLink = new DataContainerLink()
+        var newLink = new RecordTemplateLink()
         {
             Id = Guid.NewGuid(),
             FormTemplateId = request.FormTemplateId,
             ReceiptTemplateId = request.ReceiptTemplateId
         };
 
-        await dbContext.DataContainerLinks.AddAsync(newLink, cancellationToken);
+        await dbContext.RecordTemplateLinks.AddAsync(newLink, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return newLink.Id;

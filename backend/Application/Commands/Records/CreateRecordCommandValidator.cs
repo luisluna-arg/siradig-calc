@@ -1,21 +1,21 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using SiradigCalc.Core.Entities.Base.DataContainers;
+using SiradigCalc.Core.Entities.Base.Records;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateDataContainerCommandValidator<TCommand, TValueDto, TDataContainerTemplate, TDataContainerSection, TField>
+public abstract class CreateRecordCommandValidator<TCommand, TValueDto, TRecordTemplate, TRecordSection, TField>
     : AbstractValidator<TCommand>
-    where TCommand : CreateDataContainerCommand<TValueDto>
-    where TField : BaseDataContainerField, new()
-    where TDataContainerSection : BaseDataContainerSection<TField>, new()
-    where TDataContainerTemplate : BaseDataContainer<TDataContainerSection, TField>, new()
+    where TCommand : CreateRecordCommand<TValueDto>
+    where TField : BaseRecordField, new()
+    where TRecordSection : BaseRecordSection<TField>, new()
+    where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>, new()
 {
     private const short NAME_SIZE = 100;
     private const short DESCRIPTION_SIZE = 200;
 
-    public CreateDataContainerCommandValidator(ISolutionDbContext dbContext)
+    public CreateRecordCommandValidator(ISolutionDbContext dbContext)
     {
         RuleFor(c => c.Name)
             .Cascade(CascadeMode.Stop)
@@ -33,7 +33,7 @@ public abstract class CreateDataContainerCommandValidator<TCommand, TValueDto, T
             .NotEmpty()
             .WithMessage("TemplateId is required.")
             .MustAsync(async (templateId, cancellationToken) =>
-                await dbContext.Set<TDataContainerTemplate>().AnyAsync(t => t.Id == templateId))
+                await dbContext.Set<TRecordTemplate>().AnyAsync(t => t.Id == templateId))
             .WithMessage("The provided TemplateId does not exist in the database.");
 
         RuleFor(c => c.Values)

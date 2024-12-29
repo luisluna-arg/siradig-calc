@@ -1,15 +1,15 @@
-using SiradigCalc.Application.Queries.DataContainers;
+using SiradigCalc.Application.Queries.Records;
 using SiradigCalc.Core.Entities.Receipts;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Queries.Receipts;
 
 public class GetReceiptTemplatesQuery()
-    : GetDataContainersQuery<ReceiptTemplate>()
+    : GetRecordsQuery<ReceiptTemplate>()
 {
 }
 
 public class GetReceiptTemplatesQueryHandler(ISolutionDbContext dbContext)
-    : GetDataContainersQueryHandler<GetReceiptTemplatesQuery, ReceiptTemplate, ReceiptTemplateSection, ReceiptField>(dbContext)
+    : GetRecordsQueryHandler<GetReceiptTemplatesQuery, ReceiptTemplate, ReceiptTemplateSection, ReceiptField>(dbContext)
 {
 }

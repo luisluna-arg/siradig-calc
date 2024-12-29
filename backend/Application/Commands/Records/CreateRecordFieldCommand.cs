@@ -1,21 +1,21 @@
 using MediatR;
-using SiradigCalc.Core.Entities.Base.DataContainers;
+using SiradigCalc.Core.Entities.Base.Records;
 using SiradigCalc.Core.Entities.Enums;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateDataContainerFieldCommand() : IRequest<Guid>
+public abstract class CreateRecordFieldCommand() : IRequest<Guid>
 {
     public string Label { get; set; } = string.Empty;
     public int FieldType { get; set; } = 0;
     public bool IsRequired { get; set; } = true;
 }
 
-public abstract class CreateDataContainerFieldCommandHandler<TCommand, TField>(ISolutionDbContext dbContext)
+public abstract class CreateRecordFieldCommandHandler<TCommand, TField>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
-    where TCommand : CreateDataContainerFieldCommand
-    where TField : BaseDataContainerField, new()
+    where TCommand : CreateRecordFieldCommand
+    where TField : BaseRecordField, new()
 {
     public async Task<Guid> Handle(TCommand command, CancellationToken cancellationToken)
     {
@@ -27,7 +27,7 @@ public abstract class CreateDataContainerFieldCommandHandler<TCommand, TField>(I
         return field.Id;
     }
 
-    protected virtual TField CreateInstance(CreateDataContainerFieldCommand command)
+    protected virtual TField CreateInstance(CreateRecordFieldCommand command)
         => new TField
         {
             Id = Guid.NewGuid(),

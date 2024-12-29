@@ -4,7 +4,7 @@ using SiradigCalc.Core.Entities.Receipts;
 
 namespace SiradigCalc.Core.Entities;
 
-public class DataContainerLink : Entity
+public class RecordTemplateLink : Entity
 {
     public Guid FormTemplateId { get; set; }
     public FormTemplate FormTemplate { get; set; } = default!;

@@ -4,7 +4,7 @@ using SiradigCalc.Core.Entities.Receipts;
 
 namespace SiradigCalc.Core.Entities;
 
-public class DataContainerFieldLink : Entity
+public class RecordFieldLink : Entity
 {
     public Guid FormFieldId { get; set; }
     public FormField FormField { get; set; } = default!;

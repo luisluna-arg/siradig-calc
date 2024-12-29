@@ -1,4 +1,4 @@
-using SiradigCalc.Application.Commands.DataContainers;
+using SiradigCalc.Application.Commands.Records;
 using SiradigCalc.Application.Dtos;
 using SiradigCalc.Core.Entities.Forms;
 using SiradigCalc.Infra.Persistence.DbContexts;
@@ -6,17 +6,16 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 namespace SiradigCalc.Application.Commands.Forms;
 
 public class CreateFormCommand()
-    : CreateDataContainerCommand<CreateValueDto>()
+    : CreateRecordCommand<CreateValueDto>()
 {
 }
 
-/* TODO Fix so that type parameters match Validator */
 public class CreateFormHandler(ISolutionDbContext dbContext)
-    : CreateDataContainerCommandHandler<CreateFormCommand, Form, FormTemplateSection, FormField, FormValue, FormTemplate>(dbContext)
+    : CreateRecordCommandHandler<CreateFormCommand, Form, FormValue, FormTemplate, FormTemplateSection, FormField>(dbContext)
 {
 }
 
 public class CreateFormCommandValidator(ISolutionDbContext dbContext)
-    : CreateDataContainerCommandValidator<CreateFormCommand, CreateValueDto, FormTemplate, FormTemplateSection, FormField>(dbContext)
+    : CreateRecordCommandValidator<CreateFormCommand, CreateValueDto, FormTemplate, FormTemplateSection, FormField>(dbContext)
 {
 }

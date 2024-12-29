@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SiradigCalc.Api.Controllers.Base;
-using SiradigCalc.Application.Queries.DataContainers;
+using SiradigCalc.Application.Queries.Records;
 using SiradigCalc.Application.Queries.Receipts;
 
 namespace SiradigCalc.Api.Controllers.Query;
@@ -20,7 +20,7 @@ public class ReceiptTemplatesQueryController(IMediator mediator) : BaseControlle
 
     [HttpGet("field-types")]
     public async Task<IActionResult> GetFieldTypes()
-        => Ok(await Mediator.Send(new GetDataContainerFieldTypesQuery()));
+        => Ok(await Mediator.Send(new GetRecordFieldTypesQuery()));
 
     [HttpPost("{id}/links")]
     public async Task<IActionResult> GetReceiptTemplateLink(Guid id)

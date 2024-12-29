@@ -3,7 +3,7 @@ using MediatR;
 using SiradigCalc.Core.Entities.Base;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Commands.Records;
 
 public abstract class DeleteInstanceCommand<TId>() : IRequest<bool>
 {

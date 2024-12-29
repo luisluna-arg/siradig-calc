@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using SiradigCalc.Application.Commands.DataContainers;
+using SiradigCalc.Application.Commands.Records;
 using SiradigCalc.Core.Entities;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
@@ -19,8 +19,8 @@ public class UnlinkFieldTemplatesCommand(
 }
 
 public class UnlinkFieldTemplatesCommandHandler(ISolutionDbContext dbContext)
-    : DeleteInstanceCommandHandler<UnlinkFieldTemplatesCommand, DataContainerFieldLink, Guid>(dbContext)
+    : DeleteInstanceCommandHandler<UnlinkFieldTemplatesCommand, RecordFieldLink, Guid>(dbContext)
 {
-    protected override Expression<Func<DataContainerFieldLink, bool>> CreateFilterFunc(UnlinkFieldTemplatesCommand command)
+    protected override Expression<Func<RecordFieldLink, bool>> CreateFilterFunc(UnlinkFieldTemplatesCommand command)
         => (e) => e.FormFieldId == command.FormFieldId && e.ReceiptFieldId == command.ReceiptFieldId;
 }

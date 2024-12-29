@@ -5,16 +5,16 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Queries.Receipts;
 
-public class ReceiptLinksQuery(Guid receiptTemplateId) : IRequest<IEnumerable<DataContainerLink>>
+public class ReceiptLinksQuery(Guid receiptTemplateId) : IRequest<IEnumerable<RecordTemplateLink>>
 {
     public Guid ReceiptTemplateId { get; } = receiptTemplateId;
 }
 
 public class ReceiptLinksQueryHandler(ISolutionDbContext dbContext)
-    : IRequestHandler<ReceiptLinksQuery, IEnumerable<DataContainerLink>>
+    : IRequestHandler<ReceiptLinksQuery, IEnumerable<RecordTemplateLink>>
 {
-    public async Task<IEnumerable<DataContainerLink>> Handle(ReceiptLinksQuery request, CancellationToken cancellationToken)
-        => await dbContext.DataContainerLinks
+    public async Task<IEnumerable<RecordTemplateLink>> Handle(ReceiptLinksQuery request, CancellationToken cancellationToken)
+        => await dbContext.RecordTemplateLinks
             .Include(l => l.FormTemplate)
                 .ThenInclude(l => l.Sections)
                     .ThenInclude(l => l.Fields)

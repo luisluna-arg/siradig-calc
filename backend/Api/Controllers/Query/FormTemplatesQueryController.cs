@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SiradigCalc.Api.Controllers.Base;
-using SiradigCalc.Application.Queries.DataContainers;
+using SiradigCalc.Application.Queries.Records;
 using SiradigCalc.Application.Queries.Forms;
 
 namespace SiradigCalc.Api.Controllers.Query;
@@ -20,5 +20,5 @@ public class FormTemplatesQueryController(IMediator mediator) : BaseController(m
 
     [HttpGet("field-types")]
     public async Task<IActionResult> GetFieldTypes()
-        => Ok(await Mediator.Send(new GetDataContainerFieldTypesQuery()));
+        => Ok(await Mediator.Send(new GetRecordFieldTypesQuery()));
 }

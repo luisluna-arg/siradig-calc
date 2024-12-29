@@ -18,7 +18,7 @@ public class LinkFieldTemplatesCommandHandler(ISolutionDbContext dbContext)
 {
     public async Task<Guid> Handle(LinkFieldTemplatesCommand request, CancellationToken cancellationToken)
     {
-        var link = await dbContext.DataContainerLinks
+        var link = await dbContext.RecordTemplateLinks
             .Include(f => f.FormTemplate)
                 .ThenInclude(d => d.Sections)
                     .ThenInclude(d => d.Fields)
@@ -36,14 +36,14 @@ public class LinkFieldTemplatesCommandHandler(ISolutionDbContext dbContext)
             return link.Id;
         }
 
-        var newLink = new DataContainerFieldLink()
+        var newLink = new RecordFieldLink()
         {
             Id = Guid.NewGuid(),
             FormFieldId = request.FormFieldId,
             ReceiptFieldId = request.ReceiptFieldId,
         };
 
-        await dbContext.DataContainerFieldLinks.AddAsync(newLink, cancellationToken);
+        await dbContext.RecordFieldLinks.AddAsync(newLink, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return newLink.Id;

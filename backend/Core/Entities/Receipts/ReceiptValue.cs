@@ -1,7 +1,7 @@
-using SiradigCalc.Core.Entities.Base.DataContainers;
+using SiradigCalc.Core.Entities.Base.Records;
 
 namespace SiradigCalc.Core.Entities.Receipts;
 
-public class ReceiptValue() : BaseDataContainerValue<ReceiptField>()
+public class ReceiptValue() : BaseRecordValue<ReceiptField>()
 {
 }

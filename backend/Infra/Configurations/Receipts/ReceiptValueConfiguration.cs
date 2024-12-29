@@ -1,7 +1,8 @@
 using SiradigCalc.Core.Entities.Receipts;
+using SiradigCalc.Infra.Configurations.Records;
 
 namespace SiradigCalc.Infra.Configurations.Receipts;
 
-public class ReceiptValueConfiguration : BaseDataContainerValueConfiguration<ReceiptValue, ReceiptField>
+public class ReceiptValueConfiguration : BaseRecordValueConfiguration<ReceiptValue, ReceiptField>
 {
 }

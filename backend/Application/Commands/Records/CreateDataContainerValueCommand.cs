@@ -1,20 +1,20 @@
 using MediatR;
-using SiradigCalc.Core.Entities.Base.DataContainers;
+using SiradigCalc.Core.Entities.Base.Records;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateDataContainerValueCommand() : IRequest<Guid>
+public abstract class CreateRecordValueCommand() : IRequest<Guid>
 {
     public Guid FieldId { get; set; }
     public string Value { get; set; } = string.Empty;
 }
 
-public abstract class CreateDataContainerValueCommandHandler<TCommand, TValue, TField>(ISolutionDbContext dbContext)
+public abstract class CreateRecordValueCommandHandler<TCommand, TField, TValue>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
-    where TCommand : CreateDataContainerValueCommand
-    where TField : BaseDataContainerField, new()
-    where TValue : BaseDataContainerValue<TField>, new()
+    where TCommand : CreateRecordValueCommand
+    where TField : BaseRecordField, new()
+    where TValue : BaseRecordValue<TField>, new()
 {
     public async Task<Guid> Handle(TCommand command, CancellationToken cancellationToken)
     {
@@ -26,7 +26,7 @@ public abstract class CreateDataContainerValueCommandHandler<TCommand, TValue, T
         return value.Id;
     }
 
-    protected virtual TValue CreateInstance(CreateDataContainerValueCommand command)
+    protected virtual TValue CreateInstance(CreateRecordValueCommand command)
         => new TValue
         {
             Id = Guid.NewGuid(),

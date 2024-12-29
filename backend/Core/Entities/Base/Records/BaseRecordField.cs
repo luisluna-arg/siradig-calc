@@ -1,8 +1,8 @@
 using SiradigCalc.Core.Entities.Enums;
 
-namespace SiradigCalc.Core.Entities.Base.DataContainers;
+namespace SiradigCalc.Core.Entities.Base.Records;
 
-public abstract class BaseDataContainerField : Entity<Guid>
+public abstract class BaseRecordField : Entity<Guid>
 {
     public string Label { get; set; } = string.Empty;
     public FieldType FieldType { get; set; } = default;

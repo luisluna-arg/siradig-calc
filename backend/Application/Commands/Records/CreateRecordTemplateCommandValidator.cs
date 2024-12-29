@@ -1,13 +1,13 @@
 using FluentValidation;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateDataContainerTemplateCommandValidator : AbstractValidator<CreateDataContainerTemplateCommand>
+public abstract class CreateRecordTemplateCommandValidator : AbstractValidator<CreateRecordTemplateCommand>
 {
     private const short NAME_SIZE = 100;
     private const short DESCRIPTION_SIZE = 200;
 
-    public CreateDataContainerTemplateCommandValidator()
+    public CreateRecordTemplateCommandValidator()
     {
         RuleFor(c => c.Name)
             .Cascade(CascadeMode.Stop)

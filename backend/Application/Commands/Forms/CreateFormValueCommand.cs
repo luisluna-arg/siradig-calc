@@ -1,20 +1,19 @@
-using SiradigCalc.Application.Commands.DataContainers;
+using SiradigCalc.Application.Commands.Records;
 using SiradigCalc.Core.Entities.Forms;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Forms;
 
-public class CreateFormValueCommand : CreateDataContainerValueCommand
+public class CreateFormValueCommand : CreateRecordValueCommand
 {
 }
 
-/* TODO Fix so that it matches the validator class */
 public class CreateFormValueHandler(ISolutionDbContext dbContext)
-    : CreateDataContainerValueCommandHandler<CreateFormValueCommand, FormValue, FormField>(dbContext)
+    : CreateRecordValueCommandHandler<CreateFormValueCommand, FormField, FormValue>(dbContext)
 {
 }
 
 public class CreateFormValueCommandValidator(ISolutionDbContext dbContext)
-    : CreateDataContainerValueCommandValidator<FormField, FormValue>(dbContext)
+    : CreateRecordValueCommandValidator<FormField, FormValue>(dbContext)
 {
 }

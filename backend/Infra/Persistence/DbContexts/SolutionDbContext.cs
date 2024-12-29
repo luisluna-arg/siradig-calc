@@ -6,7 +6,6 @@ using SiradigCalc.Infra.Configurations.Forms;
 
 namespace SiradigCalc.Infra.Persistence.DbContexts;
 
-// TODO Check if this structure is ok
 public partial class SolutionDbContext : DbContext, ISolutionDbContext
 {
     public DbSet<Form> Forms { get; set; } = default!;
@@ -19,8 +18,8 @@ public partial class SolutionDbContext : DbContext, ISolutionDbContext
     public DbSet<ReceiptValue> ReceiptValues { get; set; } = default!;
     public DbSet<FieldTypeMapping> FieldTypeMappings { get; set; } = default!;
     public DbSet<ChangeLog> ChangeLogs { get; set; } = default!;
-    public DbSet<DataContainerLink> DataContainerLinks { get; set; } = default!;
-    public DbSet<DataContainerFieldLink> DataContainerFieldLinks { get; set; } = default!;
+    public DbSet<RecordTemplateLink> RecordTemplateLinks { get; set; } = default!;
+    public DbSet<RecordFieldLink> RecordFieldLinks { get; set; } = default!;
 
     public SolutionDbContext(DbContextOptions<SolutionDbContext> options)
         : base(options)

@@ -1,7 +1,7 @@
-using SiradigCalc.Core.Entities.Base.DataContainers;
+using SiradigCalc.Core.Entities.Base.Records;
 
 namespace SiradigCalc.Core.Entities.Forms;
 
-public class FormValue : BaseDataContainerValue<FormField>
+public class FormValue : BaseRecordValue<FormField>
 {
 }

@@ -1,15 +1,15 @@
-using SiradigCalc.Application.Queries.DataContainers;
+using SiradigCalc.Application.Queries.Records;
 using SiradigCalc.Core.Entities.Forms;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Queries.Forms;
 
 public class GetFormsQuery()
-    : GetDataContainerInstancesQuery<Form>()
+    : GetRecordInstancesQuery<Form>()
 {
 }
 
 public class GetFormsQueryHandler(ISolutionDbContext dbContext)
-    : GetDataContainerInstancesQueryHandler<GetFormsQuery, Form, FormField, FormValue, FormTemplate, FormTemplateSection>(dbContext)
+    : GetRecordInstancesQueryHandler<GetFormsQuery, Form, FormField, FormValue, FormTemplate, FormTemplateSection>(dbContext)
 {
 }

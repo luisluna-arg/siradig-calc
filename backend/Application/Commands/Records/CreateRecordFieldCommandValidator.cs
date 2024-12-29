@@ -1,13 +1,13 @@
 using FluentValidation;
 using Microsoft.VisualBasic.FileIO;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateDataContainerFieldCommandValidator : AbstractValidator<CreateDataContainerFieldCommand>
+public abstract class CreateRecordFieldCommandValidator : AbstractValidator<CreateRecordFieldCommand>
 {
     private const short LABEL_SIZE = 200;
 
-    public CreateDataContainerFieldCommandValidator()
+    public CreateRecordFieldCommandValidator()
     {
         RuleFor(c => c.Label)
             .Cascade(CascadeMode.Stop)

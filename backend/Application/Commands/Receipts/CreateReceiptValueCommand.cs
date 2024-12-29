@@ -1,19 +1,20 @@
-using SiradigCalc.Application.Commands.DataContainers;
+using SiradigCalc.Application.Commands.Records;
 using SiradigCalc.Core.Entities.Receipts;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Receipts;
 
-public class CreateReceiptValueCommand : CreateDataContainerValueCommand
+public class CreateReceiptValueCommand : CreateRecordValueCommand
 {
 }
 
 /* TODO Fix type parameters so that they match the validator */
 public class CreateReceiptValueHandler(ISolutionDbContext dbContext)
-    : CreateDataContainerValueCommandHandler<CreateReceiptValueCommand, ReceiptValue, ReceiptField>(dbContext)
+    : CreateRecordValueCommandHandler<CreateReceiptValueCommand, ReceiptField, ReceiptValue>(dbContext)
 {
 }
 
-public class CreateReceiptValueCommandValidator(ISolutionDbContext dbContext) : CreateDataContainerValueCommandValidator<ReceiptField, ReceiptValue>(dbContext)
+public class CreateReceiptValueCommandValidator(ISolutionDbContext dbContext)
+    : CreateRecordValueCommandValidator<ReceiptField, ReceiptValue>(dbContext)
 {
 }

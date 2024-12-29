@@ -1,7 +1,7 @@
 using FluentValidation;
 using SiradigCalc.Application.Dtos;
 
-namespace SiradigCalc.Application.Commands.DataContainers;
+namespace SiradigCalc.Application.Commands.Records;
 
 public class CreateSectionDtoValidator<FieldDtoValidator> : AbstractValidator<CreateSectionDto>
     where FieldDtoValidator : CreateFieldDtoValidator, new()
