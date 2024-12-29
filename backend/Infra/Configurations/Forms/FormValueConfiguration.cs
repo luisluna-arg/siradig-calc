@@ -3,6 +3,6 @@ using SiradigCalc.Infra.Configurations.Records;
 
 namespace SiradigCalc.Infra.Configurations.Forms;
 
-public class FormValueConfiguration : BaseRecordValueConfiguration<FormValue, FormField>
+public class FormValueConfiguration : BaseRecordValueConfiguration<FormField, FormValue>
 {
 }

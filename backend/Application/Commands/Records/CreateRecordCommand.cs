@@ -13,14 +13,14 @@ public abstract class CreateRecordCommand<TValueDto> : IRequest<Guid>
     public List<TValueDto> Values { get; set; } = new();
 }
 
-public abstract class CreateRecordCommandHandler<TCommand, TRecord, TFieldValue, TRecordTemplate, TRecordSection, TField>(ISolutionDbContext dbContext)
+public abstract class CreateRecordCommandHandler<TCommand, TRecord, TRecordTemplate, TRecordSection, TField, TValue>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
     where TCommand : CreateRecordCommand<CreateValueDto>
-    where TField : BaseRecordField, new()
-    where TFieldValue : BaseRecordValue<TField>, new()
+    where TRecord : BaseRecordInstance<TRecordTemplate, Guid, TRecordSection, TField, TValue>, new()
+    where TValue : BaseRecordValue<TField>, new()
     where TRecordSection : BaseRecordSection<TField>, new()
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>, new()
-    where TRecord : BaseRecordInstance<TRecordTemplate, Guid, TRecordSection, TFieldValue, TField>, new()
+    where TField : BaseRecordField, new()
 {
     public async virtual Task<Guid> Handle(TCommand command, CancellationToken cancellationToken)
     {
@@ -43,15 +43,15 @@ public abstract class CreateRecordCommandHandler<TCommand, TRecord, TFieldValue,
         entity.RecordId = command.TemplateId;
     }
 
-    protected virtual TFieldValue MapValue(CreateValueDto dto)
-        => new TFieldValue
+    protected virtual TValue MapValue(CreateValueDto dto)
+        => new TValue
         {
             Id = Guid.NewGuid(),
             FieldId = dto.FieldId,
             Value = dto.Value,
         };
 
-    protected virtual void AssignValuesToEntity(TRecord entity, List<TFieldValue> values)
+    protected virtual void AssignValuesToEntity(TRecord entity, List<TValue> values)
     {
         entity.Values = values;
     }

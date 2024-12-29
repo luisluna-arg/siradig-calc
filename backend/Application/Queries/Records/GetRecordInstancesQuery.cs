@@ -9,17 +9,17 @@ public abstract class GetRecordInstancesQuery<TRecordInstance> : IRequest<IEnume
 {
 }
 
-public abstract class GetRecordInstancesQueryHandler<TQuery, TRecordInstance, TField, TFieldValue, TRecordTemplate, TRecordSection>(ISolutionDbContext dbContext)
-    : IRequestHandler<TQuery, IEnumerable<TRecordInstance>>
-    where TQuery : GetRecordInstancesQuery<TRecordInstance>
+public abstract class GetRecordInstancesQueryHandler<TQuery, TRecord, TRecordTemplate, TRecordSection, TField, TValue>(ISolutionDbContext dbContext)
+    : IRequestHandler<TQuery, IEnumerable<TRecord>>
+    where TQuery : GetRecordInstancesQuery<TRecord>
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>, new()
     where TRecordSection : BaseRecordSection<TField>, new()
     where TField : BaseRecordField, new()
-    where TRecordInstance : BaseRecordInstance<TRecordTemplate, Guid, TRecordSection, TFieldValue, TField>, new()
-    where TFieldValue : BaseRecordValue<TField>, new()
+    where TRecord : BaseRecordInstance<TRecordTemplate, Guid, TRecordSection, TField, TValue>, new()
+    where TValue : BaseRecordValue<TField>, new()
 {
-    public async virtual Task<IEnumerable<TRecordInstance>> Handle(TQuery query, CancellationToken cancellationToken)
-        => await dbContext.Set<TRecordInstance>()
+    public async virtual Task<IEnumerable<TRecord>> Handle(TQuery query, CancellationToken cancellationToken)
+        => await dbContext.Set<TRecord>()
             .Include(i => i.Record)
                 .ThenInclude(c => c.Sections)
                     .ThenInclude(s => s.Fields)

@@ -11,7 +11,7 @@ public class CreateFormCommand()
 }
 
 public class CreateFormHandler(ISolutionDbContext dbContext)
-    : CreateRecordCommandHandler<CreateFormCommand, Form, FormValue, FormTemplate, FormTemplateSection, FormField>(dbContext)
+    : CreateRecordCommandHandler<CreateFormCommand, Form, FormTemplate, FormTemplateSection, FormField, FormValue>(dbContext)
 {
 }
 

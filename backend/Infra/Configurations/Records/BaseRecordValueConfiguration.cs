@@ -4,7 +4,7 @@ using SiradigCalc.Core.Entities.Base.Records;
 
 namespace SiradigCalc.Infra.Configurations.Records;
 
-public abstract class BaseRecordValueConfiguration<TValue, TField> : IEntityTypeConfiguration<TValue>
+public abstract class BaseRecordValueConfiguration<TField, TValue> : IEntityTypeConfiguration<TValue>
     where TValue : BaseRecordValue<TField>
     where TField : BaseRecordField
 {

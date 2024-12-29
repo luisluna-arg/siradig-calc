@@ -2,6 +2,6 @@
 
 namespace SiradigCalc.Core.Entities.Receipts;
 
-public class Receipt() : BaseRecordInstance<ReceiptTemplate, Guid, ReceiptTemplateSection, ReceiptValue, ReceiptField>()
+public class Receipt() : BaseRecordInstance<ReceiptTemplate, Guid, ReceiptTemplateSection, ReceiptField, ReceiptValue>()
 {
 }

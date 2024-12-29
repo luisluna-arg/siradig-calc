@@ -10,6 +10,6 @@ public class GetReceiptsQuery()
 }
 
 public class GetReceiptsQueryHandler(ISolutionDbContext dbContext)
-    : GetRecordInstancesQueryHandler<GetReceiptsQuery, Receipt, ReceiptField, ReceiptValue, ReceiptTemplate, ReceiptTemplateSection>(dbContext)
+    : GetRecordInstancesQueryHandler<GetReceiptsQuery, Receipt, ReceiptTemplate, ReceiptTemplateSection, ReceiptField, ReceiptValue>(dbContext)
 {
 }
