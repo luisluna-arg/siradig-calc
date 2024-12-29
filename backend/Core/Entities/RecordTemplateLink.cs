@@ -10,4 +10,5 @@ public class RecordTemplateLink : Entity
     public FormTemplate FormTemplate { get; set; } = default!;
     public Guid ReceiptTemplateId { get; set; }
     public ReceiptTemplate ReceiptTemplate { get; set; } = default!;
+    public ICollection<RecordFieldLink> RecordFieldLinks { get; set; } = [];
 }

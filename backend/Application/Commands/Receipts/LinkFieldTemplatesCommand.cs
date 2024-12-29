@@ -18,27 +18,23 @@ public class LinkFieldTemplatesCommandHandler(ISolutionDbContext dbContext)
 {
     public async Task<Guid> Handle(LinkFieldTemplatesCommand request, CancellationToken cancellationToken)
     {
-        var link = await dbContext.RecordTemplateLinks
+        var templateLink = await dbContext.RecordTemplateLinks
             .Include(f => f.FormTemplate)
                 .ThenInclude(d => d.Sections)
                     .ThenInclude(d => d.Fields)
             .Include(f => f.ReceiptTemplate)
                 .ThenInclude(d => d.Sections)
                     .ThenInclude(d => d.Fields)
-            .SingleOrDefaultAsync(l =>
+            .SingleAsync(l =>
                 l.FormTemplateId == request.FormTemplateId &&
                 l.ReceiptTemplateId == request.ReceiptTemplateId &&
                 l.FormTemplate.Sections.Any(s => s.Fields.Any(f => f.Id == request.FormFieldId)) &&
                 l.ReceiptTemplate.Sections.Any(s => s.Fields.Any(f => f.Id == request.ReceiptTemplateId)));
 
-        if (link != null)
-        {
-            return link.Id;
-        }
-
         var newLink = new RecordFieldLink()
         {
             Id = Guid.NewGuid(),
+            TemplateLink = templateLink,
             FormFieldId = request.FormFieldId,
             ReceiptFieldId = request.ReceiptFieldId,
         };

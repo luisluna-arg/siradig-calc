@@ -6,6 +6,8 @@ namespace SiradigCalc.Core.Entities;
 
 public class RecordFieldLink : Entity
 {
+    public Guid TemplateLinkId { get; set; }
+    public RecordTemplateLink TemplateLink { get; set; } = default!;
     public Guid FormFieldId { get; set; }
     public FormField FormField { get; set; } = default!;
     public Guid ReceiptFieldId { get; set; }
