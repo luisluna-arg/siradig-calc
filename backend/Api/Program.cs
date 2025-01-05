@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.OpenApi.Models;
 using SiradigCalc.Api.Common;
+using SiradigCalc.ApiFramework.Core.Config;
 using SiradigCalc.Application.Queries.Forms;
 using SiradigCalc.Application.Validation;
 using SiradigCalc.Infra.Persistence.DbContexts;
@@ -20,6 +21,7 @@ builder.Services.AddMediatR(typeof(GetFormQuery).Assembly);
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddValidatorsFromAssemblyContaining<GetFormQuery>();
+builder.Services.AddRecordConverters();
 
 builder.Services.AddSwaggerGen(c =>
 {

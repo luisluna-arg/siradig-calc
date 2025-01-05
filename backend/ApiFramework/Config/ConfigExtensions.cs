@@ -1,0 +1,39 @@
+using Microsoft.Extensions.DependencyInjection;
+using SiradigCalc.ApiFramework.Common;
+using SiradigCalc.Application.Converters;
+using SiradigCalc.Application.Converters.Strategies;
+
+namespace SiradigCalc.ApiFramework.Core.Config;
+
+public static class ConfigExtensions
+{
+    public static void AddRecordConverters(
+        this IServiceCollection services)
+    {
+        services.AddScoped<IRecordConverter, RecordConverter>();
+
+        var mainStrategyInterfaceType = typeof(IRecordConverterStrategy);
+        var converterAssembly = mainStrategyInterfaceType.Assembly;
+        var strategyTypes = converterAssembly.GetTypes()
+            .Where(t =>
+                t.Namespace == mainStrategyInterfaceType.Namespace &&
+                t.GetAllInterfaces().Any(i => i.Name.StartsWith(mainStrategyInterfaceType.Name)))
+                .ToArray();
+
+        foreach (var strategyInterfaceType in strategyTypes.Where(t => t.IsInterface))
+        {
+            var concreteStrategies = strategyTypes.Where(t => t.GetAllInterfaces().Any(i => i.Name.StartsWith(strategyInterfaceType.Name))).ToArray();
+
+            if (concreteStrategies.Length > 1)
+            {
+                throw new TypeLoadException($"More than one service exists for interface {strategyInterfaceType.FullName}");
+            }
+
+            if (concreteStrategies != null)
+            {
+                services.AddScoped(strategyInterfaceType, concreteStrategies[0]);
+                services.AddScoped(mainStrategyInterfaceType, concreteStrategies[0]);
+            }
+        }
+    }
+}
