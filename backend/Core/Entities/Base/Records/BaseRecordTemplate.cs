@@ -1,6 +1,6 @@
 namespace SiradigCalc.Core.Entities.Base.Records;
 
-public abstract class BaseRecordTemplate<TSection, TField> : Entity
+public abstract class BaseRecordTemplate<TSection, TField> : RecordTemplate
     where TSection : BaseRecordSection<TField>
     where TField : BaseRecordField
 {

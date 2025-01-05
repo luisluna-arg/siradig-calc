@@ -11,6 +11,7 @@ namespace SiradigCalc.Infra.Persistence.DbContexts;
 public interface ISolutionDbContext
 {
     public DbSet<Record> Records { get; set; }
+    public DbSet<RecordTemplate> RecordTemplates { get; set; }
     public DbSet<Form> Forms { get; set; }
     public DbSet<FormField> FormFields { get; set; }
     public DbSet<FormTemplate> FormTemplates { get; set; }
