@@ -228,41 +228,6 @@
           "Servers": [],
           "Extensions": {},
           "Annotations": null
-        },
-        "Get": {
-          "Tags": [
-            {
-              "Name": "FormQuery",
-              "Description": null,
-              "ExternalDocs": null,
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          ],
-          "Summary": null,
-          "Description": null,
-          "ExternalDocs": null,
-          "OperationId": null,
-          "Parameters": [],
-          "RequestBody": null,
-          "Responses": {
-            "200": {
-              "Description": "OK",
-              "Headers": {},
-              "Content": {},
-              "Links": {},
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          },
-          "Callbacks": {},
-          "Deprecated": false,
-          "Security": [],
-          "Servers": [],
-          "Extensions": {},
-          "Annotations": null
         }
       },
       "Servers": [],
@@ -279,101 +244,6 @@
           "Tags": [
             {
               "Name": "FormCommand",
-              "Description": null,
-              "ExternalDocs": null,
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          ],
-          "Summary": null,
-          "Description": null,
-          "ExternalDocs": null,
-          "OperationId": null,
-          "Parameters": [
-            {
-              "UnresolvedReference": false,
-              "Reference": null,
-              "Name": "formId",
-              "In": 2,
-              "Description": null,
-              "Required": true,
-              "Deprecated": false,
-              "AllowEmptyValue": false,
-              "Style": 3,
-              "Explode": false,
-              "AllowReserved": false,
-              "Schema": {
-                "Title": null,
-                "Type": "string",
-                "Format": "uuid",
-                "Description": null,
-                "Maximum": null,
-                "ExclusiveMaximum": null,
-                "Minimum": null,
-                "ExclusiveMinimum": null,
-                "MaxLength": null,
-                "MinLength": null,
-                "Pattern": null,
-                "MultipleOf": null,
-                "Default": null,
-                "ReadOnly": false,
-                "WriteOnly": false,
-                "AllOf": [],
-                "OneOf": [],
-                "AnyOf": [],
-                "Not": null,
-                "Required": [],
-                "Items": null,
-                "MaxItems": null,
-                "MinItems": null,
-                "UniqueItems": null,
-                "Properties": {},
-                "MaxProperties": null,
-                "MinProperties": null,
-                "AdditionalPropertiesAllowed": true,
-                "AdditionalProperties": null,
-                "Discriminator": null,
-                "Example": null,
-                "Enum": [],
-                "Nullable": false,
-                "ExternalDocs": null,
-                "Deprecated": false,
-                "Xml": null,
-                "Extensions": {},
-                "UnresolvedReference": false,
-                "Reference": null,
-                "Annotations": null
-              },
-              "Examples": {},
-              "Example": null,
-              "Content": {},
-              "Extensions": {}
-            }
-          ],
-          "RequestBody": null,
-          "Responses": {
-            "200": {
-              "Description": "OK",
-              "Headers": {},
-              "Content": {},
-              "Links": {},
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          },
-          "Callbacks": {},
-          "Deprecated": false,
-          "Security": [],
-          "Servers": [],
-          "Extensions": {},
-          "Annotations": null
-        },
-        "Get": {
-          "Tags": [
-            {
-              "Name": "FormQuery",
               "Description": null,
               "ExternalDocs": null,
               "Extensions": {},
@@ -1079,41 +949,6 @@
           "Servers": [],
           "Extensions": {},
           "Annotations": null
-        },
-        "Get": {
-          "Tags": [
-            {
-              "Name": "FormTemplatesQuery",
-              "Description": null,
-              "ExternalDocs": null,
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          ],
-          "Summary": null,
-          "Description": null,
-          "ExternalDocs": null,
-          "OperationId": null,
-          "Parameters": [],
-          "RequestBody": null,
-          "Responses": {
-            "200": {
-              "Description": "OK",
-              "Headers": {},
-              "Content": {},
-              "Links": {},
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          },
-          "Callbacks": {},
-          "Deprecated": false,
-          "Security": [],
-          "Servers": [],
-          "Extensions": {},
-          "Annotations": null
         }
       },
       "Servers": [],
@@ -1559,158 +1394,6 @@
       "UnresolvedReference": false,
       "Reference": null
     },
-    "/api/forms/templates/{id}": {
-      "Summary": null,
-      "Description": null,
-      "Operations": {
-        "Get": {
-          "Tags": [
-            {
-              "Name": "FormTemplatesQuery",
-              "Description": null,
-              "ExternalDocs": null,
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          ],
-          "Summary": null,
-          "Description": null,
-          "ExternalDocs": null,
-          "OperationId": null,
-          "Parameters": [
-            {
-              "UnresolvedReference": false,
-              "Reference": null,
-              "Name": "id",
-              "In": 2,
-              "Description": null,
-              "Required": true,
-              "Deprecated": false,
-              "AllowEmptyValue": false,
-              "Style": 3,
-              "Explode": false,
-              "AllowReserved": false,
-              "Schema": {
-                "Title": null,
-                "Type": "string",
-                "Format": "uuid",
-                "Description": null,
-                "Maximum": null,
-                "ExclusiveMaximum": null,
-                "Minimum": null,
-                "ExclusiveMinimum": null,
-                "MaxLength": null,
-                "MinLength": null,
-                "Pattern": null,
-                "MultipleOf": null,
-                "Default": null,
-                "ReadOnly": false,
-                "WriteOnly": false,
-                "AllOf": [],
-                "OneOf": [],
-                "AnyOf": [],
-                "Not": null,
-                "Required": [],
-                "Items": null,
-                "MaxItems": null,
-                "MinItems": null,
-                "UniqueItems": null,
-                "Properties": {},
-                "MaxProperties": null,
-                "MinProperties": null,
-                "AdditionalPropertiesAllowed": true,
-                "AdditionalProperties": null,
-                "Discriminator": null,
-                "Example": null,
-                "Enum": [],
-                "Nullable": false,
-                "ExternalDocs": null,
-                "Deprecated": false,
-                "Xml": null,
-                "Extensions": {},
-                "UnresolvedReference": false,
-                "Reference": null,
-                "Annotations": null
-              },
-              "Examples": {},
-              "Example": null,
-              "Content": {},
-              "Extensions": {}
-            }
-          ],
-          "RequestBody": null,
-          "Responses": {
-            "200": {
-              "Description": "OK",
-              "Headers": {},
-              "Content": {},
-              "Links": {},
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          },
-          "Callbacks": {},
-          "Deprecated": false,
-          "Security": [],
-          "Servers": [],
-          "Extensions": {},
-          "Annotations": null
-        }
-      },
-      "Servers": [],
-      "Parameters": [],
-      "Extensions": {},
-      "UnresolvedReference": false,
-      "Reference": null
-    },
-    "/api/forms/templates/field-types": {
-      "Summary": null,
-      "Description": null,
-      "Operations": {
-        "Get": {
-          "Tags": [
-            {
-              "Name": "FormTemplatesQuery",
-              "Description": null,
-              "ExternalDocs": null,
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          ],
-          "Summary": null,
-          "Description": null,
-          "ExternalDocs": null,
-          "OperationId": null,
-          "Parameters": [],
-          "RequestBody": null,
-          "Responses": {
-            "200": {
-              "Description": "OK",
-              "Headers": {},
-              "Content": {},
-              "Links": {},
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          },
-          "Callbacks": {},
-          "Deprecated": false,
-          "Security": [],
-          "Servers": [],
-          "Extensions": {},
-          "Annotations": null
-        }
-      },
-      "Servers": [],
-      "Parameters": [],
-      "Extensions": {},
-      "UnresolvedReference": false,
-      "Reference": null
-    },
     "/api/receipts": {
       "Summary": null,
       "Description": null,
@@ -1928,41 +1611,6 @@
           "Servers": [],
           "Extensions": {},
           "Annotations": null
-        },
-        "Get": {
-          "Tags": [
-            {
-              "Name": "ReceiptQuery",
-              "Description": null,
-              "ExternalDocs": null,
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          ],
-          "Summary": null,
-          "Description": null,
-          "ExternalDocs": null,
-          "OperationId": null,
-          "Parameters": [],
-          "RequestBody": null,
-          "Responses": {
-            "200": {
-              "Description": "OK",
-              "Headers": {},
-              "Content": {},
-              "Links": {},
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          },
-          "Callbacks": {},
-          "Deprecated": false,
-          "Security": [],
-          "Servers": [],
-          "Extensions": {},
-          "Annotations": null
         }
       },
       "Servers": [],
@@ -1979,101 +1627,6 @@
           "Tags": [
             {
               "Name": "ReceiptCommand",
-              "Description": null,
-              "ExternalDocs": null,
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          ],
-          "Summary": null,
-          "Description": null,
-          "ExternalDocs": null,
-          "OperationId": null,
-          "Parameters": [
-            {
-              "UnresolvedReference": false,
-              "Reference": null,
-              "Name": "receiptId",
-              "In": 2,
-              "Description": null,
-              "Required": true,
-              "Deprecated": false,
-              "AllowEmptyValue": false,
-              "Style": 3,
-              "Explode": false,
-              "AllowReserved": false,
-              "Schema": {
-                "Title": null,
-                "Type": "string",
-                "Format": "uuid",
-                "Description": null,
-                "Maximum": null,
-                "ExclusiveMaximum": null,
-                "Minimum": null,
-                "ExclusiveMinimum": null,
-                "MaxLength": null,
-                "MinLength": null,
-                "Pattern": null,
-                "MultipleOf": null,
-                "Default": null,
-                "ReadOnly": false,
-                "WriteOnly": false,
-                "AllOf": [],
-                "OneOf": [],
-                "AnyOf": [],
-                "Not": null,
-                "Required": [],
-                "Items": null,
-                "MaxItems": null,
-                "MinItems": null,
-                "UniqueItems": null,
-                "Properties": {},
-                "MaxProperties": null,
-                "MinProperties": null,
-                "AdditionalPropertiesAllowed": true,
-                "AdditionalProperties": null,
-                "Discriminator": null,
-                "Example": null,
-                "Enum": [],
-                "Nullable": false,
-                "ExternalDocs": null,
-                "Deprecated": false,
-                "Xml": null,
-                "Extensions": {},
-                "UnresolvedReference": false,
-                "Reference": null,
-                "Annotations": null
-              },
-              "Examples": {},
-              "Example": null,
-              "Content": {},
-              "Extensions": {}
-            }
-          ],
-          "RequestBody": null,
-          "Responses": {
-            "200": {
-              "Description": "OK",
-              "Headers": {},
-              "Content": {},
-              "Links": {},
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          },
-          "Callbacks": {},
-          "Deprecated": false,
-          "Security": [],
-          "Servers": [],
-          "Extensions": {},
-          "Annotations": null
-        },
-        "Get": {
-          "Tags": [
-            {
-              "Name": "ReceiptQuery",
               "Description": null,
               "ExternalDocs": null,
               "Extensions": {},
@@ -2703,41 +2256,6 @@
             },
             "Extensions": {}
           },
-          "Responses": {
-            "200": {
-              "Description": "OK",
-              "Headers": {},
-              "Content": {},
-              "Links": {},
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          },
-          "Callbacks": {},
-          "Deprecated": false,
-          "Security": [],
-          "Servers": [],
-          "Extensions": {},
-          "Annotations": null
-        },
-        "Get": {
-          "Tags": [
-            {
-              "Name": "ReceiptTemplatesQuery",
-              "Description": null,
-              "ExternalDocs": null,
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          ],
-          "Summary": null,
-          "Description": null,
-          "ExternalDocs": null,
-          "OperationId": null,
-          "Parameters": [],
-          "RequestBody": null,
           "Responses": {
             "200": {
               "Description": "OK",
@@ -4074,120 +3592,14 @@
       "UnresolvedReference": false,
       "Reference": null
     },
-    "/api/receipts/templates/{id}": {
+    "/api/records/forms": {
       "Summary": null,
       "Description": null,
       "Operations": {
         "Get": {
           "Tags": [
             {
-              "Name": "ReceiptTemplatesQuery",
-              "Description": null,
-              "ExternalDocs": null,
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          ],
-          "Summary": null,
-          "Description": null,
-          "ExternalDocs": null,
-          "OperationId": null,
-          "Parameters": [
-            {
-              "UnresolvedReference": false,
-              "Reference": null,
-              "Name": "id",
-              "In": 2,
-              "Description": null,
-              "Required": true,
-              "Deprecated": false,
-              "AllowEmptyValue": false,
-              "Style": 3,
-              "Explode": false,
-              "AllowReserved": false,
-              "Schema": {
-                "Title": null,
-                "Type": "string",
-                "Format": "uuid",
-                "Description": null,
-                "Maximum": null,
-                "ExclusiveMaximum": null,
-                "Minimum": null,
-                "ExclusiveMinimum": null,
-                "MaxLength": null,
-                "MinLength": null,
-                "Pattern": null,
-                "MultipleOf": null,
-                "Default": null,
-                "ReadOnly": false,
-                "WriteOnly": false,
-                "AllOf": [],
-                "OneOf": [],
-                "AnyOf": [],
-                "Not": null,
-                "Required": [],
-                "Items": null,
-                "MaxItems": null,
-                "MinItems": null,
-                "UniqueItems": null,
-                "Properties": {},
-                "MaxProperties": null,
-                "MinProperties": null,
-                "AdditionalPropertiesAllowed": true,
-                "AdditionalProperties": null,
-                "Discriminator": null,
-                "Example": null,
-                "Enum": [],
-                "Nullable": false,
-                "ExternalDocs": null,
-                "Deprecated": false,
-                "Xml": null,
-                "Extensions": {},
-                "UnresolvedReference": false,
-                "Reference": null,
-                "Annotations": null
-              },
-              "Examples": {},
-              "Example": null,
-              "Content": {},
-              "Extensions": {}
-            }
-          ],
-          "RequestBody": null,
-          "Responses": {
-            "200": {
-              "Description": "OK",
-              "Headers": {},
-              "Content": {},
-              "Links": {},
-              "Extensions": {},
-              "UnresolvedReference": false,
-              "Reference": null
-            }
-          },
-          "Callbacks": {},
-          "Deprecated": false,
-          "Security": [],
-          "Servers": [],
-          "Extensions": {},
-          "Annotations": null
-        }
-      },
-      "Servers": [],
-      "Parameters": [],
-      "Extensions": {},
-      "UnresolvedReference": false,
-      "Reference": null
-    },
-    "/api/receipts/templates/field-types": {
-      "Summary": null,
-      "Description": null,
-      "Operations": {
-        "Get": {
-          "Tags": [
-            {
-              "Name": "ReceiptTemplatesQuery",
+              "Name": "RecordsQuery",
               "Description": null,
               "ExternalDocs": null,
               "Extensions": {},
@@ -4226,14 +3638,272 @@
       "UnresolvedReference": false,
       "Reference": null
     },
-    "/api/receipts/templates/{id}/links": {
+    "/api/records/forms/{formId}": {
       "Summary": null,
       "Description": null,
       "Operations": {
-        "Post": {
+        "Get": {
           "Tags": [
             {
-              "Name": "ReceiptTemplatesQuery",
+              "Name": "RecordsQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [
+            {
+              "UnresolvedReference": false,
+              "Reference": null,
+              "Name": "formId",
+              "In": 2,
+              "Description": null,
+              "Required": true,
+              "Deprecated": false,
+              "AllowEmptyValue": false,
+              "Style": 3,
+              "Explode": false,
+              "AllowReserved": false,
+              "Schema": {
+                "Title": null,
+                "Type": "string",
+                "Format": "uuid",
+                "Description": null,
+                "Maximum": null,
+                "ExclusiveMaximum": null,
+                "Minimum": null,
+                "ExclusiveMinimum": null,
+                "MaxLength": null,
+                "MinLength": null,
+                "Pattern": null,
+                "MultipleOf": null,
+                "Default": null,
+                "ReadOnly": false,
+                "WriteOnly": false,
+                "AllOf": [],
+                "OneOf": [],
+                "AnyOf": [],
+                "Not": null,
+                "Required": [],
+                "Items": null,
+                "MaxItems": null,
+                "MinItems": null,
+                "UniqueItems": null,
+                "Properties": {},
+                "MaxProperties": null,
+                "MinProperties": null,
+                "AdditionalPropertiesAllowed": true,
+                "AdditionalProperties": null,
+                "Discriminator": null,
+                "Example": null,
+                "Enum": [],
+                "Nullable": false,
+                "ExternalDocs": null,
+                "Deprecated": false,
+                "Xml": null,
+                "Extensions": {},
+                "UnresolvedReference": false,
+                "Reference": null,
+                "Annotations": null
+              },
+              "Examples": {},
+              "Example": null,
+              "Content": {},
+              "Extensions": {}
+            }
+          ],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
+    "/api/records/receipts": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Get": {
+          "Tags": [
+            {
+              "Name": "RecordsQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
+    "/api/records/receipts/{receiptId}": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Get": {
+          "Tags": [
+            {
+              "Name": "RecordsQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [
+            {
+              "UnresolvedReference": false,
+              "Reference": null,
+              "Name": "receiptId",
+              "In": 2,
+              "Description": null,
+              "Required": true,
+              "Deprecated": false,
+              "AllowEmptyValue": false,
+              "Style": 3,
+              "Explode": false,
+              "AllowReserved": false,
+              "Schema": {
+                "Title": null,
+                "Type": "string",
+                "Format": "uuid",
+                "Description": null,
+                "Maximum": null,
+                "ExclusiveMaximum": null,
+                "Minimum": null,
+                "ExclusiveMinimum": null,
+                "MaxLength": null,
+                "MinLength": null,
+                "Pattern": null,
+                "MultipleOf": null,
+                "Default": null,
+                "ReadOnly": false,
+                "WriteOnly": false,
+                "AllOf": [],
+                "OneOf": [],
+                "AnyOf": [],
+                "Not": null,
+                "Required": [],
+                "Items": null,
+                "MaxItems": null,
+                "MinItems": null,
+                "UniqueItems": null,
+                "Properties": {},
+                "MaxProperties": null,
+                "MinProperties": null,
+                "AdditionalPropertiesAllowed": true,
+                "AdditionalProperties": null,
+                "Discriminator": null,
+                "Example": null,
+                "Enum": [],
+                "Nullable": false,
+                "ExternalDocs": null,
+                "Deprecated": false,
+                "Xml": null,
+                "Extensions": {},
+                "UnresolvedReference": false,
+                "Reference": null,
+                "Annotations": null
+              },
+              "Examples": {},
+              "Example": null,
+              "Content": {},
+              "Extensions": {}
+            }
+          ],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
+    "/api/records/templates/forms/{id}": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Get": {
+          "Tags": [
+            {
+              "Name": "RecordTemplatesQuery",
               "Description": null,
               "ExternalDocs": null,
               "Extensions": {},
@@ -4332,14 +4002,60 @@
       "UnresolvedReference": false,
       "Reference": null
     },
-    "/api/receipts/templates/{id}/links/{formTemplateId}": {
+    "/api/records/templates/forms": {
       "Summary": null,
       "Description": null,
       "Operations": {
-        "Post": {
+        "Get": {
           "Tags": [
             {
-              "Name": "ReceiptTemplatesQuery",
+              "Name": "RecordTemplatesQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
+    "/api/records/templates/receipts/{id}": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Get": {
+          "Tags": [
+            {
+              "Name": "RecordTemplatesQuery",
               "Description": null,
               "ExternalDocs": null,
               "Extensions": {},
@@ -4363,6 +4079,264 @@
               "AllowEmptyValue": false,
               "Style": 3,
               "Explode": false,
+              "AllowReserved": false,
+              "Schema": {
+                "Title": null,
+                "Type": "string",
+                "Format": "uuid",
+                "Description": null,
+                "Maximum": null,
+                "ExclusiveMaximum": null,
+                "Minimum": null,
+                "ExclusiveMinimum": null,
+                "MaxLength": null,
+                "MinLength": null,
+                "Pattern": null,
+                "MultipleOf": null,
+                "Default": null,
+                "ReadOnly": false,
+                "WriteOnly": false,
+                "AllOf": [],
+                "OneOf": [],
+                "AnyOf": [],
+                "Not": null,
+                "Required": [],
+                "Items": null,
+                "MaxItems": null,
+                "MinItems": null,
+                "UniqueItems": null,
+                "Properties": {},
+                "MaxProperties": null,
+                "MinProperties": null,
+                "AdditionalPropertiesAllowed": true,
+                "AdditionalProperties": null,
+                "Discriminator": null,
+                "Example": null,
+                "Enum": [],
+                "Nullable": false,
+                "ExternalDocs": null,
+                "Deprecated": false,
+                "Xml": null,
+                "Extensions": {},
+                "UnresolvedReference": false,
+                "Reference": null,
+                "Annotations": null
+              },
+              "Examples": {},
+              "Example": null,
+              "Content": {},
+              "Extensions": {}
+            }
+          ],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
+    "/api/records/templates/receipts": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Get": {
+          "Tags": [
+            {
+              "Name": "RecordTemplatesQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
+    "/api/records/templates/receipts/{id}/links": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Post": {
+          "Tags": [
+            {
+              "Name": "RecordTemplatesQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [
+            {
+              "UnresolvedReference": false,
+              "Reference": null,
+              "Name": "id",
+              "In": 2,
+              "Description": null,
+              "Required": true,
+              "Deprecated": false,
+              "AllowEmptyValue": false,
+              "Style": 3,
+              "Explode": false,
+              "AllowReserved": false,
+              "Schema": {
+                "Title": null,
+                "Type": "string",
+                "Format": "uuid",
+                "Description": null,
+                "Maximum": null,
+                "ExclusiveMaximum": null,
+                "Minimum": null,
+                "ExclusiveMinimum": null,
+                "MaxLength": null,
+                "MinLength": null,
+                "Pattern": null,
+                "MultipleOf": null,
+                "Default": null,
+                "ReadOnly": false,
+                "WriteOnly": false,
+                "AllOf": [],
+                "OneOf": [],
+                "AnyOf": [],
+                "Not": null,
+                "Required": [],
+                "Items": null,
+                "MaxItems": null,
+                "MinItems": null,
+                "UniqueItems": null,
+                "Properties": {},
+                "MaxProperties": null,
+                "MinProperties": null,
+                "AdditionalPropertiesAllowed": true,
+                "AdditionalProperties": null,
+                "Discriminator": null,
+                "Example": null,
+                "Enum": [],
+                "Nullable": false,
+                "ExternalDocs": null,
+                "Deprecated": false,
+                "Xml": null,
+                "Extensions": {},
+                "UnresolvedReference": false,
+                "Reference": null,
+                "Annotations": null
+              },
+              "Examples": {},
+              "Example": null,
+              "Content": {},
+              "Extensions": {}
+            }
+          ],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
+    "/api/records/templates/links": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Post": {
+          "Tags": [
+            {
+              "Name": "RecordTemplatesQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [
+            {
+              "UnresolvedReference": false,
+              "Reference": null,
+              "Name": "receiptTemplateId",
+              "In": 0,
+              "Description": null,
+              "Required": false,
+              "Deprecated": false,
+              "AllowEmptyValue": false,
+              "Style": 2,
+              "Explode": true,
               "AllowReserved": false,
               "Schema": {
                 "Title": null,
@@ -4415,13 +4389,13 @@
               "UnresolvedReference": false,
               "Reference": null,
               "Name": "formTemplateId",
-              "In": 2,
+              "In": 0,
               "Description": null,
-              "Required": true,
+              "Required": false,
               "Deprecated": false,
               "AllowEmptyValue": false,
-              "Style": 3,
-              "Explode": false,
+              "Style": 2,
+              "Explode": true,
               "AllowReserved": false,
               "Schema": {
                 "Title": null,
@@ -4497,14 +4471,14 @@
       "UnresolvedReference": false,
       "Reference": null
     },
-    "/api/receipts/templates/{id}/links/{formTemplateId}/{receiptFieldId}/links/{formFieldId}": {
+    "/api/records/templates/receipts/{id}/links/{formTemplateId}/{receiptFieldId}/links/{formFieldId}": {
       "Summary": null,
       "Description": null,
       "Operations": {
         "Post": {
           "Tags": [
             {
-              "Name": "ReceiptTemplatesQuery",
+              "Name": "RecordTemplatesQuery",
               "Description": null,
               "ExternalDocs": null,
               "Extensions": {},
@@ -4754,6 +4728,52 @@
               "Extensions": {}
             }
           ],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
+    "/api/records/templates/field-types": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Get": {
+          "Tags": [
+            {
+              "Name": "RecordTemplatesQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [],
           "RequestBody": null,
           "Responses": {
             "200": {
@@ -5669,6 +5689,48 @@
         "MinItems": null,
         "UniqueItems": null,
         "Properties": {
+          "recordId": {
+            "Title": null,
+            "Type": "string",
+            "Format": "uuid",
+            "Description": null,
+            "Maximum": null,
+            "ExclusiveMaximum": null,
+            "Minimum": null,
+            "ExclusiveMinimum": null,
+            "MaxLength": null,
+            "MinLength": null,
+            "Pattern": null,
+            "MultipleOf": null,
+            "Default": null,
+            "ReadOnly": false,
+            "WriteOnly": false,
+            "AllOf": [],
+            "OneOf": [],
+            "AnyOf": [],
+            "Not": null,
+            "Required": [],
+            "Items": null,
+            "MaxItems": null,
+            "MinItems": null,
+            "UniqueItems": null,
+            "Properties": {},
+            "MaxProperties": null,
+            "MinProperties": null,
+            "AdditionalPropertiesAllowed": true,
+            "AdditionalProperties": null,
+            "Discriminator": null,
+            "Example": null,
+            "Enum": [],
+            "Nullable": false,
+            "ExternalDocs": null,
+            "Deprecated": false,
+            "Xml": null,
+            "Extensions": {},
+            "UnresolvedReference": false,
+            "Reference": null,
+            "Annotations": null
+          },
           "fieldId": {
             "Title": null,
             "Type": "string",
@@ -6445,6 +6507,48 @@
         "MinItems": null,
         "UniqueItems": null,
         "Properties": {
+          "recordId": {
+            "Title": null,
+            "Type": "string",
+            "Format": "uuid",
+            "Description": null,
+            "Maximum": null,
+            "ExclusiveMaximum": null,
+            "Minimum": null,
+            "ExclusiveMinimum": null,
+            "MaxLength": null,
+            "MinLength": null,
+            "Pattern": null,
+            "MultipleOf": null,
+            "Default": null,
+            "ReadOnly": false,
+            "WriteOnly": false,
+            "AllOf": [],
+            "OneOf": [],
+            "AnyOf": [],
+            "Not": null,
+            "Required": [],
+            "Items": null,
+            "MaxItems": null,
+            "MinItems": null,
+            "UniqueItems": null,
+            "Properties": {},
+            "MaxProperties": null,
+            "MinProperties": null,
+            "AdditionalPropertiesAllowed": true,
+            "AdditionalProperties": null,
+            "Discriminator": null,
+            "Example": null,
+            "Enum": [],
+            "Nullable": false,
+            "ExternalDocs": null,
+            "Deprecated": false,
+            "Xml": null,
+            "Extensions": {},
+            "UnresolvedReference": false,
+            "Reference": null,
+            "Annotations": null
+          },
           "fieldId": {
             "Title": null,
             "Type": "string",
@@ -6865,6 +6969,6 @@
   "Tags": [],
   "ExternalDocs": null,
   "Extensions": {},
-  "HashCode": "98C3774BE34E19BB9F0A263DF0B9B88C3BE645378B5BBBA0E2F03CD8186658AA21D30EAA4B8C9A8E4654AB2B2AE194B828EA562C364EA80867F928BC8FAFE0A5",
+  "HashCode": "D849C84F375F30CFE340FA411E4B70CA936F2CE5E8DA5B545B62A4156D5E8F12C9A0AC3530CCD7488B822E7FF76B3045248D5F0EB39E6A39BC69745ACDE80E6B",
   "Annotations": null
 }
