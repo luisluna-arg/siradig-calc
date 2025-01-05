@@ -27,21 +27,9 @@ public class RecordTemplatesQueryController(IMediator mediator) : BaseController
     public async Task<IActionResult> GetReceiptTemplates()
         => Ok(await Mediator.Send(new GetReceiptTemplatesQuery()));
 
-    [HttpGet("receipts/{id}/links")]
-    public async Task<IActionResult> GetReceiptTemplateLink(Guid id)
-        => Ok(await Mediator.Send(new ReceiptLinksQuery(receiptTemplateId: id)));
-
     [HttpGet("links")]
     public async Task<IActionResult> GetReceiptTemplateLink([FromQuery] Guid receiptTemplateId, [FromQuery] Guid formTemplateId)
         => Ok(await Mediator.Send(new LinkTemplatesQuery(receiptTemplateId: receiptTemplateId, formTemplateId: formTemplateId)));
-        
-    [HttpGet("receipts/{id}/links/{formTemplateId}/{receiptFieldId}/links/{formFieldId}")]
-    public async Task<IActionResult> GetReceiptTemplateLink(Guid id, Guid formTemplateId, Guid receiptFieldId, Guid formFieldId)
-        => Ok(await Mediator.Send(new LinkFieldTemplatesQuery(
-            receiptTemplateId: id,
-            formTemplateId: formTemplateId,
-            receiptFieldId: receiptFieldId,
-            formFieldId: formFieldId)));
 
     [HttpGet("field-types")]
     public async Task<IActionResult> GetFieldTypes()
