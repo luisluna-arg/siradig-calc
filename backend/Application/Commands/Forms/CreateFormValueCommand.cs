@@ -4,7 +4,7 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Forms;
 
-public class CreateFormValueCommand : CreateRecordValueCommand
+public class CreateFormValueCommand : CreateRecordValueCommand<Guid>
 {
 }
 

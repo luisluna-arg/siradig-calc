@@ -5,7 +5,7 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateRecordValueCommandValidator<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue> : AbstractValidator<CreateRecordValueCommand>
+public abstract class CreateRecordValueCommandValidator<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue> : AbstractValidator<CreateRecordValueCommand<TRecordId>>
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>
     where TRecordSection : BaseRecordSection<TField>
     where TRecord : BaseRecordInstance<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>

@@ -4,15 +4,16 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateRecordValueCommand() : IRequest<Guid>
+public abstract class CreateRecordValueCommand<TRecordId>() : IRequest<Guid>
 {
+    public TRecordId RecordId { get; set; } = default!;
     public Guid FieldId { get; set; }
     public string Value { get; set; } = string.Empty;
 }
 
 public abstract class CreateRecordValueCommandHandler<TCommand, TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
-    where TCommand : CreateRecordValueCommand
+    where TCommand : CreateRecordValueCommand<TRecordId>
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>
     where TRecordSection : BaseRecordSection<TField>
     where TRecord : BaseRecordInstance<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>
@@ -29,10 +30,11 @@ public abstract class CreateRecordValueCommandHandler<TCommand, TRecord, TRecord
         return value.Id;
     }
 
-    protected virtual TValue CreateInstance(CreateRecordValueCommand command)
+    protected virtual TValue CreateInstance(TCommand command)
         => new TValue
         {
             Id = Guid.NewGuid(),
+            RecordId = command.RecordId,
             FieldId = command.FieldId,
             Value = command.Value
         };
