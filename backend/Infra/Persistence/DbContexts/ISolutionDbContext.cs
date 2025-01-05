@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using SiradigCalc.Core.Entities;
+using SiradigCalc.Core.Entities.Base.Records;
 using SiradigCalc.Core.Entities.Forms;
 using SiradigCalc.Core.Entities.Receipts;
 
@@ -9,6 +10,7 @@ namespace SiradigCalc.Infra.Persistence.DbContexts;
 
 public interface ISolutionDbContext
 {
+    public DbSet<Record> Records { get; set; }
     public DbSet<Form> Forms { get; set; }
     public DbSet<FormField> FormFields { get; set; }
     public DbSet<FormTemplate> FormTemplates { get; set; }

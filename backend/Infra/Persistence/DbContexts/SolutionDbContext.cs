@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SiradigCalc.Core.Entities;
+using SiradigCalc.Core.Entities.Base.Records;
 using SiradigCalc.Core.Entities.Forms;
 using SiradigCalc.Core.Entities.Receipts;
 using SiradigCalc.Infra.Configurations.Forms;
@@ -8,6 +9,7 @@ namespace SiradigCalc.Infra.Persistence.DbContexts;
 
 public partial class SolutionDbContext : DbContext, ISolutionDbContext
 {
+    public DbSet<Record> Records { get; set; } = default!;
     public DbSet<Form> Forms { get; set; } = default!;
     public DbSet<FormField> FormFields { get; set; } = default!;
     public DbSet<FormTemplate> FormTemplates { get; set; } = default!;

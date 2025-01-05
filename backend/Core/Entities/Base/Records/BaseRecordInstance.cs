@@ -1,6 +1,6 @@
 namespace SiradigCalc.Core.Entities.Base.Records;
 
-public abstract class BaseRecordInstance<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>() : Entity()
+public abstract class BaseRecordInstance<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>() : Record()
     where TRecord : BaseRecordInstance<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>
     where TRecordSection : BaseRecordSection<TField>
