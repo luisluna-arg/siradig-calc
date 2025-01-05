@@ -7,7 +7,7 @@ namespace SiradigCalc.Application.Commands.Records;
 
 public abstract class CreateRecordCommandValidator<TCommand, TValueDto, TRecordTemplate, TRecordSection, TField>
     : AbstractValidator<TCommand>
-    where TCommand : CreateRecordCommand<TValueDto>
+    where TCommand : CreateRecordCommand<Guid, TValueDto>
     where TField : BaseRecordField, new()
     where TRecordSection : BaseRecordSection<TField>, new()
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>, new()

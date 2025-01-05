@@ -9,14 +9,14 @@ public abstract class GetRecordInstancesQuery<TRecordInstance> : IRequest<IEnume
 {
 }
 
-public abstract class GetRecordInstancesQueryHandler<TQuery, TRecord, TRecordTemplate, TRecordSection, TField, TValue>(ISolutionDbContext dbContext)
+public abstract class GetRecordInstancesQueryHandler<TQuery, TRecord, TRecordId, TField, TValue, TRecordTemplate, TRecordSection>(ISolutionDbContext dbContext)
     : IRequestHandler<TQuery, IEnumerable<TRecord>>
     where TQuery : GetRecordInstancesQuery<TRecord>
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>, new()
     where TRecordSection : BaseRecordSection<TField>, new()
     where TField : BaseRecordField, new()
-    where TRecord : BaseRecordInstance<TRecordTemplate, Guid, TRecordSection, TField, TValue>, new()
-    where TValue : BaseRecordValue<TField>, new()
+    where TRecord : BaseRecordInstance<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>, new()
+    where TValue : BaseRecordValue<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>, new()
 {
     public async virtual Task<IEnumerable<TRecord>> Handle(TQuery query, CancellationToken cancellationToken)
         => await dbContext.Set<TRecord>()

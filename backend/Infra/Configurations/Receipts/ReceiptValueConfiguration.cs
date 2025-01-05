@@ -3,6 +3,6 @@ using SiradigCalc.Infra.Configurations.Records;
 
 namespace SiradigCalc.Infra.Configurations.Receipts;
 
-public class ReceiptValueConfiguration : BaseRecordValueConfiguration<ReceiptField, ReceiptValue>
+public class ReceiptValueConfiguration : BaseRecordValueConfiguration<Receipt, Guid, ReceiptField, ReceiptTemplate, ReceiptTemplateSection, ReceiptValue>
 {
 }

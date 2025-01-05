@@ -10,11 +10,11 @@ public class CreateReceiptValueCommand : CreateRecordValueCommand
 
 /* TODO Fix type parameters so that they match the validator */
 public class CreateReceiptValueHandler(ISolutionDbContext dbContext)
-    : CreateRecordValueCommandHandler<CreateReceiptValueCommand, ReceiptField, ReceiptValue>(dbContext)
+    : CreateRecordValueCommandHandler<CreateReceiptValueCommand, Receipt, Guid, ReceiptTemplate, ReceiptTemplateSection, ReceiptField, ReceiptValue>(dbContext)
 {
 }
 
 public class CreateReceiptValueCommandValidator(ISolutionDbContext dbContext)
-    : CreateRecordValueCommandValidator<ReceiptField, ReceiptValue>(dbContext)
+    : CreateRecordValueCommandValidator<Receipt, Guid, ReceiptTemplate, ReceiptTemplateSection, ReceiptField, ReceiptValue>(dbContext)
 {
 }

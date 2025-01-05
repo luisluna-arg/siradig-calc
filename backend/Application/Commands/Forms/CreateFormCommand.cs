@@ -6,12 +6,12 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 namespace SiradigCalc.Application.Commands.Forms;
 
 public class CreateFormCommand()
-    : CreateRecordCommand<CreateValueDto>()
+    : CreateRecordCommand<Guid, CreateValueDto>()
 {
 }
 
 public class CreateFormHandler(ISolutionDbContext dbContext)
-    : CreateRecordCommandHandler<CreateFormCommand, Form, FormTemplate, FormTemplateSection, FormField, FormValue>(dbContext)
+    : CreateRecordCommandHandler<CreateFormCommand, Form, Guid, FormTemplate, FormTemplateSection, FormField, FormValue>(dbContext)
 {
 }
 

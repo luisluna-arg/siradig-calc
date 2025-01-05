@@ -10,11 +10,14 @@ public abstract class CreateRecordValueCommand() : IRequest<Guid>
     public string Value { get; set; } = string.Empty;
 }
 
-public abstract class CreateRecordValueCommandHandler<TCommand, TField, TValue>(ISolutionDbContext dbContext)
+public abstract class CreateRecordValueCommandHandler<TCommand, TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
     where TCommand : CreateRecordValueCommand
+    where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>
+    where TRecordSection : BaseRecordSection<TField>
+    where TRecord : BaseRecordInstance<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>
     where TField : BaseRecordField, new()
-    where TValue : BaseRecordValue<TField>, new()
+    where TValue : BaseRecordValue<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>, new()
 {
     public async Task<Guid> Handle(TCommand command, CancellationToken cancellationToken)
     {
