@@ -1,3 +1,4 @@
+using System.Globalization;
 using SiradigCalc.Core.Entities.Receipts;
 
 namespace SiradigCalc.Application.Helpers.Reducers;
@@ -9,11 +10,11 @@ public class NumbersReducerStrategy : IValuesReducerStrategy<decimal>
 
     private static decimal ParseNumber(string input)
     {
-        if (int.TryParse(input, out int intResult))
+        if (int.TryParse(input, CultureInfo.InvariantCulture, out int intResult))
         {
             return intResult;
         }
-        else if (decimal.TryParse(input, out decimal decimalResult))
+        else if (decimal.TryParse(input, CultureInfo.InvariantCulture, out decimal decimalResult))
         {
             return decimalResult;
         }
