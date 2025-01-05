@@ -4369,7 +4369,7 @@
       "Summary": null,
       "Description": null,
       "Operations": {
-        "Post": {
+        "Get": {
           "Tags": [
             {
               "Name": "RecordTemplatesQuery",
@@ -4475,7 +4475,7 @@
       "Summary": null,
       "Description": null,
       "Operations": {
-        "Post": {
+        "Get": {
           "Tags": [
             {
               "Name": "RecordTemplatesQuery",
@@ -4640,7 +4640,7 @@
       "Summary": null,
       "Description": null,
       "Operations": {
-        "Post": {
+        "Get": {
           "Tags": [
             {
               "Name": "RecordTemplatesQuery",
@@ -7134,6 +7134,6 @@
   "Tags": [],
   "ExternalDocs": null,
   "Extensions": {},
-  "HashCode": "8BD9848E7AC01FB93461DBD75D465F0D80D2D757F06EBB4C108D53233A2F206257984CF7077D58374C80B2C2253D6C5DBCC0D8EEE02E87C9DC5D7685D0F3ADB4",
+  "HashCode": "9D57316BE911F691E1C4A95F68F0CA02AF9D74E7ECDEBD194E7017B5769AA30849E865ABEAE6EE0C309A1000C96446C1CB09C7643612121F76B90F540E03FF24",
   "Annotations": null
 }
