@@ -32,11 +32,18 @@ public class ExceptionHandlingMiddleware
 
             await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
         }
-        catch
+        catch (Exception ex)
         {
             context.Response.StatusCode = 500;
             context.Response.ContentType = "html/text";
-            await context.Response.WriteAsync("An unexpected error occurred.");
+
+            var errorResponse = new
+            {
+                Message = "An unexpected error occurred.",
+                Errors = new[] { ex.Message }
+            };
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
         }
     }
 }
