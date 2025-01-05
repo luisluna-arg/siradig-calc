@@ -21,7 +21,7 @@ public abstract class GetRecordInstanceQueryHandler<TQuery, TRecord, TRecordId, 
 {
     public async virtual Task<TRecord?> Handle(TQuery query, CancellationToken cancellationToken)
         => await dbContext.Set<TRecord>()
-            .Include(i => i.Record)
+            .Include(i => i.RecordTemplate)
                 .ThenInclude(c => c.Sections)
                     .ThenInclude(s => s.Fields)
             .Include(i => i.Values)

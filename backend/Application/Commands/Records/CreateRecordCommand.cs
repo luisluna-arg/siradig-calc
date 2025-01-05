@@ -40,7 +40,7 @@ public abstract class CreateRecordCommandHandler<TCommand, TRecord, TRecordId, T
     protected virtual void MapCommandToEntity(TCommand command, TRecord entity)
     {
         entity.Id = Guid.NewGuid();
-        entity.RecordId = command.TemplateId;
+        entity.RecordTemplateId = command.TemplateId;
     }
 
     protected virtual TValue MapValue(CreateValueDto dto)
