@@ -5,7 +5,7 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 namespace SiradigCalc.Application.Queries.Forms;
 
 public class GetFormQuery(Guid id)
-    : GetRecordInstanceQuery<Form>(id)
+    : GetRecordInstanceQuery<Form, Guid>(id)
 {
 }
 

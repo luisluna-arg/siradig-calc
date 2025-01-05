@@ -19,11 +19,26 @@ public abstract class GetRecordInstancesQueryHandler<TQuery, TRecord, TRecordId,
     where TValue : BaseRecordValue<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>, new()
 {
     public async virtual Task<IEnumerable<TRecord>> Handle(TQuery query, CancellationToken cancellationToken)
-        => await dbContext.Set<TRecord>()
+    {
+        var records = await dbContext.Set<TRecord>()
+            .AsNoTracking()
             .Include(i => i.RecordTemplate)
                 .ThenInclude(c => c.Sections)
                     .ThenInclude(s => s.Fields)
-            .Include(i => i.Values)
-                .ThenInclude(v => v.Field)
-            .ToArrayAsync();
+            .ToListAsync(cancellationToken);
+        
+        /* TODO There's a cycle between record and values so EF can't solve it, this should be fixed */
+        /* TODO Less important, find a way to compare Id's without 'Equals' */
+        var values = await dbContext.Set<TValue>()
+            .AsNoTracking()
+            .Include(v => v.Field)
+            .ToListAsync(cancellationToken);
+
+        foreach (var record in records)
+        {
+            record.Values = values.Where(v => v.RecordId!.Equals(record.Id)).ToList();
+        }
+
+        return records;
+    }
 }

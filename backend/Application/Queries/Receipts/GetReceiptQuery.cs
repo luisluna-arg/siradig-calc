@@ -5,7 +5,7 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 namespace SiradigCalc.Application.Queries.Receipts;
 
 public class GetReceiptQuery(Guid id)
-    : GetRecordInstanceQuery<Receipt>(id)
+    : GetRecordInstanceQuery<Receipt, Guid>(id)
 {
 }
 

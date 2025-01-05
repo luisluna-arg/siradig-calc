@@ -15,6 +15,20 @@ public class LinkTemplatesQueryHandler(ISolutionDbContext dbContext)
     : IRequestHandler<LinkTemplatesQuery, RecordTemplateLink?>
 {
     public async Task<RecordTemplateLink?> Handle(LinkTemplatesQuery request, CancellationToken cancellationToken)
-        => await dbContext.RecordTemplateLinks
-            .SingleOrDefaultAsync(l => l.FormTemplateId == request.FormTemplateId && l.ReceiptTemplateId == request.ReceiptTemplateId);
+    {
+        /* TODO There's a cycle between RecordTemplateLinks and Fields so EF can't solve it, this should be fixed */
+        var templateLink = await dbContext.RecordTemplateLinks
+            .AsNoTracking()
+            .FirstAsync(l => l.ReceiptTemplateId == request.ReceiptTemplateId &&
+            l.FormTemplateId == request.FormTemplateId, cancellationToken);
+
+        templateLink.RecordFieldLinks = await dbContext.RecordFieldLinks
+            .AsNoTracking()
+            .Include(l => l.FormField)
+            .Include(l => l.ReceiptField)
+            .Where(l => l.TemplateLinkId == templateLink.Id)
+            .ToListAsync(cancellationToken);
+
+        return templateLink;
+    }
 }
