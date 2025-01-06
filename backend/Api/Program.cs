@@ -14,14 +14,18 @@ using Swashbuckle.AspNetCore.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var programAssembly = typeof(Program).Assembly;
+var applicationAssembly = typeof(GetFormQuery).Assembly;
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddMediatR(typeof(Program).Assembly);
-builder.Services.AddMediatR(typeof(GetFormQuery).Assembly);
+builder.Services.AddMediatR(programAssembly);
+builder.Services.AddMediatR(applicationAssembly);
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddValidatorsFromAssemblyContaining<GetFormQuery>();
 builder.Services.AddRecordConverters();
+builder.Services.AddDtoMappers();
 
 builder.Services.AddSwaggerGen(c =>
 {
