@@ -12,6 +12,7 @@ public class ReceiptFieldMapper(IDtoMappingService dtoMapperManager)
     public override RecordFieldDto Map(ReceiptField source)
         => new RecordFieldDto()
         {
+            Id = source.Id,
             Label = source.Label,
             FieldType = DtoMapperManager.Map<FieldTypeDto>(source.FieldType),
             IsRequired = source.IsRequired

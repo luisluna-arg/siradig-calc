@@ -12,9 +12,21 @@ public class RecordTemplateLinkMapper(IDtoMappingService dtoMapperManager)
     public override RecordTemplateLinkDto Map(RecordTemplateLink source)
         => new RecordTemplateLinkDto()
         {
+            Id = source.Id,
             FormTemplate = DtoMapperManager.Map<RecordTemplateDto>(source.FormTemplate),
             ReceiptTemplate = DtoMapperManager.Map<RecordTemplateDto>(source.ReceiptTemplate),
-            RecordFieldLinks = DtoMapperManager.Map<RecordFieldLinkDto>(source.RecordFieldLinks)
+            RecordFieldLinks = source.RecordFieldLinks.GroupBy(l => l.FormFieldId)
+                .Select(g =>
+                {
+                    var formFieldLink = g.First();
+                    var formField = formFieldLink.FormField;
+                    return new FormFieldLinksDto()
+                    {   
+                        Id = formFieldLink.Id,
+                        FormField = DtoMapperManager.Map<RecordFieldDto>(formField),
+                        ReceiptFields = DtoMapperManager.Map<RecordFieldDto>(g.Select(r => r.ReceiptField).ToArray())
+                    };
+                }).ToArray()
         };
 }
 

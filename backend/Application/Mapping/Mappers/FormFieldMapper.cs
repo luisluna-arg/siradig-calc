@@ -12,6 +12,7 @@ public class FormFieldMapper(IDtoMappingService dtoMapperManager)
     public override RecordFieldDto Map(FormField source)
         => new RecordFieldDto()
         {
+            Id = source.Id,
             Label = source.Label,
             FieldType = DtoMapperManager.Map<FieldTypeDto>(source.FieldType),
             IsRequired = source.IsRequired
