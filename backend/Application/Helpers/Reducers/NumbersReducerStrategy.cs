@@ -1,31 +1,20 @@
-using System.Globalization;
 using SiradigCalc.Core.Entities.Receipts;
 
 namespace SiradigCalc.Application.Helpers.Reducers;
 
-public class NumbersReducerStrategy : IValuesReducerStrategy<decimal>
+public class NumbersReducerStrategy(IDecimalParser decimalParser) : IValuesReducerStrategy<decimal>
 {
+    private readonly IDecimalParser _decimalParser = decimalParser;
+
     public decimal Reduce(ICollection<ReceiptField> receiptFields, ICollection<ReceiptValue> values)
-        => values.Where(v => receiptFields.Any(r => r.Id == v.FieldId)).Select(v => v.Value).Sum(ParseNumber);
+        => Reduce(values.Where(v => receiptFields.Any(r => r.Id == v.FieldId)).Select(v => v.Value).ToArray());
 
-    private static decimal ParseNumber(string input)
-    {
-        if (int.TryParse(input, CultureInfo.InvariantCulture, out int intResult))
-        {
-            return intResult;
-        }
-        else if (decimal.TryParse(input, CultureInfo.InvariantCulture, out decimal decimalResult))
-        {
-            return decimalResult;
-        }
-        else
-        {
-            throw new FormatException("Input is not a valid number.");
-        }
-    }
+    public decimal Reduce(ICollection<string> values)
+        => values.Sum(_decimalParser.Parse);
 
-    public decimal Reduce(IEnumerable<decimal> values)
-    {
-        throw new NotImplementedException();
-    }
+    object IValuesReducerStrategy.Reduce(ICollection<ReceiptField> receiptFields, ICollection<ReceiptValue> values)
+        => Reduce(receiptFields, values);
+
+    object IValuesReducerStrategy.Reduce(ICollection<string> strings)
+        => Reduce(strings);
 }
