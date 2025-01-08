@@ -25,6 +25,7 @@ builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipeli
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddValidatorsFromAssemblyContaining<GetFormQuery>();
 builder.Services.AddRecordConverters();
+builder.Services.AddParsers();
 builder.Services.AddDtoMappers();
 
 builder.Services.AddSwaggerGen(c =>
