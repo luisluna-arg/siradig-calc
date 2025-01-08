@@ -7,4 +7,7 @@ public class ReceiptFormConversionDto : IRecordConversionDto
     public required string FormName { get; set; }
     public required string ReceiptName { get; set; }
     public required ICollection<FieldValueDto> Values { get; set; }
+    public decimal Haberes { get; set; } = 0;
+    public decimal Retenciones { get; set; } = 0;
+    public decimal neto { get; set; } = 0;
 }
