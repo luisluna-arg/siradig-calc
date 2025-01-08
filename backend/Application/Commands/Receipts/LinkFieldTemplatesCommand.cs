@@ -29,7 +29,7 @@ public class LinkFieldTemplatesCommandHandler(ISolutionDbContext dbContext)
                 l.FormTemplateId == request.FormTemplateId &&
                 l.ReceiptTemplateId == request.ReceiptTemplateId &&
                 l.FormTemplate.Sections.Any(s => s.Fields.Any(f => f.Id == request.FormFieldId)) &&
-                l.ReceiptTemplate.Sections.Any(s => s.Fields.Any(f => f.Id == request.ReceiptTemplateId)));
+                l.ReceiptTemplate.Sections.Any(s => s.Fields.Any(f => f.Id == request.ReceiptFieldId)));
 
         var newLink = new RecordFieldLink()
         {
