@@ -1,10 +1,11 @@
 using SiradigCalc.Application.Dtos;
-using SiradigCalc.Application.Mappers.Base;
+using SiradigCalc.Application.Mapping.Mappers.Base;
+using SiradigCalc.Application.Mapping;
 using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Mappers;
 
-public class RecordTemplateLinkMapper(IDtoMapperManager dtoMapperManager)
+public class RecordTemplateLinkMapper(IDtoMappingService dtoMapperManager)
     : BaseMapper<RecordTemplateLink, RecordTemplateLinkDto>(dtoMapperManager),
     IRecordTemplateLinkMapper
 {

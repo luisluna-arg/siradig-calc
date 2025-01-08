@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SiradigCalc.Application.Dtos;
-using SiradigCalc.Application.Mappers;
+using SiradigCalc.Application.Mapping;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Queries.Receipts;
@@ -12,7 +12,7 @@ public class LinkTemplatesQuery(Guid receiptTemplateId, Guid formTemplateId) : I
     public Guid FormTemplateId { get; } = formTemplateId;
 }
 
-public class LinkTemplatesQueryHandler(ISolutionDbContext dbContext, IDtoMapperManager mapperManager)
+public class LinkTemplatesQueryHandler(ISolutionDbContext dbContext, IDtoMappingService mapperManager)
     : IRequestHandler<LinkTemplatesQuery, RecordTemplateLinkDto?>
 {
     public async Task<RecordTemplateLinkDto?> Handle(LinkTemplatesQuery request, CancellationToken cancellationToken)

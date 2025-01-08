@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SiradigCalc.ApiFramework.Common;
 using SiradigCalc.Application.Converters;
 using SiradigCalc.Application.Converters.Strategies;
-using SiradigCalc.Application.Mappers;
+using SiradigCalc.Application.Mapping;
 
 namespace SiradigCalc.ApiFramework.Core.Config;
 
@@ -38,36 +38,9 @@ public static class ConfigExtensions
         }
     }
 
-    public static void AddDtoMappers(
-        this IServiceCollection services)
+    public static void AddDtoMappers(this IServiceCollection services)
     {
-        services.AddScoped<IDtoMapperManager, DtoMapperManager>();
+        services.AddScoped<IDtoMappingService, DtoMappingService>();        
+    }
 
-        var mapperInterfaceType = typeof(IDtoMapper);
-        var mapperAssembly = mapperInterfaceType.Assembly;
-        var assemblyTypes = mapperAssembly.GetTypes();
-        var mapperTypes = mapperAssembly.GetTypes()
-            .Where(t =>
-                t.Namespace == mapperInterfaceType.Namespace &&
-                t.GetAllInterfaces().Any(i => i.Name.Equals(mapperInterfaceType.Name)))
-                .ToArray();
-
-        var mapperInterfaces = mapperTypes.Where(t => t.IsInterface && t.GenericParametersCount() == 0).ToArray();
-
-        foreach (var dtoMapperType in mapperInterfaces)
-        {
-            var concreteMappers = mapperTypes.Where(t => t.GetAllInterfaces().Any(i => i.Name.StartsWith(dtoMapperType.Name))).ToArray();
-
-            if (concreteMappers.Length > 1)
-            {
-                throw new TypeLoadException($"More than one service exists for interface {dtoMapperType.FullName}");
-            }
-
-            if (concreteMappers.Length > 0)
-            {
-                services.AddScoped(dtoMapperType, concreteMappers[0]);
-                services.AddScoped(mapperInterfaceType, concreteMappers[0]);
-            }
-        }
-    } 
 }

@@ -4,6 +4,10 @@ namespace SiradigCalc.Application.Dtos;
 
 public class FieldTypeDto
 {
+    public FieldTypeDto()
+    {
+    }
+
     public FieldTypeDto(FieldTypeMapping ftm)
     {
         Id = ftm.Id;

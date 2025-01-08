@@ -7,6 +7,6 @@ public interface IDtoMapper<TSource, TTarget> : IDtoMapper
 
 public interface IDtoMapper
 {
-    bool IsMappingEnabled(Type sourceType);
+    bool IsMappingEnabled(Type sourceType, Type destinationType);
     object Map(object source);
 }
