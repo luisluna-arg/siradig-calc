@@ -2,16 +2,18 @@ using Microsoft.EntityFrameworkCore;
 using SiradigCalc.Application.Dtos.Conversion;
 using SiradigCalc.Application.Helpers.Reducers;
 using SiradigCalc.Core.Entities.Base.Records;
+using SiradigCalc.Core.Entities.Enums;
 using SiradigCalc.Core.Entities.Forms;
 using SiradigCalc.Core.Entities.Receipts;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Converters.Strategies;
 
-public class ReceiptToFormConverter(ISolutionDbContext dbContext) : IReceiptToFormConverter
+public class ReceiptToFormConverter(ISolutionDbContext dbContext, IDecimalParser decimalParser) : IReceiptToFormConverter
 {
     private ISolutionDbContext _dbContext = dbContext;
-    private ValuesReducerStrategyFactory _valueMergeStrategyFactory = new ValuesReducerStrategyFactory();
+    private IDecimalParser _decimalParser = decimalParser;
+    private ValuesReducerStrategyFactory _valueMergeStrategyFactory = new ValuesReducerStrategyFactory(decimalParser);
 
     public bool CanConvert(Type sourceType, Type targetType)
         => sourceType == typeof(Receipt) && targetType == typeof(Form);
@@ -49,26 +51,52 @@ public class ReceiptToFormConverter(ISolutionDbContext dbContext) : IReceiptToFo
             .SingleAsync(o => o.ReceiptTemplateId == receipt.RecordTemplateId &&
                 o.FormTemplateId == form.RecordTemplateId, cancellationToken);
 
+        var fieldsRetenciones = receipt.RecordTemplate.Sections
+            .Where(s => string.Equals("Retenciones", s.Name, StringComparison.InvariantCultureIgnoreCase))
+            .SelectMany(s => s.Fields)
+            .Select(s => s.Id)
+            .ToArray();
+
+        var fieldsHaberes = receipt.RecordTemplate.Sections
+            .Where(s => !string.Equals("Retenciones", s.Name, StringComparison.InvariantCultureIgnoreCase))
+            .SelectMany(s => s.Fields)
+            .Select(s => s.Id)
+            .ToArray();
+
+        var valueMergeStrategy = _valueMergeStrategyFactory.GetStrategy(FieldType.Number)!;
+
+
+        var totalRetenciones = (decimal)valueMergeStrategy.Reduce(receipt.Values.Where(v => fieldsRetenciones.Contains(v.FieldId)).Select(v => v.Value).ToArray());
+        var totalHaberes = (decimal)valueMergeStrategy.Reduce(receipt.Values.Where(v => fieldsHaberes.Contains(v.FieldId)).Select(v => v.Value).ToArray());
+        var neto = totalHaberes - totalRetenciones;
+
+        var resultValues = receiptFormLink.RecordFieldLinks.GroupBy(rfl => rfl.FormFieldId)
+            .Select(g =>
+            {
+                var formField = g.First().FormField;
+                var receiptFields = g.Select(g1 => g1.ReceiptField).ToArray();
+
+                return new FieldValueDto()
+                {
+                    FieldId = formField.Id,
+                    Label = formField.Label,
+                    FieldType = formField.FieldType,
+                    IsRequired = formField.IsRequired,
+                    Value = ProcessValues(formField, receiptFields, receipt.Values)
+                };
+            }).ToArray();
+
+
         return new ReceiptFormConversionDto()
         {
             FormName = form.RecordTemplate.Name,
             ReceiptName = receipt.RecordTemplate.Name,
             RecordFromId = form.Id,
             RecordToId = receipt.Id,
-            Values = receiptFormLink.RecordFieldLinks.GroupBy(rfl => rfl.FormFieldId)
-                .Select(g =>
-                {
-                    var formField = g.First().FormField;
-                    var receiptFields = g.Select(g1 => g1.ReceiptField).ToArray();
-
-                    return new FieldValueDto()
-                    {
-                        Label = formField.Label,
-                        FieldType = formField.FieldType,
-                        IsRequired = formField.IsRequired,
-                        Value = ProcessValues(formField, receiptFields, receipt.Values)
-                    };
-                }).ToArray()
+            Values = resultValues,
+            Retenciones = totalRetenciones,
+            Haberes = totalHaberes,
+            neto = neto
         };
     }
 
