@@ -13,6 +13,10 @@ public class ReceiptCommandController(IMediator mediator) : BaseController(media
     public async Task<IActionResult> CreateReceipt(CreateReceiptCommand command)
         => Ok(await Mediator.Send(command));
 
+    [HttpPut("{receiptId}")]
+    public async Task<IActionResult> UpdateReceipt(UpdateReceiptCommand command)
+        => Ok(await Mediator.Send(command));
+
     [HttpDelete("{receiptId}")]
     public async Task<IActionResult> DeleteReceipt(Guid receiptId)
         => Ok(await Mediator.Send(new DeleteReceiptCommand(receiptId)));

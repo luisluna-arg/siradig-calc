@@ -5,22 +5,22 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateRecordCommand<TGuid, TValueDto> : IRequest<Guid>
+public abstract class CreateRecordCommand<TRecordTemplateId, TValueDto> : IRequest<Guid>
 {
-    public string Name { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public TGuid TemplateId { get; set; } = default!;
+    public TRecordTemplateId TemplateId { get; set; } = default!;
     public List<TValueDto> Values { get; set; } = new();
 }
 
-public abstract class CreateRecordCommandHandler<TCommand, TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>(ISolutionDbContext dbContext)
+public abstract class CreateRecordCommandHandler<TCommand, TRecord, TRecordTemplateId, TRecordTemplate, TRecordSection, TField, TValue>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, Guid>
-    where TCommand : CreateRecordCommand<TRecordId, CreateValueDto>
+    where TCommand : CreateRecordCommand<TRecordTemplateId, CreateValueDto>
     where TField : BaseRecordField, new()
-    where TValue : BaseRecordValue<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>, new()
+    where TValue : BaseRecordValue<TRecord, TRecordTemplateId, TRecordTemplate, TRecordSection, TField, TValue>, new()
     where TRecordSection : BaseRecordSection<TField>, new()
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>, new()
-    where TRecord : BaseRecordInstance<TRecord, TRecordId, TRecordTemplate, TRecordSection, TField, TValue>, new()
+    where TRecord : BaseRecordInstance<TRecord, TRecordTemplateId, TRecordTemplate, TRecordSection, TField, TValue>, new()
 {
     public async virtual Task<Guid> Handle(TCommand command, CancellationToken cancellationToken)
     {
@@ -41,6 +41,7 @@ public abstract class CreateRecordCommandHandler<TCommand, TRecord, TRecordId, T
     {
         entity.Id = Guid.NewGuid();
         entity.RecordTemplateId = command.TemplateId;
+        entity.Title = command.Title;
     }
 
     protected virtual TValue MapValue(CreateValueDto dto)

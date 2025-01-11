@@ -5,9 +5,9 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Records;
 
-public abstract class CreateRecordCommandValidator<TCommand, TValueDto, TRecordTemplate, TRecordSection, TField>
+public abstract class UpdateRecordCommandValidator<TCommand, TRecordTemplate, TRecordSection, TField>
     : AbstractValidator<TCommand>
-    where TCommand : CreateRecordCommand<Guid, TValueDto>
+    where TCommand : UpdateRecordCommand<Guid, Guid>
     where TField : BaseRecordField, new()
     where TRecordSection : BaseRecordSection<TField>, new()
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>, new()
@@ -15,7 +15,7 @@ public abstract class CreateRecordCommandValidator<TCommand, TValueDto, TRecordT
     private const short NAME_SIZE = 100;
     private const short DESCRIPTION_SIZE = 200;
 
-    public CreateRecordCommandValidator(ISolutionDbContext dbContext)
+    public UpdateRecordCommandValidator(ISolutionDbContext dbContext)
     {
         RuleFor(c => c.Title)
             .Cascade(CascadeMode.Stop)
@@ -33,14 +33,7 @@ public abstract class CreateRecordCommandValidator<TCommand, TValueDto, TRecordT
             .NotEmpty()
             .WithMessage("TemplateId is required.")
             .MustAsync(async (templateId, cancellationToken) =>
-                await dbContext.Set<TRecordTemplate>().AnyAsync(t => t.Id == templateId))
+                await dbContext.Set<TRecordTemplate>().AnyAsync(t => t.Id.Equals(templateId)))
             .WithMessage("The provided TemplateId does not exist in the database.");
-
-        RuleFor(c => c.Values)
-            .NotNull()
-            .WithMessage("Values cannot be null.")
-            .Must(values => values.Count > 0)
-            .WithMessage("Values must contain at least one item.")
-            .ForEach(valueRule => valueRule.NotNull().WithMessage("Each value must not be null."));
     }
 }
