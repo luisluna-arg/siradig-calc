@@ -5,5 +5,5 @@ namespace SiradigCalc.Application.Converters;
 
 public interface IRecordConverter
 {
-    Task<IRecordConversionDto> Convert(Record source, Record target, CancellationToken cancellationToken);
+    Task<Record> Convert(Record source, RecordTemplate target, CancellationToken cancellationToken);
 }

@@ -13,7 +13,7 @@ public class RecordConverter : IRecordConverter
         _strategies = strategies;
     }
 
-    public async Task<IRecordConversionDto> Convert(Record source, Record target, CancellationToken cancellationToken)
+    public async Task<Record> Convert(Record source, RecordTemplate target, CancellationToken cancellationToken)
     {
         var strategy = _strategies.FirstOrDefault(s => s.CanConvert(source.GetType(), target.GetType()));
 

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using SiradigCalc.Application.Dtos.Conversion;
 using SiradigCalc.Application.Helpers.Reducers;
+using SiradigCalc.Core.Entities;
 using SiradigCalc.Core.Entities.Base.Records;
 using SiradigCalc.Core.Entities.Enums;
 using SiradigCalc.Core.Entities.Forms;
@@ -12,15 +12,14 @@ namespace SiradigCalc.Application.Converters.Strategies;
 public class ReceiptToFormConverter(ISolutionDbContext dbContext, IDecimalParser decimalParser) : IReceiptToFormConverter
 {
     private ISolutionDbContext _dbContext = dbContext;
-    private IDecimalParser _decimalParser = decimalParser;
     private ValuesReducerStrategyFactory _valueMergeStrategyFactory = new ValuesReducerStrategyFactory(decimalParser);
 
     public bool CanConvert(Type sourceType, Type targetType)
-        => sourceType == typeof(Receipt) && targetType == typeof(Form);
+        => sourceType == typeof(Receipt) && targetType == typeof(FormTemplate);
 
-    public async Task<IRecordConversionDto> Convert(Record source, Record target, CancellationToken cancellationToken)
+    public async Task<Record> Convert(Record source, RecordTemplate target, CancellationToken cancellationToken)
     {
-        if (source is not Receipt receipt || target is not Form form)
+        if (source is not Receipt receipt || target is not FormTemplate formTemplate)
         {
             throw new InvalidOperationException("Invalid types for conversion.");
         }
@@ -31,11 +30,8 @@ public class ReceiptToFormConverter(ISolutionDbContext dbContext, IDecimalParser
                 .ThenInclude(s => s.Field)
             .FirstAsync(r => r.Id == receipt.Id, cancellationToken);
 
-        form = await _dbContext.Forms
-            .Include(l => l.RecordTemplate)
-            .Include(t => t.Values)
-                .ThenInclude(s => s.Field)
-            .FirstAsync(r => r.Id == form.Id, cancellationToken);
+        formTemplate = await _dbContext.FormTemplates
+            .FirstAsync(r => r.Id == formTemplate.Id, cancellationToken);
 
         var receiptFormLink = await _dbContext.RecordTemplateLinks
             .Include(l => l.FormTemplate)
@@ -49,7 +45,7 @@ public class ReceiptToFormConverter(ISolutionDbContext dbContext, IDecimalParser
             .Include(l => l.RecordFieldLinks)
                 .ThenInclude(l => l.ReceiptField)
             .SingleAsync(o => o.ReceiptTemplateId == receipt.RecordTemplateId &&
-                o.FormTemplateId == form.RecordTemplateId, cancellationToken);
+                o.FormTemplateId == formTemplate.Id, cancellationToken);
 
         var fieldsRetenciones = receipt.RecordTemplate.Sections
             .Where(s => string.Equals("Retenciones", s.Name, StringComparison.InvariantCultureIgnoreCase))
@@ -65,7 +61,6 @@ public class ReceiptToFormConverter(ISolutionDbContext dbContext, IDecimalParser
 
         var valueMergeStrategy = _valueMergeStrategyFactory.GetStrategy(FieldType.Number)!;
 
-
         var totalRetenciones = (decimal)valueMergeStrategy.Reduce(receipt.Values.Where(v => fieldsRetenciones.Contains(v.FieldId)).Select(v => v.Value).ToArray());
         var totalHaberes = (decimal)valueMergeStrategy.Reduce(receipt.Values.Where(v => fieldsHaberes.Contains(v.FieldId)).Select(v => v.Value).ToArray());
         var neto = totalHaberes - totalRetenciones;
@@ -76,34 +71,35 @@ public class ReceiptToFormConverter(ISolutionDbContext dbContext, IDecimalParser
                 var formField = g.First().FormField;
                 var receiptFields = g.Select(g1 => g1.ReceiptField).ToArray();
 
-                return new FieldValueDto()
+                return new FormValue
                 {
                     FieldId = formField.Id,
-                    Label = formField.Label,
-                    FieldType = formField.FieldType,
-                    IsRequired = formField.IsRequired,
                     Value = ProcessValues(formField, receiptFields, receipt.Values)
                 };
             }).ToArray();
 
-
-        return new ReceiptFormConversionDto()
+        var newForm = new Form
         {
-            FormName = form.RecordTemplate.Name,
-            ReceiptName = receipt.RecordTemplate.Name,
-            RecordFromId = form.Id,
-            RecordToId = receipt.Id,
-            Values = resultValues,
-            Retenciones = totalRetenciones,
-            Haberes = totalHaberes,
-            neto = neto
+            Title = receipt.Title,
+            RecordTemplate = formTemplate,
+            Values = resultValues
         };
+
+        newForm.ReceiptToFormConversions = [
+                new ReceiptToFormConversion
+                {
+                    RecordTemplateLink = receiptFormLink!,
+                    Source = receipt,
+                    Target = newForm
+                }];
+
+        return newForm;
     }
 
-    private object ProcessValues(FormField formField, ICollection<ReceiptField> receiptFields, ICollection<ReceiptValue> values)
+    private string ProcessValues(FormField formField, ICollection<ReceiptField> receiptFields, ICollection<ReceiptValue> values)
     {
         var valueMergeStrategy = _valueMergeStrategyFactory.GetStrategy(formField.FieldType)!;
-        return valueMergeStrategy.Reduce(receiptFields, values);
+        return (valueMergeStrategy.Reduce(receiptFields, values) ?? 0).ToString()!;
     }
 }
 
