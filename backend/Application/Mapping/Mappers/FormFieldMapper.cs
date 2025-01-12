@@ -14,7 +14,7 @@ public class FormFieldMapper(IDtoMappingService dtoMapperManager)
         {
             Id = source.Id,
             Label = source.Label,
-            FieldType = DtoMapperManager.Map<FieldTypeDto>(source.FieldType),
+            FieldType = DtoMappingService.Map<FieldTypeDto>(source.FieldType),
             IsRequired = source.IsRequired
         };
 }

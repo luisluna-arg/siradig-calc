@@ -1,3 +1,4 @@
+using SiradigCalc.Application.Common;
 using SiradigCalc.Application.Mappers;
 
 namespace SiradigCalc.Application.Mapping;
@@ -27,14 +28,16 @@ public class DtoMappingService : IDtoMappingService
 
     public TResult Map<TResult>(object source)
     {
-        var mapper = _strategies.FirstOrDefault(s => s.IsMappingEnabled(source.GetType(), typeof(TResult)));
+        var mapper = _strategies
+            .OrderBy(s => s.GetType().HasSubclasses())
+            .FirstOrDefault(s => s.IsMappingEnabled(source.GetType(), typeof(TResult)));
 
         if (mapper != null)
         {
             return (TResult)mapper.Map(source);
         }
 
-        throw new InvalidOperationException($"No mapper found for '{source.GetType().Name}' to '{typeof(TResult).Name}'.");
+        throw new InvalidOperationException($"No mapper found for \"{source.GetType().Name}\" to \"{typeof(TResult).Name}\".");
     }
 
     public ICollection<TResult> Map<TResult>(IEnumerable<object> source)

@@ -13,7 +13,7 @@ public class FormMapper(IDtoMappingService dtoMapperManager)
         => new RecordDto()
         {
             RecordTemplateId = source.RecordTemplateId,
-            Values = DtoMapperManager.Map<FieldValueDto>(source.Values)
+            Values = DtoMappingService.Map<FieldValueDto>(source.Values)
         };
 }
 

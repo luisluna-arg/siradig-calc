@@ -4,15 +4,12 @@ namespace SiradigCalc.Application.Mapping.Mappers.Base;
 
 public abstract class BaseMapper<TSource, TTarget> : IDtoMapper<TSource, TTarget>
 {
-    private readonly IDtoMappingService _dtoMapperManager;
+    protected IDtoMappingService DtoMappingService { get; private set; }
 
-    protected BaseMapper(IDtoMappingService dtoMapperManager)
+    protected BaseMapper(IDtoMappingService dtoMappingService)
     {
-        _dtoMapperManager = dtoMapperManager;
+        DtoMappingService = dtoMappingService;
     }
-
-    // Expose DtoMapperManager to derived classes
-    protected IDtoMappingService DtoMapperManager => _dtoMapperManager;
 
     public bool IsMappingEnabled(Type sourceType, Type destinationType)
     {

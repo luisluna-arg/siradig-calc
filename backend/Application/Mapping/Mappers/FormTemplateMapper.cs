@@ -14,7 +14,7 @@ public class FormTemplateMapper(IDtoMappingService dtoMapperManager)
         {
             Name = source.Name,
             Description = source.Description,
-            Sections = DtoMapperManager.Map<RecordTemplateSectionDto>(source.Sections)
+            Sections = DtoMappingService.Map<RecordTemplateSectionDto>(source.Sections)
         };
 }
 

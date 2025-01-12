@@ -13,7 +13,7 @@ public class FormTemplateSectionMapper(IDtoMappingService dtoMapperManager)
         => new RecordTemplateSectionDto()
         {
             Name = source.Name,
-            Fields = DtoMapperManager.Map<RecordFieldDto>(source.Fields)
+            Fields = DtoMappingService.Map<RecordFieldDto>(source.Fields)
         };
 }
 

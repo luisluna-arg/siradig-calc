@@ -13,8 +13,8 @@ public class RecordFieldLinkMapper(IDtoMappingService dtoMapperManager)
         => new RecordFieldLinkDto()
         {
             TemplateLinkId = source.TemplateLinkId,
-            FormField = DtoMapperManager.Map<RecordFieldDto>(source.FormField),
-            ReceiptField = DtoMapperManager.Map<RecordFieldDto>(source.ReceiptField)
+            FormField = DtoMappingService.Map<RecordFieldDto>(source.FormField),
+            ReceiptField = DtoMappingService.Map<RecordFieldDto>(source.ReceiptField)
         };
 }
 
