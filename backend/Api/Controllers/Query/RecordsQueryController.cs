@@ -26,7 +26,11 @@ public class RecordsQueryController(IMediator mediator) : BaseController(mediato
     public async Task<IActionResult> GetReceipt(Guid receiptId)
         => Ok(await Mediator.Send(new GetReceiptQuery(receiptId)));
 
-    [HttpGet("receipts/convert/{sourceId}/to/{targetId}")]
+    [HttpGet("receipts/convertions/{sourceId}")]
+    public async Task<IActionResult> GetRecordConversion(Guid sourceId)
+        => Ok(await Mediator.Send(new GetReceiptConversionsQuery(sourceId)));
+
+    [HttpGet("receipts/convertions{sourceId}/to/{targetId}")]
     public async Task<IActionResult> GetRecordConversion(Guid sourceId, Guid targetId)
-        => Ok(await Mediator.Send(new GetRecordConversionQuery(sourceId, targetId)));
+        => Ok(await Mediator.Send(new GetReceiptToFormConversionsQuery(sourceId, targetId)));
 }

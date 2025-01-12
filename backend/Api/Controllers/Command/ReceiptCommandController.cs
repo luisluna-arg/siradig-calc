@@ -14,8 +14,11 @@ public class ReceiptCommandController(IMediator mediator) : BaseController(media
         => Ok(await Mediator.Send(command));
 
     [HttpPut("{receiptId}")]
-    public async Task<IActionResult> UpdateReceipt(UpdateReceiptCommand command)
-        => Ok(await Mediator.Send(command));
+    public async Task<IActionResult> UpdateReceipt(UpdateReceiptCommand command, Guid receiptId)
+    {
+        command.Id = receiptId;
+        return Ok(await Mediator.Send(command));
+    }
 
     [HttpDelete("{receiptId}")]
     public async Task<IActionResult> DeleteReceipt(Guid receiptId)
@@ -28,4 +31,8 @@ public class ReceiptCommandController(IMediator mediator) : BaseController(media
     [HttpDelete("value/{receiptValueId}")]
     public async Task<IActionResult> DeleteReceiptValue(Guid receiptValueId)
         => Ok(await Mediator.Send(new DeleteReceiptValueCommand(receiptValueId)));
+    
+    [HttpPost("convert/{sourceId}/to/{targetTemplateId}")]
+    public async Task<IActionResult> GetRecordConversion(Guid sourceId, Guid targetTemplateId)
+        => Ok(await Mediator.Send(new ConvertReceiptToFormCommand(sourceId, targetTemplateId)));
 }

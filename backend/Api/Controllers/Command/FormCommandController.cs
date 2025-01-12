@@ -14,8 +14,11 @@ public class FormCommandController(IMediator mediator) : BaseController(mediator
         => Ok(await Mediator.Send(command));
 
     [HttpPut("{formId}")]
-    public async Task<IActionResult> UpdateForm(UpdateFormCommand command)
-        => Ok(await Mediator.Send(command));
+    public async Task<IActionResult> UpdateForm(UpdateFormCommand command, Guid formId)
+    {
+        command.Id = formId;
+        return Ok(await Mediator.Send(command));
+    }
 
     [HttpDelete("{formId}")]
     public async Task<IActionResult> DeleteForm(Guid formId)
