@@ -10,5 +10,6 @@ public abstract class BaseRecordInstance<TRecord, TRecordTemplateId, TRecordTemp
     public TRecordTemplateId RecordTemplateId { get; set; } = default!;
     public TRecordTemplate RecordTemplate { get; set; } = null!;
     public string Title { get; set; } = string.Empty;
-    public ICollection<TValue> Values { get; set; } = new List<TValue>();
+    public ICollection<TValue> Values { get; set; } = [];
+    public ICollection<ReceiptToFormConversion> ReceiptToFormConversions { get; set; } = [];
 }
