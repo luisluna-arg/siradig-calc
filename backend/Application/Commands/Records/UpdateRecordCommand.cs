@@ -1,16 +1,17 @@
+using System.Text.Json.Serialization;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SiradigCalc.Application.Dtos;
 using SiradigCalc.Core.Entities.Base.Records;
+using SiradigCalc.Core.Entities.Base;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Records;
 
 public abstract class UpdateRecordCommand<TRecordId, TRecordTemplateId> : IRequest
 {
+    [JsonIgnore]
     public TRecordId Id { get; set; } = default!;
     public string Title { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
     public TRecordTemplateId TemplateId { get; set; } = default!;
 }
 
@@ -37,13 +38,7 @@ public abstract class UpdateRecordCommandHandler<TCommand, TRecordId, TRecord, T
 
     protected virtual void MapCommandToEntity(TCommand command, TRecord entity)
     {
-        entity.Id = Guid.NewGuid();
         entity.RecordTemplateId = command.TemplateId;
         entity.Title = command.Title;
-    }
-
-    Task<Unit> IRequestHandler<TCommand, Unit>.Handle(TCommand request, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
     }
 }

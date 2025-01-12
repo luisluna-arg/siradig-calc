@@ -8,7 +8,6 @@ namespace SiradigCalc.Application.Commands.Records;
 public abstract class CreateRecordCommand<TRecordTemplateId, TValueDto> : IRequest<Guid>
 {
     public string Title { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
     public TRecordTemplateId TemplateId { get; set; } = default!;
     public List<TValueDto> Values { get; set; } = new();
 }

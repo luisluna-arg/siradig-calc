@@ -12,7 +12,7 @@ public abstract class CreateRecordCommandValidator<TCommand, TValueDto, TRecordT
     where TRecordSection : BaseRecordSection<TField>, new()
     where TRecordTemplate : BaseRecordTemplate<TRecordSection, TField>, new()
 {
-    private const short NAME_SIZE = 100;
+    private const short TITLE_SIZE = 100;
     private const short DESCRIPTION_SIZE = 200;
 
     public CreateRecordCommandValidator(ISolutionDbContext dbContext)
@@ -22,11 +22,7 @@ public abstract class CreateRecordCommandValidator<TCommand, TValueDto, TRecordT
             .NotEmpty()
             .WithMessage("Name is required.")
             .MaximumLength(100)
-            .WithMessage($"Name must not exceed {NAME_SIZE} characters.");
-
-        RuleFor(c => c.Description)
-            .MaximumLength(100)
-            .WithMessage($"Description must not exceed {DESCRIPTION_SIZE} characters.");
+            .WithMessage($"Name must not exceed {TITLE_SIZE} characters.");
 
         RuleFor(c => c.TemplateId)
             .Cascade(CascadeMode.Stop)
