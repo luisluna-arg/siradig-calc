@@ -1,32 +1,30 @@
 using SiradigCalc.Application.Mapping.Mappers.Base;
 using SiradigCalc.Application.Mapping;
-using SiradigCalc.Core.Entities.Base.Records;
 using SiradigCalc.Application.Dtos;
 using SiradigCalc.Application.Dtos.Conversion;
-using SiradigCalc.Core.Entities.Forms;
-using SiradigCalc.Core.Entities.Receipts;
 using ConversionFieldValueDto = SiradigCalc.Application.Dtos.Conversion.FieldValueDto;
 using SiradigCalc.Application.Helpers.Reducers;
 using SiradigCalc.Core.Entities.Enums;
+using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Mappers;
 
-public class ReceiptToFormConversionMapper(IDtoMappingService dtoMappingService)
-    : BaseMapper<ReceiptToFormConversion, ReceiptToFormConversionDto>(dtoMappingService),
-    IRecordConversionMapper
+public class RecordTemplateConversionMapper(IDtoMappingService dtoMappingService)
+    : BaseMapper<RecordTemplateConversion, RecordTemplateConversionDto>(dtoMappingService),
+    IRecordTemplateConversionMapper
 {
     private ValuesReducerStrategyFactory _valueMergeStrategyFactory = new ValuesReducerStrategyFactory(new DecimalParserStrategy());
-    public override ReceiptToFormConversionDto Map(ReceiptToFormConversion recordConvertion)
+    public override RecordTemplateConversionDto Map(RecordTemplateConversion recordConvertion)
     {
-        var receipt = recordConvertion.Source;
+        var recordSource = recordConvertion.Source;
         
-        var fieldsRetenciones = receipt.RecordTemplate.Sections
+        var fieldsRetenciones = recordSource.Template.Sections
             .Where(s => string.Equals("Retenciones", s.Name, StringComparison.InvariantCultureIgnoreCase))
             .SelectMany(s => s.Fields)
             .Select(s => s.Id)
             .ToArray();
 
-        var fieldsHaberes = receipt.RecordTemplate.Sections
+        var fieldsHaberes = recordSource.Template.Sections
             .Where(s => !string.Equals("Retenciones", s.Name, StringComparison.InvariantCultureIgnoreCase))
             .SelectMany(s => s.Fields)
             .Select(s => s.Id)
@@ -34,27 +32,28 @@ public class ReceiptToFormConversionMapper(IDtoMappingService dtoMappingService)
 
         var valueMergeStrategy = _valueMergeStrategyFactory.GetStrategy(FieldType.Number)!;
 
-        var totalRetenciones = (decimal)valueMergeStrategy.Reduce(receipt.Values.Where(v => fieldsRetenciones.Contains(v.FieldId)).Select(v => v.Value).ToArray());
-        var totalHaberes = (decimal)valueMergeStrategy.Reduce(receipt.Values.Where(v => fieldsHaberes.Contains(v.FieldId)).Select(v => v.Value).ToArray());
+        var totalRetenciones = (decimal)valueMergeStrategy.Reduce(recordSource.Values.Where(v => fieldsRetenciones.Contains(v.FieldId)).Select(v => v.Value).ToArray());
+        var totalHaberes = (decimal)valueMergeStrategy.Reduce(recordSource.Values.Where(v => fieldsHaberes.Contains(v.FieldId)).Select(v => v.Value).ToArray());
         var neto = totalHaberes - totalRetenciones;
 
-        var resultValues = recordConvertion.RecordTemplateLink.RecordFieldLinks.GroupBy(rfl => rfl.FormFieldId)
+        var resultValues = recordConvertion.RecordTemplateLink.RecordFieldLinks
+            .GroupBy(rfl => rfl.RightFieldId)
             .Select(g =>
             {
-                var formField = g.First().FormField;
-                var receiptFields = g.Select(g1 => g1.ReceiptField).ToArray();
+                var rightField = g.First().RightField;
+                var leftFields = g.Select(g1 => g1.LeftField).ToArray();
 
                 return new ConversionFieldValueDto()
                 {
-                    FieldId = formField.Id,
-                    Label = formField.Label,
-                    FieldType = formField.FieldType,
-                    IsRequired = formField.IsRequired,
-                    Value = ProcessValues(formField, receiptFields, receipt!.Values)
+                    FieldId = rightField.Id,
+                    Label = rightField.Label,
+                    FieldType = rightField.FieldType,
+                    IsRequired = rightField.IsRequired,
+                    Value = ProcessValues(rightField, leftFields, recordSource!.Values)
                 };
             }).ToArray();
 
-        return new ReceiptToFormConversionDto()
+        return new RecordTemplateConversionDto()
         {
             Id = recordConvertion.Id,
             RecordTemplateLinkId = recordConvertion.RecordTemplateLinkId,
@@ -70,13 +69,13 @@ public class ReceiptToFormConversionMapper(IDtoMappingService dtoMappingService)
         };
     }
 
-    private object ProcessValues(FormField formField, ICollection<ReceiptField> receiptFields, ICollection<ReceiptValue> values)
+    private object ProcessValues(RecordTemplateField rightField, ICollection<RecordTemplateField> leftFields, ICollection<RecordValue> values)
     {
-        var valueMergeStrategy = _valueMergeStrategyFactory.GetStrategy(formField.FieldType)!;
-        return valueMergeStrategy.Reduce(receiptFields, values);
+        var valueMergeStrategy = _valueMergeStrategyFactory.GetStrategy(rightField.FieldType)!;
+        return valueMergeStrategy.Reduce(leftFields, values);
     }
 }
 
-public interface IRecordConversionMapper : IDtoMapper<ReceiptToFormConversion, ReceiptToFormConversionDto>
+public interface IRecordTemplateConversionMapper : IDtoMapper<RecordTemplateConversion, RecordTemplateConversionDto>
 {
 }

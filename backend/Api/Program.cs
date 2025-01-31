@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.OpenApi.Models;
 using SiradigCalc.Api.Common;
 using SiradigCalc.ApiFramework.Core.Config;
-using SiradigCalc.Application.Queries.Forms;
 using SiradigCalc.Application.Validation;
 using SiradigCalc.Infra.Persistence.DbContexts;
 using System.Text.Json;
 using Swashbuckle.AspNetCore.Swagger;
+using SiradigCalc.Application.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var programAssembly = typeof(Program).Assembly;
-var applicationAssembly = typeof(GetFormQuery).Assembly;
+var applicationAssembly = typeof(GetRecordQuery).Assembly;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -23,7 +23,7 @@ builder.Services.AddMediatR(programAssembly);
 builder.Services.AddMediatR(applicationAssembly);
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-builder.Services.AddValidatorsFromAssemblyContaining<GetFormQuery>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetRecordQuery>();
 builder.Services.AddRecordConverters();
 builder.Services.AddParsers();
 builder.Services.AddDtoMappers();

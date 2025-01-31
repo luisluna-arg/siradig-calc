@@ -1,16 +1,12 @@
 using SiradigCalc.Core.Entities.Base;
-using SiradigCalc.Core.Entities.Base.Records;
-using SiradigCalc.Core.Entities.Forms;
-using SiradigCalc.Core.Entities.Receipts;
 
 namespace SiradigCalc.Core.Entities;
 
 public class RecordTemplateLink : Entity
 {
-    public Guid FormTemplateId { get; set; }
-    public FormTemplate FormTemplate { get; set; } = default!;
-    public Guid ReceiptTemplateId { get; set; }
-    public ReceiptTemplate ReceiptTemplate { get; set; } = default!;
-    public ICollection<RecordFieldLink> RecordFieldLinks { get; set; } = [];
-    public ICollection<ReceiptToFormConversion> ReceiptToFormConversions { get; set; } = [];
+    public Guid RightTemplateId { get; set; }
+    public RecordTemplate RightTemplate { get; set; } = default!;
+    public Guid LeftTemplateId { get; set; }
+    public RecordTemplate LeftTemplate { get; set; } = default!;
+    public ICollection<RecordTemplateFieldLink> RecordFieldLinks { get; set; } = [];
 }

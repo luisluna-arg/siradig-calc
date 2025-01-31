@@ -13,18 +13,18 @@ public class RecordTemplateLinkMapper(IDtoMappingService dtoMapperManager)
         => new RecordTemplateLinkDto()
         {
             Id = source.Id,
-            FormTemplate = DtoMappingService.Map<RecordTemplateDto>(source.FormTemplate),
-            ReceiptTemplate = DtoMappingService.Map<RecordTemplateDto>(source.ReceiptTemplate),
-            RecordFieldLinks = source.RecordFieldLinks.GroupBy(l => l.FormFieldId)
+            RightTemplate = DtoMappingService.Map<RecordTemplateDto>(source.RightTemplate),
+            LeftTemplate = DtoMappingService.Map<RecordTemplateDto>(source.LeftTemplate),
+            RecordTemplateFieldLinks = source.RecordFieldLinks.GroupBy(l => l.RightFieldId)
                 .Select(g =>
                 {
-                    var formFieldLink = g.First();
-                    var formField = formFieldLink.FormField;
-                    return new FormFieldLinksDto()
+                    var rightFieldLink = g.First();
+                    var rightField = rightFieldLink.RightField;
+                    return new RecordTemplateFieldLinksDto()
                     {   
-                        Id = formFieldLink.Id,
-                        FormField = DtoMappingService.Map<RecordFieldDto>(formField),
-                        ReceiptFields = DtoMappingService.Map<RecordFieldDto>(g.Select(r => r.ReceiptField).ToArray())
+                        Id = rightFieldLink.Id,
+                        RightField = DtoMappingService.Map<RecordTemplateFieldDto>(rightField),
+                        LeftFields = DtoMappingService.Map<RecordTemplateFieldDto>(g.Select(r => r.LeftField).ToArray())
                     };
                 }).ToArray()
         };

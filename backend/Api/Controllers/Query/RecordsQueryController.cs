@@ -1,8 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SiradigCalc.Api.Controllers.Base;
-using SiradigCalc.Application.Queries.Forms;
-using SiradigCalc.Application.Queries.Receipts;
+using SiradigCalc.Application.Queries;
 
 namespace SiradigCalc.Api.Controllers.Query;
 
@@ -10,27 +9,19 @@ namespace SiradigCalc.Api.Controllers.Query;
 [ApiController]
 public class RecordsQueryController(IMediator mediator) : BaseController(mediator)
 {
-    [HttpGet("forms")]
-    public async Task<IActionResult> GetForms()
-        => Ok(await Mediator.Send(new GetFormsQuery()));
+    [HttpGet]
+    public async Task<IActionResult> GetRecords()
+        => Ok(await Mediator.Send(new GetRecordInstancesQuery()));
 
-    [HttpGet("forms/{formId}")]
-    public async Task<IActionResult> GetForm(Guid formId)
-        => Ok(await Mediator.Send(new GetFormQuery(formId)));
+    [HttpGet("{recordId}")]
+    public async Task<IActionResult> GetRecord(Guid recordId)
+        => Ok(await Mediator.Send(new GetRecordQuery(recordId)));
 
-    [HttpGet("receipts")]
-    public async Task<IActionResult> GetReceipts()
-        => Ok(await Mediator.Send(new GetReceiptsQuery()));
-
-    [HttpGet("receipts/{receiptId}")]
-    public async Task<IActionResult> GetReceipt(Guid receiptId)
-        => Ok(await Mediator.Send(new GetReceiptQuery(receiptId)));
-
-    [HttpGet("receipts/convertions/{sourceId}")]
+    [HttpGet("convertions/{sourceId}")]
     public async Task<IActionResult> GetRecordConversion(Guid sourceId)
-        => Ok(await Mediator.Send(new GetReceiptConversionsQuery(sourceId)));
+        => base.Ok(await Mediator.Send(new GetRecordTemplateConversionsQuery(sourceId)));
 
-    [HttpGet("receipts/convertions{sourceId}/to/{targetId}")]
+    [HttpGet("convertions{sourceId}/to/{targetId}")]
     public async Task<IActionResult> GetRecordConversion(Guid sourceId, Guid targetId)
-        => Ok(await Mediator.Send(new GetReceiptToFormConversionsQuery(sourceId, targetId)));
+        => base.Ok(await Mediator.Send(new GetRecordToRecordTemplateConversionsQuery(sourceId, targetId)));
 }

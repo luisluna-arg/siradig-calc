@@ -1,4 +1,4 @@
-using SiradigCalc.Core.Entities.Base.Records;
+using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Converters.Strategies;
 

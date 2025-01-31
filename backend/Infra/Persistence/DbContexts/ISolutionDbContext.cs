@@ -2,29 +2,21 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using SiradigCalc.Core.Entities;
-using SiradigCalc.Core.Entities.Base.Records;
-using SiradigCalc.Core.Entities.Forms;
-using SiradigCalc.Core.Entities.Receipts;
 
 namespace SiradigCalc.Infra.Persistence.DbContexts;
 
 public interface ISolutionDbContext
 {
     public DbSet<ChangeLog> ChangeLogs { get; set; }
-    public DbSet<Form> Forms { get; set; }
-    public DbSet<FormField> FormFields { get; set; }
-    public DbSet<FormTemplate> FormTemplates { get; set; }
     public DbSet<FieldTypeMapping> FieldTypeMappings { get; set; }
-    public DbSet<FormValue> FormValues { get; set; }
-    public DbSet<Receipt> Receipts { get; set; }
-    public DbSet<ReceiptField> ReceiptFields { get; set; }
-    public DbSet<ReceiptTemplate> ReceiptTemplates { get; set; }
-    public DbSet<ReceiptValue> ReceiptValues { get; set; }
-    public DbSet<Record> Records { get; set; }
-    public DbSet<ReceiptToFormConversion> ReceiptToFormConversions { get; set; }
-    public DbSet<RecordFieldLink> RecordFieldLinks { get; set; }
     public DbSet<RecordTemplate> RecordTemplates { get; set; }
+    public DbSet<RecordTemplateSection> RecordTemplateSections { get; set; }
+    public DbSet<RecordTemplateField> RecordTemplateFields { get; set; }
+    public DbSet<RecordValue> RecordValues { get; set; }
     public DbSet<RecordTemplateLink> RecordTemplateLinks { get; set; }
+    public DbSet<RecordTemplateConversion> RecordTemplateConversions { get; set; }
+    public DbSet<Record> Records { get; set; }
+    public DbSet<RecordTemplateFieldLink> RecordFieldLinks { get; set; }
 
     int SaveChanges();
 

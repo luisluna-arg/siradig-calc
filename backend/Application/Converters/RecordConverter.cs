@@ -1,6 +1,5 @@
 using SiradigCalc.Application.Converters.Strategies;
-using SiradigCalc.Application.Dtos.Conversion;
-using SiradigCalc.Core.Entities.Base.Records;
+using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Converters;
 

@@ -6,18 +6,18 @@ using SiradigCalc.Core.Entities;
 namespace SiradigCalc.Application.Mappers;
 
 public class RecordFieldLinkMapper(IDtoMappingService dtoMapperManager)
-    : BaseMapper<RecordFieldLink, RecordFieldLinkDto>(dtoMapperManager),
+    : BaseMapper<RecordTemplateFieldLink, RecordTemplateFieldLinkDto>(dtoMapperManager),
     IRecordFieldLinkMapper
 {
-    public override RecordFieldLinkDto Map(RecordFieldLink source)
-        => new RecordFieldLinkDto()
+    public override RecordTemplateFieldLinkDto Map(RecordTemplateFieldLink source)
+        => new RecordTemplateFieldLinkDto()
         {
             TemplateLinkId = source.TemplateLinkId,
-            FormField = DtoMappingService.Map<RecordFieldDto>(source.FormField),
-            ReceiptField = DtoMappingService.Map<RecordFieldDto>(source.ReceiptField)
+            RightTemplateField = DtoMappingService.Map<RecordTemplateFieldDto>(source.RightField),
+            LeftTemplateField = DtoMappingService.Map<RecordTemplateFieldDto>(source.LeftField)
         };
 }
 
-public interface IRecordFieldLinkMapper : IDtoMapper<RecordFieldLink, RecordFieldLinkDto>
+public interface IRecordFieldLinkMapper : IDtoMapper<RecordTemplateFieldLink, RecordTemplateFieldLinkDto>
 {
 }

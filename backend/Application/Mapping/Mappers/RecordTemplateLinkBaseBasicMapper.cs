@@ -13,8 +13,8 @@ public class RecordTemplateLinkBaseBasicMapper(IDtoMappingService dtoMapperManag
         => new RecordTemplateLinkBasicDto()
         {
             Id = source.Id,
-            SourceTemplateId = source.FormTemplateId,
-            TargetTemplateId = source.ReceiptTemplateId,
+            SourceTemplateId = source.RightTemplateId,
+            TargetTemplateId = source.LeftTemplateId,
         };
 }
 

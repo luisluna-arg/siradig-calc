@@ -1,0 +1,61 @@
+{
+    "title": "UNPSJB Agosto de 2024",
+    "recordTemplateId": "5ed2cacd-7339-449d-ae30-b1de90af6384",
+    "values": [
+        {
+            "fieldId": "a911903a-9c09-4830-b47d-a65f5aa46836",
+            "fieldLabel": "(A) 1-SUELDO BASICO",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "2da49dd5-dfa0-4df2-8b00-cee4c2ba59e5",
+            "fieldLabel": "(C) 182-ARNOBON 5ANTIG",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "0172752c-2181-412e-821d-ea160b6240d5",
+            "fieldLabel": "(C) 17-ADICIONAL ZONA",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "8f9d44e0-14ea-4052-bd22-3e4de370cada",
+            "fieldLabel": "(C) 25-HAB RETROACTIVO",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "73a297d6-bf8b-400b-bf39-39b4fae985d2",
+            "fieldLabel": "365-JUBIL DOC UNIV",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "815d19c2-f49a-4fad-8c81-6331c74e620c",
+            "fieldLabel": "302-LEY 19.032 3%",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "d88347a5-017c-41be-9c85-326e7dd6e94e",
+            "fieldLabel": "311-OBRA SOCIAL 3%",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "69c4cdcf-219b-4368-9e9d-8f22e912143e",
+            "fieldLabel": "312-APOR O.SOC.DASU",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "16b31d98-7074-46b9-becc-0fa58dbcbd7f",
+            "fieldLabel": "922-SEG.VIDA COLECT",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "0486a8e7-9485-4cc0-90cb-0640f9e547a2",
+            "fieldLabel": "314-AJ.APOR.O.SOC.",
+            "value": "000.0"
+        },
+        {
+            "fieldId": "06d5e2cc-e4c7-4143-a86d-701c5dbcaa83",
+            "fieldLabel": "366-DESC 2% DOCUNIV",
+            "value": "000.0"
+        }
+    ]
+}
