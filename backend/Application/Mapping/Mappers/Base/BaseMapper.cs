@@ -24,5 +24,15 @@ public abstract class BaseMapper<TSource, TTarget> : IDtoMapper<TSource, TTarget
         return Map(typedSource)!;
     }
 
+    public IEnumerable<object> Map(IEnumerable<object> source)
+    {
+        if (source is not IEnumerable<TSource> typedSource)
+            throw new InvalidCastException($"Expected type {typeof(TSource).Name}, but got {source.GetType().Name}.");
+
+        return Map(typedSource).Cast<object>()!;
+    }
+
     public abstract TTarget Map(TSource source);
+    public virtual IEnumerable<TTarget> Map(IEnumerable<TSource> source)
+        => source.Select(s => Map(s)).ToList();
 }

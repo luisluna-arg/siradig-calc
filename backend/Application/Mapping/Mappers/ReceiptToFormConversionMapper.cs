@@ -2,7 +2,6 @@ using SiradigCalc.Application.Mapping.Mappers.Base;
 using SiradigCalc.Application.Mapping;
 using SiradigCalc.Application.Dtos;
 using SiradigCalc.Application.Dtos.Conversion;
-using ConversionFieldValueDto = SiradigCalc.Application.Dtos.Conversion.FieldValueDto;
 using SiradigCalc.Application.Helpers.Reducers;
 using SiradigCalc.Core.Entities.Enums;
 using SiradigCalc.Core.Entities;
@@ -10,14 +9,15 @@ using SiradigCalc.Core.Entities;
 namespace SiradigCalc.Application.Mappers;
 
 public class RecordTemplateConversionMapper(IDtoMappingService dtoMappingService)
-    : BaseMapper<RecordTemplateConversion, RecordTemplateConversionDto>(dtoMappingService),
+    : BaseMapper<RecordConversion, RecordTemplateConversionDto>(dtoMappingService),
     IRecordTemplateConversionMapper
 {
     private ValuesReducerStrategyFactory _valueMergeStrategyFactory = new ValuesReducerStrategyFactory(new DecimalParserStrategy());
-    public override RecordTemplateConversionDto Map(RecordTemplateConversion recordConvertion)
+
+    public override RecordTemplateConversionDto Map(RecordConversion recordConvertion)
     {
         var recordSource = recordConvertion.Source;
-        
+
         var fieldsRetenciones = recordSource.Template.Sections
             .Where(s => string.Equals("Retenciones", s.Name, StringComparison.InvariantCultureIgnoreCase))
             .SelectMany(s => s.Fields)
@@ -43,7 +43,7 @@ public class RecordTemplateConversionMapper(IDtoMappingService dtoMappingService
                 var rightField = g.First().RightField;
                 var leftFields = g.Select(g1 => g1.LeftField).ToArray();
 
-                return new ConversionFieldValueDto()
+                return new FieldValueDto()
                 {
                     FieldId = rightField.Id,
                     Label = rightField.Label,
@@ -76,6 +76,6 @@ public class RecordTemplateConversionMapper(IDtoMappingService dtoMappingService
     }
 }
 
-public interface IRecordTemplateConversionMapper : IDtoMapper<RecordTemplateConversion, RecordTemplateConversionDto>
+public interface IRecordTemplateConversionMapper : IDtoMapper<RecordConversion, RecordTemplateConversionDto>
 {
 }

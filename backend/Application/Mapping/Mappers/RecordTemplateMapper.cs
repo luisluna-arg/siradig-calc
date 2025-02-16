@@ -12,6 +12,7 @@ public class RecordTemplateMapper(IDtoMappingService dtoMapperManager)
     public override RecordTemplateDto Map(RecordTemplate source)
         => new RecordTemplateDto()
         {
+            Id = source.Id,
             Name = source.Name,
             Description = source.Description,
             Sections = DtoMappingService.Map<RecordTemplateSectionDto>(source.Sections)
