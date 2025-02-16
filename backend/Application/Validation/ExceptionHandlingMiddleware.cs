@@ -37,10 +37,19 @@ public class ExceptionHandlingMiddleware
             context.Response.StatusCode = 500;
             context.Response.ContentType = "html/text";
 
+            var errors = new List<string>() { ex.Message };
+
+            var currentEx = ex;
+            while (currentEx.InnerException != null)
+            {
+                currentEx = currentEx.InnerException;
+                errors.Add(currentEx.Message);
+            }
+
             var errorResponse = new
             {
                 Message = "An unexpected error occurred.",
-                Errors = new[] { ex.Message }
+                Errors = errors
             };
 
             await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
