@@ -3,7 +3,7 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace SiradigCalc.Application.Commands;
 
-public abstract class CreateRecordFieldCommandValidator : AbstractValidator<CreateRecordTemplateFieldCommand>
+public class CreateRecordFieldCommandValidator : AbstractValidator<CreateRecordTemplateFieldCommand>
 {
     private const short LABEL_SIZE = 200;
 

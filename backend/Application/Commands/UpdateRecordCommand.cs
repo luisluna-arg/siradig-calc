@@ -5,7 +5,7 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands;
 
-public abstract class UpdateRecordCommand : IRequest
+public class UpdateRecordCommand : IRequest
 {
     [JsonIgnore]
     public Guid Id { get; set; } = default!;
@@ -13,7 +13,7 @@ public abstract class UpdateRecordCommand : IRequest
     public Guid TemplateId { get; set; } = default!;
 }
 
-public abstract class UpdateRecordCommandHandler(ISolutionDbContext dbContext)
+public class UpdateRecordCommandHandler(ISolutionDbContext dbContext)
     : IRequestHandler<UpdateRecordCommand>
 {
     public async virtual Task<Unit> Handle(UpdateRecordCommand command, CancellationToken cancellationToken)

@@ -6,14 +6,14 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands;
 
-public abstract class CreateRecordTemplateCommand() : IRequest<Guid>
+public class CreateRecordTemplateCommand() : IRequest<Guid>
 {
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public List<CreateSectionDto> Sections { get; set; } = new();
+    public List<CreateSectionDto> Sections { get; set; } = [];
 }
 
-public abstract class CreateRecordTemplateCommandHandler<TCommand, TRecord, TRecordSection, TField>(ISolutionDbContext dbContext)
+public class CreateRecordTemplateCommandHandler(ISolutionDbContext dbContext)
     : IRequestHandler<CreateRecordTemplateCommand, Guid>
 {
     public async virtual Task<Guid> Handle(CreateRecordTemplateCommand command, CancellationToken cancellationToken)

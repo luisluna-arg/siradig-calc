@@ -4,7 +4,7 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands;
 
-public abstract class CreateRecordValueCommandValidator : AbstractValidator<CreateRecordValueCommand>
+public class CreateRecordValueCommandValidator : AbstractValidator<CreateRecordValueCommand>
 {
     private const short NAME_SIZE = 100;
 

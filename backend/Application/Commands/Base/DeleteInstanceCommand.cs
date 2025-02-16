@@ -5,7 +5,7 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands.Base;
 
-public abstract class DeleteInstanceCommand<TId>() : IRequest<bool>
+public class DeleteInstanceCommand<TId>() : IRequest<bool>
 {
     public TId Id { get; } = default!;
 
@@ -15,7 +15,7 @@ public abstract class DeleteInstanceCommand<TId>() : IRequest<bool>
     }
 }
 
-public abstract class DeleteInstanceCommandHandler<TCommand, TEntity, TId>(ISolutionDbContext dbContext)
+public class DeleteInstanceCommandHandler<TCommand, TEntity, TId>(ISolutionDbContext dbContext)
     : IRequestHandler<TCommand, bool>
     where TCommand : DeleteInstanceCommand<TId>
     where TEntity : Entity<TId>, IEntity, new()

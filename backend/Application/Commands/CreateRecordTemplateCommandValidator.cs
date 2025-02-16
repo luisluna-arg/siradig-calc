@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace SiradigCalc.Application.Commands;
 
-public abstract class CreateRecordTemplateCommandValidator : AbstractValidator<CreateRecordTemplateCommand>
+public class CreateRecordTemplateCommandValidator : AbstractValidator<CreateRecordTemplateCommand>
 {
     private const short NAME_SIZE = 100;
     private const short DESCRIPTION_SIZE = 200;

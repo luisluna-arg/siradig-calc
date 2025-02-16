@@ -4,14 +4,14 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands;
 
-public abstract class CreateRecordValueCommand() : IRequest<Guid>
+public class CreateRecordValueCommand() : IRequest<Guid>
 {
     public Guid RecordId { get; set; } = default!;
     public Guid FieldId { get; set; }
     public string Value { get; set; } = string.Empty;
 }
 
-public abstract class CreateRecordValueCommandHandler(ISolutionDbContext dbContext)
+public class CreateRecordValueCommandHandler(ISolutionDbContext dbContext)
     : IRequestHandler<CreateRecordValueCommand, Guid>
 {
     public async Task<Guid> Handle(CreateRecordValueCommand command, CancellationToken cancellationToken)

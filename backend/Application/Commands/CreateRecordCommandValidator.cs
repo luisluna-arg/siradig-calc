@@ -1,11 +1,10 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using SiradigCalc.Core.Entities;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands;
 
-public abstract class CreateRecordCommandValidator : AbstractValidator<Record>
+public class CreateRecordCommandValidator : AbstractValidator<CreateRecordCommand>
 {
     private const short TITLE_SIZE = 100;
 
@@ -14,7 +13,7 @@ public abstract class CreateRecordCommandValidator : AbstractValidator<Record>
         RuleFor(c => c.Title)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
-            .WithMessage("Name is required.")
+            .WithMessage("Title is required.")
             .MaximumLength(100)
             .WithMessage($"Title must not exceed {TITLE_SIZE} characters.");
 
@@ -27,10 +26,26 @@ public abstract class CreateRecordCommandValidator : AbstractValidator<Record>
             .WithMessage("The provided TemplateId does not exist in the database.");
 
         RuleFor(c => c.Values)
+            .Cascade(CascadeMode.Stop)
             .NotNull()
             .WithMessage("Values cannot be null.")
             .Must(values => values.Count > 0)
             .WithMessage("Values must contain at least one item.")
-            .ForEach(valueRule => valueRule.NotNull().WithMessage("Each value must not be null."));
+            .ForEach(valueRule => valueRule.NotNull().WithMessage("Each value must not be null."))
+            .ForEach(valueRule => valueRule.MustAsync(
+                (fieldValue, cancellationToken) => dbContext.RecordTemplateFields
+                    .AnyAsync(f => f.Id == fieldValue.FieldId, cancellationToken))
+                    .WithMessage("{PropertyName} need to exist under the record template requested"));
+
+        RuleFor(c => c)
+            .MustAsync(async (c, cancellationToken) =>
+                await dbContext.RecordTemplates
+                    .Include(t => t.Sections)
+                        .ThenInclude(t => t.Fields)
+                    .AnyAsync(t => t.Id == c.TemplateId &&
+                        c.Values.Select(v => v.FieldId).All(
+                            fId => t.Sections.SelectMany(s => s.Fields).Any(f => f.Id == fId)
+                            ), cancellationToken))
+            .WithMessage("All fields need to exist under any section of the pretended template");
     }
 }

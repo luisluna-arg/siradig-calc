@@ -9,8 +9,8 @@ public class LinkFieldTemplatesCommand(Guid leftTemplateId, Guid rightTemplateId
 {
     public Guid LeftTemplateId { get; } = leftTemplateId;
     public Guid RightTemplateId { get; } = rightTemplateId;
-    public Guid LeftFieldId { get; } = leftFieldId;
     public Guid RightFieldId { get; } = rightFieldId;
+    public Guid LeftFieldId { get; } = leftFieldId;
 }
 
 public class LinkFieldTemplatesCommandHandler(ISolutionDbContext dbContext)

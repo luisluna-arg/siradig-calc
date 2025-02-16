@@ -4,7 +4,7 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands;
 
-public abstract class UpdateRecordCommandValidator
+public class UpdateRecordCommandValidator
     : AbstractValidator<UpdateRecordCommand>
 {
     private const short TITLE_SIZE = 100;

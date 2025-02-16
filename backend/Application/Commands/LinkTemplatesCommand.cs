@@ -1,14 +1,19 @@
+using System.Text.Json.Serialization;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SiradigCalc.Application.Dtos;
 using SiradigCalc.Core.Entities;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands;
 
-public class LinkTemplatesCommand(Guid leftTemplateId, Guid rightTemplateId) : IRequest<Guid>
+public class LinkTemplatesCommand() : IRequest<Guid>
 {
-    public Guid LeftTemplateId { get; } = leftTemplateId;
-    public Guid RightTemplateId { get; } = rightTemplateId;
+    [JsonIgnore]
+    public Guid LeftTemplateId { get; set; }
+    [JsonIgnore]
+    public Guid RightTemplateId { get; set; }
+    public List<CreateFieldLinkDTO> FieldLinks { get; set; } = [];
 }
 
 public class LinkTemplatesCommandHandler(ISolutionDbContext dbContext)
@@ -28,7 +33,10 @@ public class LinkTemplatesCommandHandler(ISolutionDbContext dbContext)
         {
             Id = Guid.NewGuid(),
             LeftTemplateId = request.LeftTemplateId,
-            RightTemplateId = request.RightTemplateId
+            RightTemplateId = request.RightTemplateId,
+            RecordFieldLinks = request.FieldLinks
+                .Select(l => new RecordTemplateFieldLink() { LeftFieldId = l.LeftFieldId, RightFieldId = l.RightFieldId })
+                .ToList()
         };
 
         await dbContext.RecordTemplateLinks.AddAsync(newLink, cancellationToken);
