@@ -8,5 +8,9 @@ public class RecordTemplateSectionConfiguration : IEntityTypeConfiguration<Recor
 {
     public void Configure(EntityTypeBuilder<RecordTemplateSection> builder)
     {
+        builder
+            .HasMany(r => r.Fields)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

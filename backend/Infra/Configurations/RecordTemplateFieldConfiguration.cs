@@ -10,6 +10,7 @@ public class RecordTemplateFieldConfiguration : IEntityTypeConfiguration<RecordT
     {
         builder
             .HasMany(b => b.Links)
-            .WithOne();
+            .WithOne()
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

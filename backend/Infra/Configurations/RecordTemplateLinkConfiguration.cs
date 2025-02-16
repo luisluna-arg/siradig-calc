@@ -8,5 +8,14 @@ public abstract class RecordTemplateLinkConfiguration : IEntityTypeConfiguration
 {
     public virtual void Configure(EntityTypeBuilder<RecordTemplateLink> builder)
     {
+        builder
+            .HasOne(r => r.LeftTemplate)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasOne(r => r.RightTemplate)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

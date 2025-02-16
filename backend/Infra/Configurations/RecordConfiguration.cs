@@ -12,12 +12,18 @@ public class RecordConfiguration : IEntityTypeConfiguration<Record>
             .HasMany(r => r.ConvertedTo)
             .WithOne(c => c.Source)
             .HasForeignKey(c => c.SourceId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasMany(r => r.ConvertedFrom)
             .WithOne(c => c.Target)
             .HasForeignKey(c => c.TargetId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasOne(r => r.Template)
+            .WithMany()
+            .HasForeignKey(c => c.TemplateId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

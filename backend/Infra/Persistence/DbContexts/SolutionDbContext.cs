@@ -13,7 +13,7 @@ public partial class SolutionDbContext : DbContext, ISolutionDbContext
     public DbSet<RecordTemplateField> RecordTemplateFields { get; set; } = default!;
     public DbSet<RecordValue> RecordValues { get; set; } = default!;
     public DbSet<RecordTemplateLink> RecordTemplateLinks { get; set; } = default!;
-    public DbSet<RecordTemplateConversion> RecordTemplateConversions { get; set; } = default!;
+    public DbSet<RecordConversion> RecordConversions { get; set; } = default!;
     public DbSet<Record> Records { get; set; } = default!;
     public DbSet<RecordTemplateFieldLink> RecordFieldLinks { get; set; } = default!;
 

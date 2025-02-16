@@ -9,11 +9,11 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 #nullable disable
 
-namespace infra.Persistence.Migrations
+namespace infra.Migrations
 {
     [DbContext(typeof(SolutionDbContext))]
-    [Migration("20250130073354_ModelsRefactor")]
-    partial class ModelsRefactor
+    [Migration("20250131070807_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

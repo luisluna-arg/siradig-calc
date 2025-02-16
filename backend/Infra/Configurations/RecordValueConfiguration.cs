@@ -8,5 +8,14 @@ public abstract class RecordValueConfiguration : IEntityTypeConfiguration<Record
 {
     public virtual void Configure(EntityTypeBuilder<RecordValue> builder)
     {
+        builder
+            .HasOne(r => r.Field)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasOne(r => r.Record)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

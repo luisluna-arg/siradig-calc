@@ -8,5 +8,14 @@ public class RecordTemplateConfiguration : IEntityTypeConfiguration<RecordTempla
 {
     public void Configure(EntityTypeBuilder<RecordTemplate> builder)
     {
+        builder
+            .HasMany(r => r.Sections)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasMany(r => r.Links)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

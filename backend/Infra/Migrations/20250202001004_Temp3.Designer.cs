@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
 #nullable disable
 
-namespace infra.Persistence.Migrations
+namespace infra.Migrations
 {
     [DbContext(typeof(SolutionDbContext))]
-    partial class SolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250202001004_Temp3")]
+    partial class Temp3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,35 +170,7 @@ namespace infra.Persistence.Migrations
                     b.ToTable("Records");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RecordTemplates");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateConversion", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordConversion", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -227,7 +202,35 @@ namespace infra.Persistence.Migrations
 
                     b.HasIndex("TargetId");
 
-                    b.ToTable("RecordTemplateConversions");
+                    b.ToTable("RecordConversions");
+                });
+
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RecordTemplates");
                 });
 
             modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateField", b =>
@@ -252,7 +255,7 @@ namespace infra.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("RecordTemplateSectionId")
+                    b.Property<Guid?>("RecordTemplateSectionId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -320,6 +323,9 @@ namespace infra.Persistence.Migrations
                     b.Property<Guid>("LeftTemplateId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("RecordTemplateId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("RightTemplateId")
                         .HasColumnType("uuid");
 
@@ -329,6 +335,8 @@ namespace infra.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("LeftTemplateId");
+
+                    b.HasIndex("RecordTemplateId");
 
                     b.HasIndex("RightTemplateId");
 
@@ -403,18 +411,18 @@ namespace infra.Persistence.Migrations
                     b.HasOne("SiradigCalc.Core.Entities.RecordTemplate", "Template")
                         .WithMany()
                         .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Template");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateConversion", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordConversion", b =>
                 {
                     b.HasOne("SiradigCalc.Core.Entities.RecordTemplateLink", "RecordTemplateLink")
                         .WithMany()
                         .HasForeignKey("RecordTemplateLinkId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SiradigCalc.Core.Entities.Record", "Source")
@@ -438,13 +446,10 @@ namespace infra.Persistence.Migrations
 
             modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateField", b =>
                 {
-                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplateSection", "RecordTemplateSection")
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplateSection", null)
                         .WithMany("Fields")
                         .HasForeignKey("RecordTemplateSectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RecordTemplateSection");
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateFieldLink", b =>
@@ -457,7 +462,8 @@ namespace infra.Persistence.Migrations
 
                     b.HasOne("SiradigCalc.Core.Entities.RecordTemplateField", null)
                         .WithMany("Links")
-                        .HasForeignKey("RecordTemplateFieldId");
+                        .HasForeignKey("RecordTemplateFieldId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SiradigCalc.Core.Entities.RecordTemplateField", "RightField")
                         .WithMany()
@@ -486,6 +492,11 @@ namespace infra.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplate", null)
+                        .WithMany("Links")
+                        .HasForeignKey("RecordTemplateId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("SiradigCalc.Core.Entities.RecordTemplate", "RightTemplate")
                         .WithMany()
                         .HasForeignKey("RightTemplateId")
@@ -501,7 +512,8 @@ namespace infra.Persistence.Migrations
                 {
                     b.HasOne("SiradigCalc.Core.Entities.RecordTemplate", null)
                         .WithMany("Sections")
-                        .HasForeignKey("RecordTemplateId");
+                        .HasForeignKey("RecordTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SiradigCalc.Core.Entities.RecordValue", b =>
@@ -534,6 +546,8 @@ namespace infra.Persistence.Migrations
 
             modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplate", b =>
                 {
+                    b.Navigation("Links");
+
                     b.Navigation("Sections");
                 });
 

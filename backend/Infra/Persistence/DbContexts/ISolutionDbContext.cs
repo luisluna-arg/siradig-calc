@@ -14,7 +14,7 @@ public interface ISolutionDbContext
     public DbSet<RecordTemplateField> RecordTemplateFields { get; set; }
     public DbSet<RecordValue> RecordValues { get; set; }
     public DbSet<RecordTemplateLink> RecordTemplateLinks { get; set; }
-    public DbSet<RecordTemplateConversion> RecordTemplateConversions { get; set; }
+    public DbSet<RecordConversion> RecordConversions { get; set; }
     public DbSet<Record> Records { get; set; }
     public DbSet<RecordTemplateFieldLink> RecordFieldLinks { get; set; }
 

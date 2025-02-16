@@ -9,11 +9,11 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 #nullable disable
 
-namespace infra.Persistence.Migrations
+namespace infra.Migrations
 {
     [DbContext(typeof(SolutionDbContext))]
-    [Migration("20250105075652_RenamedRecordTemplateReference")]
-    partial class RenamedRecordTemplateReference
+    [Migration("20250202000638_Temp2")]
+    partial class Temp2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,25 +24,6 @@ namespace infra.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Base.Records.Record", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Records");
-
-                    b.UseTptMappingStrategy();
-                });
 
             modelBuilder.Entity("SiradigCalc.Core.Entities.ChangeLog", b =>
                 {
@@ -85,6 +66,9 @@ namespace infra.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
@@ -105,6 +89,7 @@ namespace infra.Persistence.Migrations
                         {
                             Id = 0,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
                             Description = "Text",
                             Name = "Text",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -113,6 +98,7 @@ namespace infra.Persistence.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
                             Description = "Number",
                             Name = "Number",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -121,6 +107,7 @@ namespace infra.Persistence.Migrations
                         {
                             Id = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
                             Description = "Date",
                             Name = "Date",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -129,6 +116,7 @@ namespace infra.Persistence.Migrations
                         {
                             Id = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
                             Description = "Email",
                             Name = "Email",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -137,6 +125,7 @@ namespace infra.Persistence.Migrations
                         {
                             Id = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
                             Description = "Checkbox",
                             Name = "Checkbox",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -145,13 +134,14 @@ namespace infra.Persistence.Migrations
                         {
                             Id = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
                             Description = "Dropdown",
                             Name = "Dropdown",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.FormField", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.Record", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,16 +150,13 @@ namespace infra.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("FieldType")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("FormTemplateSectionId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsRequired")
+                    b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Label")
+                    b.Property<Guid>("TemplateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -178,12 +165,12 @@ namespace infra.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FormTemplateSectionId");
+                    b.HasIndex("TemplateId");
 
-                    b.ToTable("FormFields");
+                    b.ToTable("Records");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.FormTemplate", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -191,6 +178,9 @@ namespace infra.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -205,10 +195,10 @@ namespace infra.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FormTemplates");
+                    b.ToTable("RecordTemplates");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.FormTemplateSection", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateConversion", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,24 +207,33 @@ namespace infra.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("FormTemplateId")
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("RecordTemplateLinkId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("SourceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TargetId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FormTemplateId");
+                    b.HasIndex("RecordTemplateLinkId");
 
-                    b.ToTable("FormTemplateSection");
+                    b.HasIndex("SourceId");
+
+                    b.HasIndex("TargetId");
+
+                    b.ToTable("RecordTemplateConversions");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.FormValue", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateField", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -243,36 +242,8 @@ namespace infra.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("FieldId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("RecordId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FieldId");
-
-                    b.HasIndex("RecordId");
-
-                    b.ToTable("FormValues");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.ReceiptField", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("FieldType")
                         .HasColumnType("integer");
@@ -284,7 +255,7 @@ namespace infra.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ReceiptTemplateSectionId")
+                    b.Property<Guid?>("RecordTemplateSectionId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -292,12 +263,12 @@ namespace infra.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReceiptTemplateSectionId");
+                    b.HasIndex("RecordTemplateSectionId");
 
-                    b.ToTable("ReceiptFields");
+                    b.ToTable("RecordTemplateFields");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.ReceiptTemplate", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateFieldLink", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -306,92 +277,16 @@ namespace infra.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ReceiptTemplates");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.ReceiptTemplateSection", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("LeftFieldId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("ReceiptTemplateId")
+                    b.Property<Guid?>("RecordTemplateFieldId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReceiptTemplateId");
-
-                    b.ToTable("ReceiptTemplateSection");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.ReceiptValue", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("FieldId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("RecordId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FieldId");
-
-                    b.HasIndex("RecordId");
-
-                    b.ToTable("ReceiptValues");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordFieldLink", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("FormFieldId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ReceiptFieldId")
+                    b.Property<Guid>("RightFieldId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("TemplateLinkId")
@@ -402,9 +297,11 @@ namespace infra.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FormFieldId");
+                    b.HasIndex("LeftFieldId");
 
-                    b.HasIndex("ReceiptFieldId");
+                    b.HasIndex("RecordTemplateFieldId");
+
+                    b.HasIndex("RightFieldId");
 
                     b.HasIndex("TemplateLinkId");
 
@@ -420,10 +317,16 @@ namespace infra.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("FormTemplateId")
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("LeftTemplateId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ReceiptTemplateId")
+                    b.Property<Guid?>("RecordTemplateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RightTemplateId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -431,114 +334,140 @@ namespace infra.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FormTemplateId");
+                    b.HasIndex("LeftTemplateId");
 
-                    b.HasIndex("ReceiptTemplateId");
+                    b.HasIndex("RecordTemplateId");
+
+                    b.HasIndex("RightTemplateId");
 
                     b.ToTable("RecordTemplateLinks");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.Form", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateSection", b =>
                 {
-                    b.HasBaseType("SiradigCalc.Core.Entities.Base.Records.Record");
-
-                    b.Property<Guid>("RecordTemplateId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("RecordTemplateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("RecordTemplateId");
 
-                    b.ToTable("Forms");
+                    b.ToTable("RecordTemplateSections");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.Receipt", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordValue", b =>
                 {
-                    b.HasBaseType("SiradigCalc.Core.Entities.Base.Records.Record");
-
-                    b.Property<Guid>("RecordTemplateId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.HasIndex("RecordTemplateId");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.ToTable("Receipts");
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("FieldId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RecordId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FieldId");
+
+                    b.HasIndex("RecordId");
+
+                    b.ToTable("RecordValues");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.FormField", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.Record", b =>
                 {
-                    b.HasOne("SiradigCalc.Core.Entities.Forms.FormTemplateSection", null)
-                        .WithMany("Fields")
-                        .HasForeignKey("FormTemplateSectionId");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.FormTemplateSection", b =>
-                {
-                    b.HasOne("SiradigCalc.Core.Entities.Forms.FormTemplate", null)
-                        .WithMany("Sections")
-                        .HasForeignKey("FormTemplateId");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.FormValue", b =>
-                {
-                    b.HasOne("SiradigCalc.Core.Entities.Forms.FormField", "Field")
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplate", "Template")
                         .WithMany()
-                        .HasForeignKey("FieldId")
+                        .HasForeignKey("TemplateId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SiradigCalc.Core.Entities.Forms.Form", "Record")
-                        .WithMany("Values")
-                        .HasForeignKey("RecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Field");
-
-                    b.Navigation("Record");
+                    b.Navigation("Template");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.ReceiptField", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateConversion", b =>
                 {
-                    b.HasOne("SiradigCalc.Core.Entities.Receipts.ReceiptTemplateSection", null)
-                        .WithMany("Fields")
-                        .HasForeignKey("ReceiptTemplateSectionId");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.ReceiptTemplateSection", b =>
-                {
-                    b.HasOne("SiradigCalc.Core.Entities.Receipts.ReceiptTemplate", null)
-                        .WithMany("Sections")
-                        .HasForeignKey("ReceiptTemplateId");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.ReceiptValue", b =>
-                {
-                    b.HasOne("SiradigCalc.Core.Entities.Receipts.ReceiptField", "Field")
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplateLink", "RecordTemplateLink")
                         .WithMany()
-                        .HasForeignKey("FieldId")
+                        .HasForeignKey("RecordTemplateLinkId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SiradigCalc.Core.Entities.Receipts.Receipt", "Record")
-                        .WithMany("Values")
-                        .HasForeignKey("RecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("SiradigCalc.Core.Entities.Record", "Source")
+                        .WithMany("ConvertedTo")
+                        .HasForeignKey("SourceId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Field");
+                    b.HasOne("SiradigCalc.Core.Entities.Record", "Target")
+                        .WithMany("ConvertedFrom")
+                        .HasForeignKey("TargetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Record");
+                    b.Navigation("RecordTemplateLink");
+
+                    b.Navigation("Source");
+
+                    b.Navigation("Target");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordFieldLink", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateField", b =>
                 {
-                    b.HasOne("SiradigCalc.Core.Entities.Forms.FormField", "FormField")
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplateSection", null)
+                        .WithMany("Fields")
+                        .HasForeignKey("RecordTemplateSectionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateFieldLink", b =>
+                {
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplateField", "LeftField")
                         .WithMany()
-                        .HasForeignKey("FormFieldId")
+                        .HasForeignKey("LeftFieldId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiradigCalc.Core.Entities.Receipts.ReceiptField", "ReceiptField")
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplateField", null)
+                        .WithMany("Links")
+                        .HasForeignKey("RecordTemplateFieldId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplateField", "RightField")
                         .WithMany()
-                        .HasForeignKey("ReceiptFieldId")
+                        .HasForeignKey("RightFieldId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -548,84 +477,83 @@ namespace infra.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FormField");
+                    b.Navigation("LeftField");
 
-                    b.Navigation("ReceiptField");
+                    b.Navigation("RightField");
 
                     b.Navigation("TemplateLink");
                 });
 
             modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateLink", b =>
                 {
-                    b.HasOne("SiradigCalc.Core.Entities.Forms.FormTemplate", "FormTemplate")
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplate", "LeftTemplate")
                         .WithMany()
-                        .HasForeignKey("FormTemplateId")
+                        .HasForeignKey("LeftTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiradigCalc.Core.Entities.Receipts.ReceiptTemplate", "ReceiptTemplate")
-                        .WithMany()
-                        .HasForeignKey("ReceiptTemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FormTemplate");
-
-                    b.Navigation("ReceiptTemplate");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.Form", b =>
-                {
-                    b.HasOne("SiradigCalc.Core.Entities.Base.Records.Record", null)
-                        .WithOne()
-                        .HasForeignKey("SiradigCalc.Core.Entities.Forms.Form", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SiradigCalc.Core.Entities.Forms.FormTemplate", "RecordTemplate")
-                        .WithMany()
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplate", null)
+                        .WithMany("Links")
                         .HasForeignKey("RecordTemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("RecordTemplate");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.Receipt", b =>
-                {
-                    b.HasOne("SiradigCalc.Core.Entities.Base.Records.Record", null)
-                        .WithOne()
-                        .HasForeignKey("SiradigCalc.Core.Entities.Receipts.Receipt", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SiradigCalc.Core.Entities.Receipts.ReceiptTemplate", "RecordTemplate")
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplate", "RightTemplate")
                         .WithMany()
-                        .HasForeignKey("RecordTemplateId")
+                        .HasForeignKey("RightTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RecordTemplate");
+                    b.Navigation("LeftTemplate");
+
+                    b.Navigation("RightTemplate");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.FormTemplate", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateSection", b =>
                 {
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplate", null)
+                        .WithMany("Sections")
+                        .HasForeignKey("RecordTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordValue", b =>
+                {
+                    b.HasOne("SiradigCalc.Core.Entities.RecordTemplateField", "Field")
+                        .WithMany()
+                        .HasForeignKey("FieldId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SiradigCalc.Core.Entities.Record", "Record")
+                        .WithMany("Values")
+                        .HasForeignKey("RecordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Field");
+
+                    b.Navigation("Record");
+                });
+
+            modelBuilder.Entity("SiradigCalc.Core.Entities.Record", b =>
+                {
+                    b.Navigation("ConvertedFrom");
+
+                    b.Navigation("ConvertedTo");
+
+                    b.Navigation("Values");
+                });
+
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplate", b =>
+                {
+                    b.Navigation("Links");
+
                     b.Navigation("Sections");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.FormTemplateSection", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateField", b =>
                 {
-                    b.Navigation("Fields");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.ReceiptTemplate", b =>
-                {
-                    b.Navigation("Sections");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.ReceiptTemplateSection", b =>
-                {
-                    b.Navigation("Fields");
+                    b.Navigation("Links");
                 });
 
             modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateLink", b =>
@@ -633,14 +561,9 @@ namespace infra.Persistence.Migrations
                     b.Navigation("RecordFieldLinks");
                 });
 
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Forms.Form", b =>
+            modelBuilder.Entity("SiradigCalc.Core.Entities.RecordTemplateSection", b =>
                 {
-                    b.Navigation("Values");
-                });
-
-            modelBuilder.Entity("SiradigCalc.Core.Entities.Receipts.Receipt", b =>
-                {
-                    b.Navigation("Values");
+                    b.Navigation("Fields");
                 });
 #pragma warning restore 612, 618
         }
