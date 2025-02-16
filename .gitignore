@@ -9,4 +9,10 @@
 /**/.vscode
 !/.vscode
 
+backend/SamplesLocal
+
 **/.env.development
+
+**/node_modules/
+
+**/public

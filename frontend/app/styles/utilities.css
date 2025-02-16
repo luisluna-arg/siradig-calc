@@ -1,0 +1,5 @@
+@utility focused {
+    &:focus-visible {
+      @apply outline-solid outline-2 outline-offset-0 outline-custom dark:outline-gray-50;
+    }
+  }

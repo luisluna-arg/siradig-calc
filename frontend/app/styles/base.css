@@ -1,0 +1,11 @@
+@layer base {
+    body {
+      background-color: #ffffff;
+      color: #222222;
+  
+      @variant dark {
+        background-color: #262626;
+        color: #fafafa;
+      }
+    }
+  }
