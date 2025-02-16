@@ -78,7 +78,7 @@ public class RecordToRecordConverter(ISolutionDbContext dbContext, IDecimalParse
         };
 
         newRecord.ConvertedFrom = [
-                new RecordTemplateConversion
+                new RecordConversion
                 {
                     RecordTemplateLink = recordTemplateLink!,
                     Source = sourceRecord,
