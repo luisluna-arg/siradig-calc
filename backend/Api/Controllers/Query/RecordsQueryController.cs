@@ -21,7 +21,7 @@ public class RecordsQueryController(IMediator mediator) : BaseController(mediato
     public async Task<IActionResult> GetRecordConversion(Guid sourceId)
         => base.Ok(await Mediator.Send(new GetRecordTemplateConversionsQuery(sourceId)));
 
-    [HttpGet("convertions{sourceId}/to/{targetId}")]
+    [HttpGet("convertions/{sourceId}/to/{targetId}")]
     public async Task<IActionResult> GetRecordConversion(Guid sourceId, Guid targetId)
         => base.Ok(await Mediator.Send(new GetRecordToRecordTemplateConversionsQuery(sourceId, targetId)));
 }

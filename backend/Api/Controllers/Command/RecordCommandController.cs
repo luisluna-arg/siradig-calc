@@ -31,4 +31,16 @@ public class RecordCommandController(IMediator mediator) : BaseController(mediat
     [HttpDelete("value/{recordId}")]
     public async Task<IActionResult> DeleteRecordValue(Guid valueId)
         => Ok(await Mediator.Send(new DeleteRecordValueCommand(valueId)));
+
+    [HttpPost("conversions/{sourceId}/to/{targetTemplateId}")]
+    public async Task<IActionResult> GetRecordConversion(Guid sourceId, Guid targetTemplateId)
+        => base.Ok(await Mediator.Send(new ConvertRecordCommand(sourceId, targetTemplateId)));
+    
+    [HttpDelete("{sourceId}/conversions")]
+    public async Task<IActionResult> DeleteAllRecordConversions(Guid sourceId)
+        => base.Ok(await Mediator.Send(new DeleteAllRecordConversionsCommand(sourceId)));
+
+    [HttpDelete("{sourceId}/conversions/{conversionId}")]
+    public async Task<IActionResult> DeleteAllRecordConversions(Guid sourceId, Guid conversionId)
+        => base.Ok(await Mediator.Send(new DeleteRecordConversionCommand(sourceId, conversionId)));
 }

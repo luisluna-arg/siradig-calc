@@ -18,8 +18,12 @@ public class RecordTemplatesQueryController(IMediator mediator) : BaseController
         => Ok(await Mediator.Send(new GetRecordTemplatesQuery()));
 
     [HttpGet("links")]
-    public async Task<IActionResult> GetRecordTemplateLink([FromQuery] Guid leftTemplateId, [FromQuery] Guid rightTemplateId)
-        => Ok(await Mediator.Send(new LinkTemplatesQuery(leftTemplateId, rightTemplateId)));
+    public async Task<IActionResult> GetRecordTemplateLinks()
+        => Ok(await Mediator.Send(new GetRecordTemplateLinksQuery()));
+
+    [HttpGet("links/{leftTemplateId}/to/{rightTemplateId}")]
+    public async Task<IActionResult> GetRecordTemplateLink(Guid leftTemplateId, Guid rightTemplateId)
+        => Ok(await Mediator.Send(new GetRecordTemplateLinkQuery(leftTemplateId, rightTemplateId)));
 
     [HttpGet("field-types")]
     public async Task<IActionResult> GetFieldTypes()
