@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SiradigCalc.Application.Dtos;
@@ -6,16 +7,18 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Queries;
 
-public class LinkTemplatesQuery(Guid leftTemplateId, Guid rightTemplateId) : IRequest<RecordTemplateLinkDto?>
+public class GetRecordTemplateLinkQuery(Guid leftTemplateId, Guid rightTemplateId) : IRequest<RecordTemplateLinkDto>
 {
+    [JsonIgnore]
     public Guid LeftTemplateId { get; } = leftTemplateId;
+    [JsonIgnore]
     public Guid RightTemplateId { get; } = rightTemplateId;
 }
 
-public class LinkTemplatesQueryHandler(ISolutionDbContext dbContext, IDtoMappingService mapperManager)
-    : IRequestHandler<LinkTemplatesQuery, RecordTemplateLinkDto?>
+public class GetRecordTemplateLinkQueryHandler(ISolutionDbContext dbContext, IDtoMappingService mapperManager)
+    : IRequestHandler<GetRecordTemplateLinkQuery, RecordTemplateLinkDto>
 {
-    public async Task<RecordTemplateLinkDto?> Handle(LinkTemplatesQuery request, CancellationToken cancellationToken)
+    public async Task<RecordTemplateLinkDto> Handle(GetRecordTemplateLinkQuery request, CancellationToken cancellationToken)
     {
         /* TODO There's a cycle between RecordTemplateLinks and Fields so EF can't solve it, this should be fixed */
         var templateLink = await dbContext.RecordTemplateLinks
@@ -23,7 +26,7 @@ public class LinkTemplatesQueryHandler(ISolutionDbContext dbContext, IDtoMapping
             .Include(l => l.RightTemplate)
             .Include(l => l.LeftTemplate)
             .FirstAsync(l => l.LeftTemplateId == request.LeftTemplateId &&
-            l.RightTemplateId == request.RightTemplateId, cancellationToken);
+                l.LeftTemplateId == request.LeftTemplateId, cancellationToken);
 
         templateLink.RecordFieldLinks = await dbContext.RecordFieldLinks
             .AsNoTracking()

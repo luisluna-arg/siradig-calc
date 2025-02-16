@@ -25,7 +25,7 @@ public class GetRecordToTemplateConversionsQueryHandler(ISolutionDbContext dbCon
 
     public async Task<ICollection<RecordTemplateConversionDto>> Handle(GetRecordToRecordTemplateConversionsQuery request, CancellationToken cancellationToken)
     {
-        var recordConversions = await _dbContext.RecordTemplateConversions
+        var recordConversions = await _dbContext.RecordConversions
             .Include(c => c.Source)
             .Include(c => c.Target)
             .Where(r => 

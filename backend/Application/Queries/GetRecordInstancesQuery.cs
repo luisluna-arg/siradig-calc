@@ -17,8 +17,10 @@ public class GetRecordInstancesQueryHandler(ISolutionDbContext dbContext)
         var records = await dbContext.Set<Record>()
             .AsNoTracking()
             .Include(i => i.Template)
-                .ThenInclude(c => c.Sections)
-                    .ThenInclude(s => s.Fields)
+                .ThenInclude(c => c.Sections.OrderBy(s => s.Name))
+                    .ThenInclude(s => s.Fields.OrderBy(s => s.Label))
+            .OrderBy(r => r.Template.Name)
+            .ThenBy(r => r.Title)
             .ToListAsync(cancellationToken);
         
         /* TODO There's a cycle between record and values so EF can't solve it, this should be fixed */

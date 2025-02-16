@@ -13,8 +13,10 @@ public class GetRecordTemplatesQueryHandler(ISolutionDbContext dbContext)
     : IRequestHandler<GetRecordTemplatesQuery, IEnumerable<RecordTemplate>>
 {
     public async virtual Task<IEnumerable<RecordTemplate>> Handle(GetRecordTemplatesQuery query, CancellationToken cancellationToken)
-        => await dbContext.Set<RecordTemplate>()
-            .Include(d => d.Sections)
-                .ThenInclude(d => d.Fields)
+        => await dbContext.RecordTemplates
+            .AsNoTracking()
+            .Include(d => d.Sections.OrderBy(s => s.Name))
+                .ThenInclude(d => d.Fields.OrderBy(s => s.Label))
+            .OrderBy(t => t.Name)
             .ToArrayAsync();
 }

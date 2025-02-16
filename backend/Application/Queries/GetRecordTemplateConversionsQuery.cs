@@ -22,7 +22,7 @@ public class GetRecordTemplateConversionsQueryHandler(ISolutionDbContext dbConte
 
     public async Task<ICollection<RecordTemplateConversionDto>> Handle(GetRecordTemplateConversionsQuery request, CancellationToken cancellationToken)
     {
-        var conversions = await _dbContext.RecordTemplateConversions
+        var conversions = await _dbContext.RecordConversions
             .AsNoTracking()
             .Include(c => c.Source)
                 .ThenInclude(l => l.Template)
@@ -41,7 +41,7 @@ public class GetRecordTemplateConversionsQueryHandler(ISolutionDbContext dbConte
                 r.SourceId == request.SourceRecordId)
             .ToArrayAsync(cancellationToken);
 
-        var templateLinks = await _dbContext.RecordTemplateConversions
+        var templateLinks = await _dbContext.RecordConversions
             .AsNoTracking()
             .Include(c => c.RecordTemplateLink)
                 .ThenInclude(c => c.RecordFieldLinks)
