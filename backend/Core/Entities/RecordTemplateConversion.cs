@@ -2,7 +2,7 @@ using SiradigCalc.Core.Entities.Base;
 
 namespace SiradigCalc.Core.Entities;
 
-public class RecordTemplateConversion : Entity
+public class RecordConversion : Entity
 {
     public Guid RecordTemplateLinkId { get; set; }
     public RecordTemplateLink RecordTemplateLink { get; set; } = default!;
