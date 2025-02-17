@@ -2,6 +2,6 @@ namespace SiradigCalc.Application.Dtos.Conversion.Base;
 
 public interface IRecordConversionBaseDto
 {
-    public Guid SourceId { get; set; }
-    public Guid TargetId { get; set; }
+    public RecordDto Source { get; set; }
+    public RecordDto Target { get; set; }
 }
