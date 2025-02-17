@@ -34,5 +34,5 @@ public abstract class BaseMapper<TSource, TTarget> : IDtoMapper<TSource, TTarget
 
     public abstract TTarget Map(TSource source);
     public virtual IEnumerable<TTarget> Map(IEnumerable<TSource> source)
-        => source.Select(s => Map(s)).ToList();
+        => source.Select(Map).ToList();
 }
