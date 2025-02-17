@@ -11,6 +11,52 @@
   },
   "Servers": [],
   "Paths": {
+    "/api/catalog/templates": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Get": {
+          "Tags": [
+            {
+              "Name": "CatalogQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
     "/api/records": {
       "Summary": null,
       "Description": null,
@@ -244,7 +290,67 @@
           "Description": null,
           "ExternalDocs": null,
           "OperationId": null,
-          "Parameters": [],
+          "Parameters": [
+            {
+              "UnresolvedReference": false,
+              "Reference": null,
+              "Name": "templateId",
+              "In": 0,
+              "Description": null,
+              "Required": false,
+              "Deprecated": false,
+              "AllowEmptyValue": false,
+              "Style": 2,
+              "Explode": true,
+              "AllowReserved": false,
+              "Schema": {
+                "Title": null,
+                "Type": "string",
+                "Format": "uuid",
+                "Description": null,
+                "Maximum": null,
+                "ExclusiveMaximum": null,
+                "Minimum": null,
+                "ExclusiveMinimum": null,
+                "MaxLength": null,
+                "MinLength": null,
+                "Pattern": null,
+                "MultipleOf": null,
+                "Default": null,
+                "ReadOnly": false,
+                "WriteOnly": false,
+                "AllOf": [],
+                "OneOf": [],
+                "AnyOf": [],
+                "Not": null,
+                "Required": [],
+                "Items": null,
+                "MaxItems": null,
+                "MinItems": null,
+                "UniqueItems": null,
+                "Properties": {},
+                "MaxProperties": null,
+                "MinProperties": null,
+                "AdditionalPropertiesAllowed": true,
+                "AdditionalProperties": null,
+                "Discriminator": null,
+                "Example": null,
+                "Enum": [],
+                "Nullable": false,
+                "ExternalDocs": null,
+                "Deprecated": false,
+                "Xml": null,
+                "Extensions": {},
+                "UnresolvedReference": false,
+                "Reference": null,
+                "Annotations": null
+              },
+              "Examples": {},
+              "Example": null,
+              "Content": {},
+              "Extensions": {}
+            }
+          ],
           "RequestBody": null,
           "Responses": {
             "200": {
@@ -1572,7 +1678,7 @@
       "UnresolvedReference": false,
       "Reference": null
     },
-    "/api/records/convertions/{sourceId}": {
+    "/api/records/conversions": {
       "Summary": null,
       "Description": null,
       "Operations": {
@@ -1596,13 +1702,13 @@
               "UnresolvedReference": false,
               "Reference": null,
               "Name": "sourceId",
-              "In": 2,
+              "In": 0,
               "Description": null,
-              "Required": true,
+              "Required": false,
               "Deprecated": false,
               "AllowEmptyValue": false,
-              "Style": 3,
-              "Explode": false,
+              "Style": 2,
+              "Explode": true,
               "AllowReserved": false,
               "Schema": {
                 "Title": null,
@@ -1678,7 +1784,7 @@
       "UnresolvedReference": false,
       "Reference": null
     },
-    "/api/records/convertions/{sourceId}/to/{targetId}": {
+    "/api/records/conversions/{sourceId}/to/{targetId}": {
       "Summary": null,
       "Description": null,
       "Operations": {
@@ -6235,6 +6341,6 @@
   "Tags": [],
   "ExternalDocs": null,
   "Extensions": {},
-  "HashCode": "9DCE46E364333A3C973676D6D75132000C41C0B74AD94A49363A857A0FB3B3CB449EAF61ADD1135DF38AA20C390A9FEF1D85918FDB6C6DD41B01E951235AF2CE",
+  "HashCode": "A055B829FA460E36BF45E3251F52083C3271E0DA4556DD6D0241957705B9EA570BB72F6AEB5F69740E3B766345D024E07060DF3DEB49B1AE7B873D7B1EE4A727",
   "Annotations": null
 }

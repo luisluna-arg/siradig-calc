@@ -11,6 +11,7 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 using System.Text.Json;
 using Swashbuckle.AspNetCore.Swagger;
 using SiradigCalc.Application.Queries;
+using SiradigCalc.ApiFramework.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<GetRecordQuery>();
 builder.Services.AddRecordConverters();
 builder.Services.AddParsers();
 builder.Services.AddDtoMappers();
+builder.Services.EnableCors();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -68,7 +70,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// app.UseAuthorization();
+app.UseCors(Policies.AllowAll);
 
 app.MapControllers();
 

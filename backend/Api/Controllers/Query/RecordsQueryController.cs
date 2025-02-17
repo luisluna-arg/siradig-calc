@@ -10,18 +10,18 @@ namespace SiradigCalc.Api.Controllers.Query;
 public class RecordsQueryController(IMediator mediator) : BaseController(mediator)
 {
     [HttpGet]
-    public async Task<IActionResult> GetRecords()
-        => Ok(await Mediator.Send(new GetRecordInstancesQuery()));
+    public async Task<IActionResult> GetRecords([FromQuery] Guid? templateId)
+        => Ok(await Mediator.Send(new GetRecordsQuery(templateId)));
 
     [HttpGet("{recordId}")]
     public async Task<IActionResult> GetRecord(Guid recordId)
         => Ok(await Mediator.Send(new GetRecordQuery(recordId)));
 
-    [HttpGet("convertions/{sourceId}")]
-    public async Task<IActionResult> GetRecordConversion(Guid sourceId)
+    [HttpGet("conversions")]
+    public async Task<IActionResult> GetRecordConversion([FromQuery] Guid? sourceId)
         => base.Ok(await Mediator.Send(new GetRecordTemplateConversionsQuery(sourceId)));
 
-    [HttpGet("convertions/{sourceId}/to/{targetId}")]
+    [HttpGet("conversions/{sourceId}/to/{targetId}")]
     public async Task<IActionResult> GetRecordConversion(Guid sourceId, Guid targetId)
         => base.Ok(await Mediator.Send(new GetRecordToRecordTemplateConversionsQuery(sourceId, targetId)));
 }
