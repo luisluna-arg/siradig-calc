@@ -1,5 +1,72 @@
-@theme {
-    --color-custom: #1f50a1;
+@layer base {
+  .dark,
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --tw-bg-opacity: 1;
+    --tw-text-opacity: 1;
+    background-color: hsl(222, 47%, 11% / var(--tw-bg-opacity));
+    color: hsl(0, 0%, 100%);
+    transition: background-color 2s ease;
+    --card: 24 9.8% 10%;
+    --card-foreground: 240 10% 3.9%;
+    --border: 360 77% 45% !important;
+    --border-l: 360 77% 45% !important;
+    --border-r: 360 77% 45% !important;
+    --border-b: 360 77% 45% !important;
+    --border-t: 360 77% 45% !important;
+    --border-x: 360 77% 45% !important;
+    --border-y: 360 77% 45% !important;
   }
-  
-  @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+  .light,
+  [data-theme="light"] {
+    color-scheme: light;
+    --tw-bg-opacity: 1;
+    --tw-text-opacity: 1;
+    background-color: hsl(220, 14%, 95% / var(--tw-bg-opacity));
+    color: hsl(0, 0%, 0% / var(--tw-text-opacity));
+    transition: background-color 2s ease;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 95%;
+    --border: 360 77% 45% !important;
+    --border-l: 360 77% 45% !important;
+    --border-r: 360 77% 45% !important;
+    --border-b: 360 77% 45% !important;
+    --border-t: 360 77% 45% !important;
+    --border-x: 360 77% 45% !important;
+    --border-y: 360 77% 45% !important;
+  }
+}
+
+/* .dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+.light,
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  background-color: #000;
+  color: white;
+  transition: background-color 2s ease;
+}
+[data-theme="light"] {
+  background-color: #f2f2f2;
+  color: black;
+  transition: background-color 2s ease;
+}
+
+.dark {
+  background-color: #000;
+  color: white;
+  transition: background-color 2s ease;
+}
+
+.light {
+  background-color: #f2f2f2;
+  color: black;
+  transition: background-color 2s ease;
+} */
