@@ -4,6 +4,8 @@ using SiradigCalc.Application.Converters;
 using SiradigCalc.Application.Converters.Strategies;
 using SiradigCalc.Application.Helpers.Reducers;
 using SiradigCalc.Application.Mapping;
+using Microsoft.AspNetCore.Cors;
+using SiradigCalc.ApiFramework.Config;
 
 namespace SiradigCalc.ApiFramework.Core.Config;
 
@@ -67,7 +69,18 @@ public static class ConfigExtensions
 
     public static void AddDtoMappers(this IServiceCollection services)
     {
-        services.AddScoped<IDtoMappingService, DtoMappingService>();        
+        services.AddScoped<IDtoMappingService, DtoMappingService>();
     }
 
+    public static void EnableCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy(Policies.AllowAll,
+                policy => policy
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+        });
+    }
 }
