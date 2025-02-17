@@ -26,8 +26,28 @@ public class GetRecordToTemplateConversionsQueryHandler(ISolutionDbContext dbCon
     public async Task<ICollection<RecordTemplateConversionDto>> Handle(GetRecordToRecordTemplateConversionsQuery request, CancellationToken cancellationToken)
     {
         var recordConversions = await _dbContext.RecordConversions
+            .AsNoTracking()
             .Include(c => c.Source)
+                .ThenInclude(s => s.Template)
+                    .ThenInclude(s => s.Sections)
+                        .ThenInclude(s => s.Fields)
+            .Include(c => c.Source)
+                .ThenInclude(s => s.Values)
             .Include(c => c.Target)
+                .ThenInclude(s => s.Template)
+                    .ThenInclude(s => s.Sections)
+            .Include(c => c.Target)
+                .ThenInclude(c => c.Values)
+            .Include(c => c.RecordTemplateLink)
+                .ThenInclude(c => c.RecordFieldLinks)
+                    .ThenInclude(c => c.LeftField)
+            .Include(c => c.RecordTemplateLink)
+                .ThenInclude(c => c.RecordFieldLinks)
+                    .ThenInclude(c => c.RightField)
+            .Include(c => c.RecordTemplateLink)
+                .ThenInclude(c => c.LeftTemplate)
+            .Include(c => c.RecordTemplateLink)
+                .ThenInclude(c => c.RightTemplate)
             .Where(r => 
                 r.SourceId == request.SourceRecordId &&
                 r.TargetId == request.TargetRecordId)

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SiradigCalc.Core.Entities;
@@ -5,24 +6,33 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Queries;
 
-public class GetRecordInstancesQuery : IRequest<IEnumerable<Record>>
+public class GetRecordsQuery(Guid? templateId) : IRequest<IEnumerable<Record>>
 {
+    [JsonIgnore]
+    public Guid? TemplateId { get; set; } = templateId;
 }
 
-public class GetRecordInstancesQueryHandler(ISolutionDbContext dbContext)
-    : IRequestHandler<GetRecordInstancesQuery, IEnumerable<Record>>
+public class GetRecordsQueryHandler(ISolutionDbContext dbContext)
+    : IRequestHandler<GetRecordsQuery, IEnumerable<Record>>
 {
-    public async virtual Task<IEnumerable<Record>> Handle(GetRecordInstancesQuery query, CancellationToken cancellationToken)
+    public async virtual Task<IEnumerable<Record>> Handle(GetRecordsQuery query, CancellationToken cancellationToken)
     {
-        var records = await dbContext.Set<Record>()
+        var recordsQuery = dbContext.Records
             .AsNoTracking()
             .Include(i => i.Template)
                 .ThenInclude(c => c.Sections.OrderBy(s => s.Name))
                     .ThenInclude(s => s.Fields.OrderBy(s => s.Label))
             .OrderBy(r => r.Template.Name)
             .ThenBy(r => r.Title)
-            .ToListAsync(cancellationToken);
-        
+            .AsQueryable();
+
+        if (query.TemplateId.HasValue)
+        {
+            recordsQuery = recordsQuery.Where(r => r.TemplateId == query.TemplateId);
+        }
+
+        var records = await recordsQuery.ToListAsync(cancellationToken);
+
         /* TODO There's a cycle between record and values so EF can't solve it, this should be fixed */
         /* TODO Less important, find a way to compare Id's without 'Equals' */
         var values = await dbContext.RecordValues

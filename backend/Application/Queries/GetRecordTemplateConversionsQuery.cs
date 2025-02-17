@@ -7,11 +7,11 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Queries;
 
-public class GetRecordTemplateConversionsQuery(Guid sourceRecordId)
+public class GetRecordTemplateConversionsQuery(Guid? sourceRecordId)
     : IRequest<ICollection<RecordTemplateConversionDto>>
 {
     [JsonIgnore]
-    public Guid SourceRecordId { get; set; } = sourceRecordId;
+    public Guid? SourceRecordId { get; set; } = sourceRecordId;
 }
 
 public class GetRecordTemplateConversionsQueryHandler(ISolutionDbContext dbContext, IDtoMappingService dtoMappingService)
@@ -22,7 +22,7 @@ public class GetRecordTemplateConversionsQueryHandler(ISolutionDbContext dbConte
 
     public async Task<ICollection<RecordTemplateConversionDto>> Handle(GetRecordTemplateConversionsQuery request, CancellationToken cancellationToken)
     {
-        var conversions = await _dbContext.RecordConversions
+        var conversionQueries = _dbContext.RecordConversions
             .AsNoTracking()
             .Include(c => c.Source)
                 .ThenInclude(l => l.Template)
@@ -37,11 +37,11 @@ public class GetRecordTemplateConversionsQueryHandler(ISolutionDbContext dbConte
                         .ThenInclude(t => t.Fields)
             .Include(c => c.Target)
                 .ThenInclude(l => l.Values)
-            .Where(r => 
-                r.SourceId == request.SourceRecordId)
-            .ToArrayAsync(cancellationToken);
+            .OrderBy(c => c.Source.Title)
+            .ThenBy(c => c.Source.Template.Name)
+            .AsQueryable();
 
-        var templateLinks = await _dbContext.RecordConversions
+        var templateLinksQuery = _dbContext.RecordConversions
             .AsNoTracking()
             .Include(c => c.RecordTemplateLink)
                 .ThenInclude(c => c.RecordFieldLinks)
@@ -52,9 +52,18 @@ public class GetRecordTemplateConversionsQueryHandler(ISolutionDbContext dbConte
             .Include(c => c.RecordTemplateLink)
                 .ThenInclude(l => l.LeftTemplate)
                     .ThenInclude(t => t.Sections)
-            .Where(r => 
-                r.SourceId == request.SourceRecordId)
-            .ToArrayAsync(cancellationToken);
+            .OrderBy(c => c.Source.Title)
+            .ThenBy(c => c.Source.Template.Name)
+            .AsQueryable();
+
+        if (request.SourceRecordId.HasValue)
+        {
+            conversionQueries = conversionQueries.Where(r => r.SourceId == request.SourceRecordId);
+            templateLinksQuery = templateLinksQuery.Where(r => r.SourceId == request.SourceRecordId);
+        }
+
+        var templateLinks = await templateLinksQuery.ToArrayAsync(cancellationToken);
+        var conversions = await conversionQueries.ToArrayAsync(cancellationToken);
 
         foreach (var conversion in conversions)
         {
