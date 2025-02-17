@@ -7,10 +7,12 @@ export const loader: LoaderFunction = async () => {
   return await apiClient.getTemplates();
 };
 
+const metaData = { title: "Templates" };
+
 export const meta: MetaFunction = () => {
-  return [
-    { title: "Templates" },
-  ];
+  return [metaData];
 };
+
+export const handle = metaData;
 
 export default TemplatesGrid;

@@ -1,13 +1,13 @@
 import { MetaFunction, type LoaderFunction } from "@remix-run/node";
-import TemplateLinksGrid from "@/components/templateLinksGrid";
+import ConversionsGrid from "@/components/recordsConversionGrid";
 import { ApiClient } from "@/data/ApiClient";
 
 export const loader: LoaderFunction = async () => {
   let apiClient = new ApiClient();
-  return await apiClient.getLinks();
+  return await apiClient.getConversions();
 };
 
-const metaData = { title: "Template Links" };
+const metaData = { title: "Conversions" };
 
 export const meta: MetaFunction = () => {
   return [metaData];
@@ -15,4 +15,4 @@ export const meta: MetaFunction = () => {
 
 export const handle = metaData;
 
-export default TemplateLinksGrid;
+export default ConversionsGrid;

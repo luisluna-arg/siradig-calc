@@ -1,5 +1,4 @@
 import { useLoaderData } from "@remix-run/react";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -10,58 +9,97 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useToast } from "@/hooks/use-toast";
 import { Record } from "@/data/interfaces/Record";
 import { useNavigate } from "@remix-run/react";
+import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
+import { CirclePlus, Trash2Icon } from "lucide-react";
+import { ApiClient } from "@/data/ApiClient";
+import ActionButton from "./utils/actionButton";
 
 export default function RecordsGrid() {
+  const apiClient = new ApiClient();
   const data = useLoaderData() as Array<Record>;
-
+  const { toast } = useToast();
   const navigate = useNavigate();
 
+  const handleAdd = async () => {
+    navigate(`/records/add`);
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await apiClient.deleteRecord(id);
+      navigate(`/records`);
+    } catch (error: any) {
+      toast({
+        title: "Error deleting item",
+        description: error.response?.data?.message || error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
-      <Card className="w-[80vw] bg-white">
-        <CardContent>
-          <Table>
-            <TableCaption>Record</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Template</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="text-right">Section count</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((record) => (
-                <TableRow
-                  key={record.id}
-                  onClick={() => navigate(`/records/${record.id}`)}
-                  className="cursor-pointer"
-                >
-                  <TableCell className="font-medium">
-                    {record.template.name}
-                  </TableCell>
-                  <TableCell className="font-medium">{record.title}</TableCell>
-                  <TableCell className="font-medium">
-                    {record.template.description}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {record.template.sections.length ?? 0}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell
-                  colSpan={2}
-                >{`Total templates: ${data.length}`}</TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </CardContent>
-      </Card>
+    <div className="flex justify-center items-center py-6 px-20">
+      <Table>
+        <TableCaption>Record</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className={cn(["w-80"])}>Template</TableHead>
+            <TableHead className={cn(["w-80"])}>Title</TableHead>
+            <TableHead className={cn(["w-auto"])}>Description</TableHead>
+            <TableHead className={cn(["w-40"])}>Section count</TableHead>
+            <TableHead className={cn(["w-10"])}>
+              <ActionButton
+                type="add"
+                onClick={async () => {
+                  await handleAdd();
+                }}
+              />
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.map((record) => (
+            <TableRow
+              key={record.id}
+              onClick={() => {
+                navigate(`/records/${record.id}`);
+              }}
+              className="cursor-pointer"
+            >
+              <TableCell className="font-medium">
+                {record.template.name}
+              </TableCell>
+              <TableCell className="font-medium">{record.title}</TableCell>
+              <TableCell className="font-medium">
+                {record.template.description}
+              </TableCell>
+              <TableCell className="font-medium">
+                {record.template.sections.length ?? 0}
+              </TableCell>
+              <TableCell className="font-medium">
+                <ActionButton
+                  type="delete"
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    await handleDelete(record.id);
+                  }}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell
+              colSpan={4}
+            >{`Total templates: ${data.length}`}</TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
     </div>
   );
 }
