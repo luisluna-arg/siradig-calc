@@ -13,6 +13,7 @@ public class RecordValueMapper(IDtoMappingService dtoMapperManager)
         => new RecordValueDto()
         {
             FieldId = source.FieldId,
+            Label = source.Field.Label,
             Value = source.Value
         };
 }

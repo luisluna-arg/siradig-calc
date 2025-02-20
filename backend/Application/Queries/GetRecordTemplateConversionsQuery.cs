@@ -30,6 +30,7 @@ public class GetRecordTemplateConversionsQueryHandler(ISolutionDbContext dbConte
                         .ThenInclude(t => t.Fields)
             .Include(c => c.Source)
                 .ThenInclude(l => l.Values)
+                    .ThenInclude(l => l.Field)
 
             .Include(c => c.Target)
                 .ThenInclude(l => l.Template)
@@ -37,6 +38,7 @@ public class GetRecordTemplateConversionsQueryHandler(ISolutionDbContext dbConte
                         .ThenInclude(t => t.Fields)
             .Include(c => c.Target)
                 .ThenInclude(l => l.Values)
+                    .ThenInclude(l => l.Field)
             .OrderBy(c => c.Source.Title)
             .ThenBy(c => c.Source.Template.Name)
             .AsQueryable();

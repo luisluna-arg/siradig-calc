@@ -51,7 +51,9 @@ public class RecordTemplateConversionMapper(IDtoMappingService dtoMappingService
                     IsRequired = rightField.IsRequired,
                     Value = ProcessValues(rightField, leftFields, recordSource!.Values)
                 };
-            }).ToArray();
+            })
+            .OrderBy(fv => fv.Label)
+            .ToArray();
 
         return new RecordTemplateConversionDto()
         {
