@@ -13,3 +13,12 @@ export interface Record {
   updatedAt: Date;
   deleted: boolean;
 }
+
+export interface RecordFlat {
+  id: string;
+  title: string;
+  name: string;
+  description: string;
+  recordTemplateId: string;
+  values: Array<RecordValue>;
+}

@@ -22,8 +22,6 @@ export default function TemplatesGrid() {
   return (
     <div className="flex justify-center items-center py-6 px-20">
       <Table>
-        {" "}
-        <TableCaption>Record templates</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className={cn(["w-80"])}>Name</TableHead>

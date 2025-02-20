@@ -4,6 +4,7 @@ export interface RecordValue {
   recordId: string;
   fieldId: string;
   field: RecordField;
+  label: string;
   value: string;
   id: string;
   createdAt: Date;

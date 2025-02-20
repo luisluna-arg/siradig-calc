@@ -22,7 +22,6 @@ export default function TemplatesGrid() {
   return (
     <div className="flex justify-center items-center py-6 px-20">
       <Table>
-        <TableCaption>Record template links</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className={cn(["w-2", "text-center"])} colSpan={2}>

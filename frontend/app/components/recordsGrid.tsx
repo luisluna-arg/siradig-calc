@@ -44,7 +44,6 @@ export default function RecordsGrid() {
   return (
     <div className="flex justify-center items-center py-6 px-20">
       <Table>
-        <TableCaption>Record</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className={cn(["w-80"])}>Template</TableHead>

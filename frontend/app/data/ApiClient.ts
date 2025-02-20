@@ -76,6 +76,10 @@ export class ApiClient {
     return await this.get<RecordConversion>(`api/records/conversions`);
   }
 
+  public async getConversion(conversionId: string): Promise<DataRecord> {
+    return await this.get<DataRecord>(`api/records/conversions/${conversionId}`);
+  }
+
   public async deleteConversion(sourceId: string, conversionId: string): Promise<RecordConversion> {
     return await this.delete(`api/records/${sourceId}/conversions/${conversionId}`);
   }
