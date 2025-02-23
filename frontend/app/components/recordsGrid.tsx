@@ -2,7 +2,6 @@ import { useLoaderData } from "@remix-run/react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -13,8 +12,6 @@ import { useToast } from "@/hooks/use-toast";
 import { Record } from "@/data/interfaces/Record";
 import { useNavigate } from "@remix-run/react";
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
-import { CirclePlus, Trash2Icon } from "lucide-react";
 import { ApiClient } from "@/data/ApiClient";
 import ActionButton from "./utils/actionButton";
 
