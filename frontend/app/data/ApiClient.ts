@@ -4,6 +4,7 @@ import { Record as DataRecord } from "@/data/interfaces/Record";
 import { TemplateLinkReduced } from "@/data/interfaces/TemplateLinkReduced";
 import { RecordConversion } from "@/data/interfaces/RecordConversion";
 import { Catalog } from "./interfaces/Catalog";
+import { RecordPostData } from "./interfaces/RecordPostData";
 
 export class ApiClient {
   private baseURL: string;
@@ -45,9 +46,13 @@ export class ApiClient {
     return result.data as T;
   }
 
+  public async post(endpoint: string, data?: any): Promise<any> {
+    return await this.client.post(endpoint, data, await this.getAxiosConfig());
+  }
+
   public async delete(endpoint: string, id?: string): Promise<any> {
     return await this.client.delete(
-      `${endpoint}` + (id ? `/${id}` : ''),
+      `${endpoint}` + (id ? `/${id}` : ""),
       await this.getAxiosConfig()
     );
   }
@@ -68,6 +73,10 @@ export class ApiClient {
     return await this.get<DataRecord>(`api/records/${recordId}`);
   }
 
+  public async postRecord(data: RecordPostData): Promise<DataRecord> {
+    return await this.post(`api/records/`, data);
+  }
+
   public async deleteRecord(recordId: string): Promise<any> {
     return await this.delete(`api/records`, recordId);
   }
@@ -77,11 +86,18 @@ export class ApiClient {
   }
 
   public async getConversion(conversionId: string): Promise<DataRecord> {
-    return await this.get<DataRecord>(`api/records/conversions/${conversionId}`);
+    return await this.get<DataRecord>(
+      `api/records/conversions/${conversionId}`
+    );
   }
 
-  public async deleteConversion(sourceId: string, conversionId: string): Promise<RecordConversion> {
-    return await this.delete(`api/records/${sourceId}/conversions/${conversionId}`);
+  public async deleteConversion(
+    sourceId: string,
+    conversionId: string
+  ): Promise<RecordConversion> {
+    return await this.delete(
+      `api/records/${sourceId}/conversions/${conversionId}`
+    );
   }
 
   public async getLinks(): Promise<TemplateLinkReduced> {
@@ -97,9 +113,7 @@ export class ApiClient {
     );
   }
 
-  
   public async getTemplateCatalog(): Promise<Catalog> {
     return await this.get<Catalog>(`api/catalog/templates`);
   }
-
 }
