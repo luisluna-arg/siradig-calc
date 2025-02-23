@@ -6,7 +6,6 @@ import { ReactNode } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "./ui/navigation-menu";
 
