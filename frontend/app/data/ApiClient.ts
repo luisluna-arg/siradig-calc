@@ -3,8 +3,8 @@ import { Template } from "@/data/interfaces/Template";
 import { Record as DataRecord } from "@/data/interfaces/Record";
 import { TemplateLinkReduced } from "@/data/interfaces/TemplateLinkReduced";
 import { RecordConversion } from "@/data/interfaces/RecordConversion";
-import { Catalog } from "./interfaces/Catalog";
-import { RecordPostData } from "./interfaces/RecordPostData";
+import { Catalog } from "@/data/interfaces/Catalog";
+import { RecordPostData } from "@/routeUtils/interfaces/RecordPostData";
 
 export class ApiClient {
   private baseURL: string;
@@ -50,6 +50,10 @@ export class ApiClient {
     return await this.client.post(endpoint, data, await this.getAxiosConfig());
   }
 
+  public async put(endpoint: string, data?: any): Promise<any> {
+    return await this.client.put(endpoint, data, await this.getAxiosConfig());
+  }
+
   public async delete(endpoint: string, id?: string): Promise<any> {
     return await this.client.delete(
       `${endpoint}` + (id ? `/${id}` : ""),
@@ -75,6 +79,13 @@ export class ApiClient {
 
   public async postRecord(data: RecordPostData): Promise<DataRecord> {
     return await this.post(`api/records/`, data);
+  }
+
+  public async putRecord(
+    id: string,
+    data: RecordPostData
+  ): Promise<DataRecord> {
+    return await this.put(`api/records/${id}`, data);
   }
 
   public async deleteRecord(recordId: string): Promise<any> {
