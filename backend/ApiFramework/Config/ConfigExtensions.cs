@@ -4,7 +4,6 @@ using SiradigCalc.Application.Converters;
 using SiradigCalc.Application.Converters.Strategies;
 using SiradigCalc.Application.Helpers.Reducers;
 using SiradigCalc.Application.Mapping;
-using Microsoft.AspNetCore.Cors;
 using SiradigCalc.ApiFramework.Config;
 
 namespace SiradigCalc.ApiFramework.Core.Config;
