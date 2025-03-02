@@ -49,12 +49,12 @@ export default function ConversionsGrid() {
             <TableHead className={cn(["text-center", "border-l"])}></TableHead>
           </TableRow>
           <TableRow>
-            <TableHead className={cn(["w-80"])}>Template</TableHead>
-            <TableHead className={cn(["w-80"])}>Title</TableHead>
-            <TableHead className={cn(["w-auto"])}>Description</TableHead>
-            <TableHead className={cn(["w-80", "border-l"])}>Template</TableHead>
-            <TableHead className={cn(["w-80"])}>Title</TableHead>
-            <TableHead className={cn(["w-auto"])}>Description</TableHead>
+            <TableHead className={cn(["w-auto"])}>Template</TableHead>
+            <TableHead className={cn(["w-auto"])}>Title</TableHead>
+            <TableHead className={cn(["w-60"])}>Description</TableHead>
+            <TableHead className={cn(["w-auto", "border-l"])}>Template</TableHead>
+            <TableHead className={cn(["w-auto"])}>Title</TableHead>
+            <TableHead className={cn(["w-60"])}>Description</TableHead>
             <TableHead className={cn(["w-auto", "border-l"])}></TableHead>
           </TableRow>
         </TableHeader>

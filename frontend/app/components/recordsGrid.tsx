@@ -25,6 +25,10 @@ export default function RecordsGrid() {
     navigate(`/records/add`);
   };
 
+  const handleEdit = async (id: string) => {
+    navigate(`/records/${id}?edit=true`);
+  };
+
   const handleDelete = async (id: string) => {
     try {
       await apiClient.deleteRecord(id);
@@ -47,7 +51,7 @@ export default function RecordsGrid() {
             <TableHead className={cn(["w-80"])}>Title</TableHead>
             <TableHead className={cn(["w-auto"])}>Description</TableHead>
             <TableHead className={cn(["w-40"])}>Section count</TableHead>
-            <TableHead className={cn(["w-10"])}>
+            <TableHead className={cn(["w-10", "text-right"])}>
               <ActionButton
                 type="add"
                 onClick={async () => {
@@ -76,7 +80,14 @@ export default function RecordsGrid() {
               <TableCell className="font-medium">
                 {record.template.sections.length ?? 0}
               </TableCell>
-              <TableCell className="font-medium">
+              <TableCell className="font-medium flex flex-row gap-2">
+                <ActionButton
+                  type="edit"
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    await handleEdit(record.id);
+                  }}
+                />
                 <ActionButton
                   type="delete"
                   onClick={async (e) => {
