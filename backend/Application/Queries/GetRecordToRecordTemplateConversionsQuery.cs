@@ -51,6 +51,7 @@ public class GetRecordToTemplateConversionsQueryHandler(ISolutionDbContext dbCon
             .Where(r => 
                 r.SourceId == request.SourceRecordId &&
                 r.TargetId == request.TargetRecordId)
+            .AsSplitQuery()
             .ToArrayAsync(cancellationToken);
 
         return _dtoMappingService.Map<RecordTemplateConversionDto>(recordConversions);

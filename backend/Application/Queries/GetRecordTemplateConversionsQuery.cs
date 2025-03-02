@@ -64,8 +64,8 @@ public class GetRecordTemplateConversionsQueryHandler(ISolutionDbContext dbConte
             templateLinksQuery = templateLinksQuery.Where(r => r.SourceId == request.SourceRecordId);
         }
 
-        var templateLinks = await templateLinksQuery.ToArrayAsync(cancellationToken);
-        var conversions = await conversionQueries.ToArrayAsync(cancellationToken);
+        var templateLinks = await templateLinksQuery.AsSplitQuery().ToArrayAsync(cancellationToken);
+        var conversions = await conversionQueries.AsSplitQuery().ToArrayAsync(cancellationToken);
 
         foreach (var conversion in conversions)
         {

@@ -22,6 +22,7 @@ public class GetRecordTemplateLinksQueryHandler(ISolutionDbContext dbContext, ID
             .AsNoTracking()
             .Include(l => l.RightTemplate)
             .Include(l => l.LeftTemplate)
+            .AsSplitQuery()
             .ToListAsync(cancellationToken);
 
         var recordFieldLinkDictionary = await dbContext.RecordFieldLinks
@@ -29,6 +30,7 @@ public class GetRecordTemplateLinksQueryHandler(ISolutionDbContext dbContext, ID
             .Include(l => l.RightField)
             .Include(l => l.LeftField)
             .GroupBy(k => k.TemplateLinkId)
+            .AsSplitQuery()
             .ToDictionaryAsync(k => k.Key, v => v.ToList(), cancellationToken);
 
         foreach (var templateLink in templateLinks)

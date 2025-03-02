@@ -18,16 +18,15 @@ public class GetRecordQueryHandler(ISolutionDbContext dbContext)
         var record = await dbContext.Records
             .AsNoTracking()
             .Include(i => i.Template)
-                .ThenInclude(c => c.Sections)
-                    .ThenInclude(s => s.Fields)
+                .ThenInclude(c => c.Sections.OrderBy(s => s.Name))
+                    .ThenInclude(s => s.Fields.OrderBy(s => s.Label))
             .SingleAsync(i => i.Id.Equals(query.Id), cancellationToken);
         
-        /* TODO There's a cycle between record and values so EF can't solve it, this should be fixed */
-        /* TODO Less important, find a way to compare Id's without 'Equals' */
         record.Values = await dbContext.RecordValues
             .AsNoTracking()
             .Include(v => v.Field)
-            .Where(v => v.RecordId!.Equals(query.Id))
+            .OrderBy(s => s.Field.Label)
+            .Where(v => v.RecordId == query.Id)
             .ToListAsync(cancellationToken);
 
         return record;
