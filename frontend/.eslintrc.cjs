@@ -20,10 +20,7 @@ module.exports = {
     es6: true,
   },
   ignorePatterns: ["!**/.server", "!**/.client"],
-
-  // Base config
   extends: ["eslint:recommended"],
-
   overrides: [
     // React
     {
@@ -71,6 +68,16 @@ module.exports = {
         "plugin:import/recommended",
         "plugin:import/typescript",
       ],
+      rules: {
+        "no-unused-vars": "off", // disable the base rule
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            argsIgnorePattern: "^_",
+            varsIgnorePattern: "^_",
+          },
+        ],
+      },
     },
 
     // Node
