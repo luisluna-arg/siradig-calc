@@ -1,13 +1,14 @@
 import { ModeToggle } from "@/components/mode-toggle";
 import { cn } from "@/lib/utils";
 import { hasHandleWithTitle } from "@/utils";
-import { NavLink, useMatches } from "@remix-run/react";
+import { NavLink, useLocation, useMatches } from "@remix-run/react";
 import { ReactNode } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
 } from "./ui/navigation-menu";
+import NavigationTabs from "@/constants/NavigationTabs";
 
 interface LocalLinkProps {
   to: string;
@@ -24,6 +25,7 @@ const LocalLink = ({ children, to }: LocalLinkProps) => (
 
 export function Toolbar() {
   const matches = useMatches();
+  const location = useLocation();
   const currentMatch = matches.find(hasHandleWithTitle);
   const title = currentMatch?.handle.title || "";
 
@@ -43,25 +45,26 @@ export function Toolbar() {
       ])}
     >
       <NavLink to={"/"}>
-        <span className={cn(["text-lg", "font-bold", "ml-4"])}>
+        <span className={cn(["text-lg", "font-bold", "mx-2"])}>
           Siradig Calculator {` | ${title}`}
         </span>
       </NavLink>
       <div className={cn(["justify-center", "flex"])}>
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem className={cn(["pl-2"])}>
-              <LocalLink to={"/records"}>Records</LocalLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem className={cn(["pl-2"])}>
-              <LocalLink to={"/records/templates"}>Templates</LocalLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem className={cn(["pl-2"])}>
-              <LocalLink to={"/records/conversions"}>Conversions</LocalLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem className={cn(["pl-2"])}>
-              <LocalLink to={"/records/templates/links"}>Links</LocalLink>
-            </NavigationMenuItem>
+            {NavigationTabs.map((tab) => (
+              <NavigationMenuItem
+                key={tab.id}
+                className={cn([
+                  "px-1 py-2 rounded-md transition-colors",
+                  location.pathname === tab.route
+                    ? "text-primary"
+                    : "hover:text-primary",
+                ])}
+              >
+                <LocalLink to={tab.route}>{tab.label}</LocalLink>
+              </NavigationMenuItem>
+            ))}
           </NavigationMenuList>
         </NavigationMenu>
       </div>
