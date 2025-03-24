@@ -1,4 +1,4 @@
-import { RecordPostData } from "@/routeUtils/interfaces/RecordPostData";
+import { RecordPostData } from "@/utils/route/interfaces/RecordPostData";
 
 export function buildRecordSubmitData(formData: any) {
   let postData: RecordPostData = {
