@@ -57,6 +57,52 @@
       "UnresolvedReference": false,
       "Reference": null
     },
+    "/api/catalog/field-types": {
+      "Summary": null,
+      "Description": null,
+      "Operations": {
+        "Get": {
+          "Tags": [
+            {
+              "Name": "CatalogQuery",
+              "Description": null,
+              "ExternalDocs": null,
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          ],
+          "Summary": null,
+          "Description": null,
+          "ExternalDocs": null,
+          "OperationId": null,
+          "Parameters": [],
+          "RequestBody": null,
+          "Responses": {
+            "200": {
+              "Description": "OK",
+              "Headers": {},
+              "Content": {},
+              "Links": {},
+              "Extensions": {},
+              "UnresolvedReference": false,
+              "Reference": null
+            }
+          },
+          "Callbacks": {},
+          "Deprecated": false,
+          "Security": [],
+          "Servers": [],
+          "Extensions": {},
+          "Annotations": null
+        }
+      },
+      "Servers": [],
+      "Parameters": [],
+      "Extensions": {},
+      "UnresolvedReference": false,
+      "Reference": null
+    },
     "/api/records": {
       "Summary": null,
       "Description": null,
@@ -6708,6 +6754,6 @@
   "Tags": [],
   "ExternalDocs": null,
   "Extensions": {},
-  "HashCode": "9D6B5F1260328D7FE96E9E59A2EF0F02096BF6F8BAF99B709957ED29D9D4D26D8647E07A4507B0BA6C334FF7014E9D4FDD69ADD3E301431BF4A93863313C8EAE",
+  "HashCode": "014C2EE7F648FC844CFF21097D15A86D97CEF3BDB4CDBF55853C4788456FB37EF63D70E0FC4821DEF1D35BA890926523AA7AC5488C15A48F75B691962EB6624E",
   "Annotations": null
 }

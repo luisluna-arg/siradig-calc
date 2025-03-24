@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SiradigCalc.Application.Dtos;
 using SiradigCalc.Application.Mapping;
 using SiradigCalc.Core.Entities;
 using SiradigCalc.Infra.Persistence.DbContexts;
@@ -11,7 +12,7 @@ public class GetTemplateCatalogQuery() : IRequest<ICollection<Dtos.CatalogDto>>
 }
 
 public class GetTemplateCatalogQueryHandler(ISolutionDbContext dbContext, IDtoMappingService dtoMappingService)
-    : GetCatalogBaseQueryHandler<GetTemplateCatalogQuery, RecordTemplate>(dbContext, dtoMappingService)
+    : GetCatalogBaseQueryHandler<GetTemplateCatalogQuery, RecordTemplate, CatalogDto>(dbContext, dtoMappingService)
 {
     protected override async Task<IEnumerable<RecordTemplate>> GetData(GetTemplateCatalogQuery query, CancellationToken cancellationToken)
         => await DbContext.RecordTemplates

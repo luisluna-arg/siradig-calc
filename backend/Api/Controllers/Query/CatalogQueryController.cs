@@ -12,4 +12,8 @@ public class CatalogQueryController(IMediator mediator) : BaseController(mediato
     [HttpGet("templates")]
     public async Task<IActionResult> GetTemplates()
         => Ok(await Mediator.Send(new GetTemplateCatalogQuery()));
+
+    [HttpGet("field-types")]
+    public async Task<IActionResult> GetFieldTypes()
+        => Ok(await Mediator.Send(new GetRecordFieldTypesCatalogQuery()));
 }
