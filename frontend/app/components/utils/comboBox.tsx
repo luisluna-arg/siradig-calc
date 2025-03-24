@@ -20,45 +20,55 @@ import {
 } from "@/components/ui/popover";
 import { Catalog } from "@/data/interfaces/Catalog";
 
-export interface ComboBoxProps {
-  data: Array<Catalog>;
-  value?: string;
+export interface ComboBoxProps<T extends Object> {
+  data: Array<Catalog<T>>;
+  value?: T;
   name?: string;
   placeholder: string;
   searchPlaceholder: string;
-  onSelect?: ((data?: Catalog | null) => void) | undefined;
+  className?: string | string[];
+  onSelect?: (data?: Catalog<T> | null) => void;
 }
 
-function findDataEntryByValue(data: Array<Catalog>, value?: string) {
+function findDataEntryByValue<T extends Object>(
+  data: Catalog<T>[],
+  value?: T
+): Catalog<T> | undefined {
   return data.find((entry) => entry.id === value);
 }
 
-function findDataEnryByLabel(data: Array<Catalog>, label?: string) {
+function findDataEntryByLabel<T extends Object>(
+  data: Catalog<T>[],
+  label?: string
+): Catalog<T> | undefined {
   return data.find((entry) => entry.label === label);
 }
 
-const ComboBox = ({
+const ComboBox = <T extends Object>({
   data,
   value,
   name,
+  className,
   placeholder = "Select...",
   searchPlaceholder = "Search...",
   onSelect,
-}: ComboBoxProps) => {
+}: ComboBoxProps<T>) => {
   const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState(value);
-  const [comboLabel, setComboValue] = React.useState(
+  const [selectedValue, setSelectedValue] = React.useState<T | undefined>(
+    value
+  );
+  const [comboLabel, setComboLabel] = React.useState(
     findDataEntryByValue(data, value)?.label ?? ""
   );
 
   function privateOnSelect(currentLabel: string) {
-    setComboValue(currentLabel === comboLabel ? "" : currentLabel);
-    const dataEntry = findDataEnryByLabel(data, currentLabel);
+    setComboLabel(currentLabel === comboLabel ? "" : currentLabel);
+    const dataEntry = findDataEntryByLabel(data, currentLabel);
 
     setOpen(false);
 
     if (name) {
-      setSelectedValue(dataEntry?.id);
+      setSelectedValue(dataEntry?.id as T);
     }
 
     if (onSelect) {
@@ -67,16 +77,16 @@ const ComboBox = ({
   }
 
   return (
-    <div>
+    <div className={cn(className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-[200px] justify-between text-black dark:text-white dark:hover:text-black"
           >
-            {findDataEnryByLabel(data, comboLabel)?.label ?? placeholder}
+            {findDataEntryByLabel(data, comboLabel)?.label ?? placeholder}
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -88,7 +98,7 @@ const ComboBox = ({
               <CommandGroup>
                 {data.map((entry) => (
                   <CommandItem
-                    key={entry.id}
+                    key={entry.id.toString()}
                     value={entry.label}
                     onSelect={privateOnSelect}
                   >
@@ -106,7 +116,11 @@ const ComboBox = ({
           </Command>
         </PopoverContent>
       </Popover>
-      {name ? <input type="hidden" name={name} value={selectedValue} /> : <></>}
+      {name ? (
+        <input type="hidden" name={name} value={selectedValue?.toString()} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

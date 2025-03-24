@@ -2,8 +2,8 @@ import { useLoaderData } from "@remix-run/react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TemplateLink } from "@/data/interfaces/TemplateLink";
 import { RecordTemplateFieldLink } from "../data/interfaces/RecordTemplateFieldLink";
-import { Separator } from "./ui/separator";
-import { Label } from "./ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Label } from "@/components/ui/label";
 
 export default function TemplateLinkForm() {
   const data = useLoaderData() as TemplateLink;

@@ -7,7 +7,7 @@ import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
-} from "./ui/navigation-menu";
+} from "@/components/ui/navigation-menu";
 import NavigationTabs from "@/constants/NavigationTabs";
 
 interface LocalLinkProps {
