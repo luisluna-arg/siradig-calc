@@ -4,7 +4,8 @@ import { Record as DataRecord } from "@/data/interfaces/Record";
 import { TemplateLinkReduced } from "@/data/interfaces/TemplateLinkReduced";
 import { RecordConversion } from "@/data/interfaces/RecordConversion";
 import { Catalog } from "@/data/interfaces/Catalog";
-import { RecordPostData } from "@/routeUtils/interfaces/RecordPostData";
+import { RecordPostData } from "@/utils/route/interfaces/RecordPostData";
+import { TemplatePostData } from "@/utils/route/interfaces/TemplatePostData";
 
 export class ApiClient {
   private baseURL: string;
@@ -61,12 +62,23 @@ export class ApiClient {
     );
   }
 
+  public async getTemplates(): Promise<Template> {
+    return await this.get<Template>(`api/records/templates`);
+  }
+
   public async getTemplate(templateId: string): Promise<Template> {
     return await this.get<Template>(`api/records/templates/${templateId}`);
   }
 
-  public async getTemplates(): Promise<Template> {
-    return await this.get<Template>(`api/records/templates`);
+  public async postTemplate(data: TemplatePostData): Promise<DataRecord> {
+    return await this.post(`api/records/templates/`, data);
+  }
+
+  public async putTemplate(
+    id: string,
+    data: TemplatePostData
+  ): Promise<DataRecord> {
+    return await this.put(`api/records/templates/${id}`, data);
   }
 
   public async getRecords(): Promise<DataRecord> {
@@ -124,7 +136,11 @@ export class ApiClient {
     );
   }
 
-  public async getTemplateCatalog(): Promise<Catalog> {
-    return await this.get<Catalog>(`api/catalog/templates`);
+  public async getTemplateCatalog(): Promise<Catalog<string>> {
+    return await this.get<Catalog<string>>(`api/catalog/templates`);
+  }
+
+  public async getFieldTypes(): Promise<Catalog<number>> {
+    return await this.get<Catalog<number>>(`api/catalog/field-types`);
   }
 }
