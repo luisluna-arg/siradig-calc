@@ -5,7 +5,7 @@ import {
   redirect,
 } from "@remix-run/node";
 import { ApiClient } from "@/data/ApiClient";
-import { buildRecordSubmitData } from "@/routeUtils/records";
+import { buildRecordSubmitData } from "@/utils/route/records";
 import { Catalog } from "@/data/interfaces/Catalog";
 import { Template } from "@/data/interfaces/Template";
 import RecordEditForm from "@/components/recordEditForm";

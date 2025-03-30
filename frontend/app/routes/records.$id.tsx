@@ -7,7 +7,7 @@ import {
 } from "@remix-run/node";
 import { ApiClient } from "@/data/ApiClient";
 import { AxiosError } from "axios";
-import { buildRecordSubmitData } from "@/routeUtils/records";
+import { buildRecordSubmitData } from "@/utils/route/records";
 import { Record } from "@/data/interfaces/Record";
 import RecordForm from "@/components/recordForm";
 
