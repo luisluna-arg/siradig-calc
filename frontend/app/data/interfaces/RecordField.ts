@@ -7,7 +7,7 @@ export interface RecordField {
   fieldType: FieldTypeEnum;
   isRequired: boolean;
   links: Array<FieldLink>;
-  createdAt: Date;
-  updatedAt: Date;
-  deleted: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deleted?: boolean;
 }

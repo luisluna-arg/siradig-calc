@@ -5,7 +5,7 @@ export interface TemplateSection {
   name: string,
   description: string,
   fields: Array<RecordField>,
-  createdAt: Date,
-  updatedAt: Date,
-  deleted: boolean
+  createdAt?: Date,
+  updatedAt?: Date,
+  deleted?: boolean
 }

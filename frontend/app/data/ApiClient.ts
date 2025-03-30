@@ -81,6 +81,10 @@ export class ApiClient {
     return await this.put(`api/records/templates/${id}`, data);
   }
 
+  public async deleteTemplate(recordId: string): Promise<any> {
+    return await this.delete(`api/records`, recordId);
+  }
+
   public async getRecords(): Promise<DataRecord> {
     return await this.get<DataRecord>(`api/records`);
   }
@@ -140,7 +144,7 @@ export class ApiClient {
     return await this.get<Catalog<string>>(`api/catalog/templates`);
   }
 
-  public async getFieldTypes(): Promise<Catalog<number>> {
+  public async getFieldTypeCatalog(): Promise<Catalog<number>> {
     return await this.get<Catalog<number>>(`api/catalog/field-types`);
   }
 }
