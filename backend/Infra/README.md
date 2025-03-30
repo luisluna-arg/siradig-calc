@@ -37,17 +37,17 @@ dotnet ef migrations add InitialCreate -o Persistence/Migrations --startup-proje
 Use the following command to update the database to the latest migrations
 
 ```bash
-dotnet ef database update --startup-project --startup-project <StartupProject>
+dotnet ef database update --startup-project <StartupProject>
 ```
 
 Or include the migration name to update the database to that migration.
 THIS A DESTRUCTIVE OPERATION, IF YOU ROLLBACK ALL NEW DATA DEPENDING ON THE CURRENT MODEL WILL BE DESTROYED
 ```bash
-dotnet ef database update <MigrationName> --startup-project --startup-project <StartupProject>
+dotnet ef database update <MigrationName> --startup-project <StartupProject>
 ```
 
 To remove a migrations run the following command
 The migration being removed doesn't have to be applied for this to run, if it is the migration removal will not be applied
 ```bash
-dotnet ef database remove --startup-project --startup-project <StartupProject>
+dotnet ef database remove --startup-project <StartupProject>
 ```

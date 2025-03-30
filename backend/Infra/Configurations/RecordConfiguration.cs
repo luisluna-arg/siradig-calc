@@ -9,6 +9,11 @@ public class RecordConfiguration : IEntityTypeConfiguration<Record>
     public void Configure(EntityTypeBuilder<Record> builder)
     {
         builder
+            .Property(e => e.Id)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("gen_random_uuid()");
+
+        builder
             .HasMany(r => r.ConvertedTo)
             .WithOne(c => c.Source)
             .HasForeignKey(c => c.SourceId)

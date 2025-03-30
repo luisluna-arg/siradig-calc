@@ -9,6 +9,11 @@ public abstract class RecordFieldLinkConfiguration : IEntityTypeConfiguration<Re
     public virtual void Configure(EntityTypeBuilder<RecordTemplateFieldLink> builder)
     {
         builder
+            .Property(e => e.Id)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("gen_random_uuid()");
+
+        builder
             .HasOne(b => b.LeftField)
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict);

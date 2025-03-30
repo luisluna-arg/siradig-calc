@@ -9,6 +9,11 @@ public abstract class RecordValueConfiguration : IEntityTypeConfiguration<Record
     public virtual void Configure(EntityTypeBuilder<RecordValue> builder)
     {
         builder
+            .Property(e => e.Id)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("gen_random_uuid()");
+
+        builder
             .HasOne(r => r.Field)
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict);

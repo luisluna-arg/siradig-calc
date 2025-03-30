@@ -9,6 +9,11 @@ public class RecordTemplateConfiguration : IEntityTypeConfiguration<RecordTempla
     public void Configure(EntityTypeBuilder<RecordTemplate> builder)
     {
         builder
+            .Property(e => e.Id)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("gen_random_uuid()");
+
+        builder
             .HasMany(r => r.Sections)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade);

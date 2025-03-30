@@ -9,6 +9,11 @@ public class RecordTemplateConversionConfiguration : IEntityTypeConfiguration<Re
     public void Configure(EntityTypeBuilder<RecordConversion> builder)
     {
         builder
+            .Property(e => e.Id)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("gen_random_uuid()");
+
+        builder
             .HasOne(rtc => rtc.RecordTemplateLink)
             .WithMany()
             .HasForeignKey(rtc => rtc.RecordTemplateLinkId)

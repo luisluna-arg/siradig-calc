@@ -21,7 +21,11 @@ public partial class SolutionDbContext : DbContext, ISolutionDbContext
     {
         var now = DateTime.UtcNow;
 
-        foreach (var entry in ChangeTracker.Entries())
+        var unchagned = ChangeTracker.Entries().Where(e => e.State == EntityState.Unchanged).ToArray();
+
+        var entries = ChangeTracker.Entries().ToList();
+
+        foreach (var entry in entries)
         {
             if (entry.Entity is IAuditable auditableEntity)
             {
@@ -47,7 +51,7 @@ public partial class SolutionDbContext : DbContext, ISolutionDbContext
     {
         var now = DateTime.UtcNow;
 
-        var entries = ChangeTracker.Entries().ToArray();
+        var entries = ChangeTracker.Entries().ToList();
 
         foreach (var entry in entries)
         {
