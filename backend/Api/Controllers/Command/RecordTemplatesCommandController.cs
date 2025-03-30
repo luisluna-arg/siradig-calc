@@ -13,6 +13,13 @@ public class RecordTemplatesCommandController(IMediator mediator) : BaseControll
     public async Task<IActionResult> CreateRecordTemplate(CreateRecordTemplateCommand command)
         => Ok(await Mediator.Send(command));
 
+    [HttpPut("{recordTemplateId}")]
+    public async Task<IActionResult> UpdateRecordTemplate(Guid recordTemplateId, UpdateRecordTemplateCommand command)
+    {
+        command.Id = recordTemplateId;
+        return Ok(await Mediator.Send(command));
+    }
+
     [HttpDelete("{recordTemplateId}")]
     public async Task<IActionResult> DeleteRecordTemplate(Guid recordTemplateId)
         => Ok(await Mediator.Send(new DeleteRecordTemplateCommand(recordTemplateId)));

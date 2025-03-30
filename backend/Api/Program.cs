@@ -39,10 +39,18 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+var loggerFactory = LoggerFactory.Create(builder =>
+{
+    builder.AddConsole().AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
+});
+
+
 builder.Services
     .AddDbContext<ISolutionDbContext, SolutionDbContext>(opt =>
         opt.UseLazyLoadingProxies(false)
-            .UseNpgsql(builder.Configuration.GetConnectionString("PostgresDb")));
+            .UseNpgsql(builder.Configuration.GetConnectionString("PostgresDb"))
+            .UseLoggerFactory(loggerFactory)
+            .EnableSensitiveDataLogging());
 
 var app = builder.Build();
 
