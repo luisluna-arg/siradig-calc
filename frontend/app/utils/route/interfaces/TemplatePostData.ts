@@ -3,7 +3,6 @@ export interface TemplateFieldPostData {
   label: string;
   fieldType: number;
   isRequired: boolean;
-  placeholder: string;
 }
 
 export interface TemplateSectionPostData {

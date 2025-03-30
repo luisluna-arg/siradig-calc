@@ -23,20 +23,31 @@ export function buildTemplateSubmitData(formData: any) {
   }
 
   let sectionSelector = getSectionSelector(sectionIndex);
-
   while (formData.has(`${sectionSelector}.name`)) {
+    let sectionId = formData.get(`${sectionSelector}.id`);
+    if (sectionId.indexOf("new-") >= 0) {
+      sectionId = undefined;
+    }
+
     const section: TemplateSectionPostData = {
+      id: sectionId,
       name: formData.get(`${sectionSelector}.name`),
       fields: [],
     };
 
     let fieldSelector = getFieldSelector(sectionIndex, fieldIndex);
+
     while (formData.has(`${fieldSelector}.label`)) {
+      let fieldId = formData.get(`${fieldSelector}.id`);
+      if (fieldId.indexOf("new-") >= 0) {
+        fieldId = undefined;
+      }
+
       const field: TemplateFieldPostData = {
-        fieldType: formData.get(`${fieldSelector}.fieldType`),
-        isRequired: formData.get(`${fieldSelector}.isRequired`),
+        id: fieldId,
+        fieldType: parseInt(formData.get(`${fieldSelector}.fieldType`)),
+        isRequired: formData.get(`${fieldSelector}.isRequired`) === "on",
         label: formData.get(`${fieldSelector}.label`),
-        placeholder: formData.get(`${fieldSelector}.placeholder`),
       };
 
       section.fields.push(field);
@@ -44,9 +55,11 @@ export function buildTemplateSubmitData(formData: any) {
       fieldIndex++;
       fieldSelector = getFieldSelector(sectionIndex, fieldIndex);
     }
+
+    postData.sections.push(section);
     fieldIndex = 0;
     sectionIndex++;
-    sectionSelector = getFieldSelector(sectionIndex, fieldIndex);
+    sectionSelector = getSectionSelector(sectionIndex);
   }
 
   return postData;
