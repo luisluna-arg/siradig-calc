@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import ActionButton from "./utils/actionButton";
 import ComboBox from "./utils/comboBox";
 import Hidden from "./utils/hidden";
+import { showToast } from "@/utils/route/form";
 
 /* TOOD There's an error here
  * hmr-runtime:266 Warning: A component is changing a controlled input to be uncontrolled.
@@ -52,12 +53,11 @@ export default function RecordEditForm() {
 
   const [editingRecord, _] = useState(record);
 
-  function onSelect(data?: Catalog | null) {
+  function onSelect(data?: Catalog<string> | null) {
     if (data) {
       setSelectedTemplate(data?.id);
       const url = new URL(window.location.href);
       url.searchParams.set("templateId", data?.id);
-      console.log(`${url.pathname}${url.search}`);
       navigate(`${url.pathname}${url.search}`);
     }
   }
@@ -75,21 +75,7 @@ export default function RecordEditForm() {
 
   useEffect(() => {
     if ((actionData && actionData.status !== 200) || actionData?.errorData) {
-      console.log(actionData);
-      let description = `${actionData?.title ?? ""}`;
-      description += `${actionData?.statusText ?? ""}`;
-      if (actionData?.errorData?.errors) {
-        description += `${Object.keys(actionData?.errorData?.errors)?.map(
-          (k: any) =>
-            `\n\t${k}: ${JSON.stringify(actionData?.errorData?.errors[k])}`
-        )}`;
-      }
-      toast({
-        title: "Error during Submit operation",
-        description: description,
-        variant: "destructive",
-        duration: Infinity,
-      });
+      showToast(toast, actionData);
     }
   }, [actionData, toast]); // Runs only when `error` changes
 
@@ -184,43 +170,45 @@ const Section = ({
   sectionIndex,
   className,
   editingRecord,
-}: LocalLinkProps) => (
-  <div className={className}>
-    <h2>{section.name}</h2>
-    <hr className={cn(["pb-4"])} />
-    <table>
-      <tbody>
-        {section.fields.map((f, i) => {
-          const fieldValue = editingRecord?.values.find(
-            (v) => v.fieldId == f.id
-          );
-          let value = fieldValue?.value;
-          return (
-            <tr key={f.id} className={cn(["h-12"])}>
-              <td className={"w-80"}>
-                <Label htmlFor={`section[${sectionIndex}].values[${i}].value`}>
-                  {f.label}
-                </Label>
-              </td>
-              <td className={"w-80"}>
-                <Hidden
-                  name={`section[${sectionIndex}].values[${i}].valueId`}
-                  defaultValue={fieldValue?.id}
-                />
-                <Hidden
-                  name={`section[${sectionIndex}].values[${i}].fieldId`}
-                  defaultValue={fieldValue?.fieldId}
-                />
-                <Input
-                  type="text"
-                  name={`section[${sectionIndex}].values[${i}].value`}
-                  defaultValue={value}
-                />
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  </div>
-);
+}: LocalLinkProps) => {
+  const getInputName = (valueIndex: number, attribute: string) =>
+    `section[${sectionIndex}].values[${valueIndex}].${attribute}`;
+  return (
+    <div className={className}>
+      <h2>{section.name}</h2>
+      <hr className={cn(["pb-4"])} />
+      <table>
+        <tbody>
+          {section.fields.map((f, i) => {
+            const fieldValue = editingRecord?.values.find(
+              (v) => v.fieldId == f.id
+            );
+            let value = fieldValue?.value;
+            return (
+              <tr key={f.id} className={cn(["h-12"])}>
+                <td className={"w-80"}>
+                  <Label htmlFor={getInputName(i, `value`)}>{f.label}</Label>
+                </td>
+                <td className={"w-80"}>
+                  <Hidden
+                    name={getInputName(i, `valueId`)}
+                    defaultValue={fieldValue?.id}
+                  />
+                  <Hidden
+                    name={getInputName(i, `fieldId`)}
+                    defaultValue={fieldValue?.fieldId}
+                  />
+                  <Input
+                    type="text"
+                    name={getInputName(i, `value`)}
+                    defaultValue={value}
+                  />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
