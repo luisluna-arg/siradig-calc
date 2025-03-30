@@ -33,7 +33,6 @@ public class LinkFieldTemplatesCommandHandler(ISolutionDbContext dbContext)
 
         var newLink = new RecordTemplateFieldLink()
         {
-            Id = Guid.NewGuid(),
             TemplateLink = templateLink,
             RightFieldId = request.RightFieldId,
             LeftFieldId = request.LeftFieldId,

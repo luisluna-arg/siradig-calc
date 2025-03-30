@@ -18,7 +18,6 @@ public class CreateRecordValueCommandHandler(ISolutionDbContext dbContext)
     {
         var value = new RecordValue
         {
-            Id = Guid.NewGuid(),
             RecordId = command.RecordId,
             FieldId = command.FieldId,
             Value = command.Value

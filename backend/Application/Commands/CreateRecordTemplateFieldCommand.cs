@@ -24,14 +24,13 @@ public class CreateRecordFieldCommandHandler(ISolutionDbContext dbContext)
     public async Task<Guid> Handle(CreateRecordTemplateFieldCommand command, CancellationToken cancellationToken)
     {
         var section = await (from t in dbContext.RecordTemplates
-            where t.Id == command.RecordTemplateId
-            from s in t.Sections
-            where s.Id == command.RecordTemplateSectionId
-            select s).SingleAsync(cancellationToken);
+                             where t.Id == command.RecordTemplateId
+                             from s in t.Sections
+                             where s.Id == command.RecordTemplateSectionId
+                             select s).SingleAsync(cancellationToken);
 
         var newField = new RecordTemplateField
         {
-            Id = Guid.NewGuid(),
             Label = command.Label,
             FieldType = (FieldType)command.FieldType,
             IsRequired = command.IsRequired

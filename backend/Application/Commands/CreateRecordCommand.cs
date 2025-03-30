@@ -18,12 +18,10 @@ public class CreateRecordCommandHandler(ISolutionDbContext dbContext)
     public async virtual Task<Guid> Handle(CreateRecordCommand command, CancellationToken cancellationToken)
     {
         var entity = new Record();
-        entity.Id = Guid.NewGuid();
         entity.TemplateId = command.TemplateId;
         entity.Title = command.Title;
         entity.Values = command.Values.Select(v => new RecordValue
         {
-            Id = Guid.NewGuid(),
             FieldId = v.FieldId,
             Value = v.Value,
         }).ToList();

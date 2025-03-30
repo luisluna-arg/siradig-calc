@@ -24,6 +24,6 @@ public class UpdateRecordCommandValidator
             .WithMessage("TemplateId is required.")
             .MustAsync(async (templateId, cancellationToken) =>
                 await dbContext.RecordTemplates.AnyAsync(t => t.Id.Equals(templateId)))
-            .WithMessage("The provided TemplateId does not exist in the database.");
+            .WithMessage("The provided TemplateId does not exist.");
     }
 }

@@ -23,7 +23,7 @@ public class CreateRecordCommandValidator : AbstractValidator<CreateRecordComman
             .WithMessage("TemplateId is required.")
             .MustAsync(async (templateId, cancellationToken) =>
                 await dbContext.RecordTemplates.AnyAsync(t => t.Id == templateId))
-            .WithMessage("The provided TemplateId does not exist in the database.");
+            .WithMessage("The provided TemplateId does not exist.");
 
         RuleFor(c => c.Values)
             .Cascade(CascadeMode.Stop)

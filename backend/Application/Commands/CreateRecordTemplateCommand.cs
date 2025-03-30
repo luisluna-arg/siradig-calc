@@ -20,22 +20,19 @@ public class CreateRecordTemplateCommandHandler(ISolutionDbContext dbContext)
     {
         var fieldContainerTemplate = new RecordTemplate
         {
-            Id = Guid.NewGuid(),
             Name = command.Name,
             Description = command.Description,
             Sections = command.Sections.Select(f => new RecordTemplateSection
             {
-                Id = Guid.NewGuid(),
                 Name = f.Name,
                 Fields = f.Fields.Select(f => new RecordTemplateField()
                 {
-                    Id = Guid.NewGuid(),
                     Label = f.Label,
                     FieldType = (FieldType)f.FieldType,
                     IsRequired = f.IsRequired
                 }).ToArray()
             }).ToList()
-        };;
+        }; ;
 
         dbContext.RecordTemplates.Add(fieldContainerTemplate);
         await dbContext.SaveChangesAsync();

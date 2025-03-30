@@ -25,11 +25,9 @@ public class CreateRecordTemplateSectionCommandHandler(ISolutionDbContext dbCont
 
         var newField = new RecordTemplateSection
         {
-            Id = Guid.NewGuid(),
             Name = command.Name,
             Fields = command.Fields.Select(f => new RecordTemplateField()
             {
-                Id = Guid.NewGuid(),
                 Label = f.Label,
                 FieldType = (FieldType)f.FieldType,
                 IsRequired = f.IsRequired
