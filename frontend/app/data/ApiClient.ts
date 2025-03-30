@@ -81,8 +81,8 @@ export class ApiClient {
     return await this.put(`api/records/templates/${id}`, data);
   }
 
-  public async deleteTemplate(recordId: string): Promise<any> {
-    return await this.delete(`api/records`, recordId);
+  public async deleteTemplate(id: string): Promise<any> {
+    return await this.delete(`api/records/templates`, id);
   }
 
   public async getRecords(): Promise<DataRecord> {
