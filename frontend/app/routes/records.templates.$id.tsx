@@ -6,7 +6,7 @@ import {
   redirect,
 } from "@remix-run/node";
 import Template from "@/components/templateForm";
-import { ApiClient } from "@/data/ApiClient";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
 import { AxiosError } from "axios";
 import { buildTemplateSubmitData } from "@/utils/route/templates";
 
@@ -19,15 +19,15 @@ export const loader: LoaderFunction = async ({
   const url = new URL(request.url);
   const searchParams = url.searchParams;
 
-  let apiClient = new ApiClient();
+  let apiClient = new ApiClientProvider();
 
   const queries = [];
 
   const isEdit = searchParams.get("edit") ?? false;
 
-  queries.push(apiClient.getTemplate(templateId!));
+  queries.push(apiClient.Templates.get(templateId!));
 
-  queries.push(apiClient.getFieldTypeCatalog());
+  queries.push(apiClient.Catalogs.getFieldTypes());
 
   const [template, fieldTypeCatalog] = await Promise.all(queries);
 
@@ -44,13 +44,13 @@ export async function action({ request }: ActionFunctionArgs) {
   const templateId = formData.get("id");
   const submitData = buildTemplateSubmitData(formData);
 
-  let apiClient = new ApiClient();
+  let apiClient = new ApiClientProvider();
 
   try {
     if (templateId) {
-      await apiClient.putTemplate(templateId, submitData);
+      await apiClient.Templates.put(templateId, submitData);
     } else {
-      await apiClient.postTemplate(submitData);
+      await apiClient.Templates.post(submitData);
     }
   } catch (error) {
     const axiosError = error as AxiosError;

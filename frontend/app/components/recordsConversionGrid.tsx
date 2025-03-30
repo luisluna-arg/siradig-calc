@@ -2,7 +2,6 @@ import { useLoaderData } from "@remix-run/react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -13,18 +12,18 @@ import { useNavigate } from "@remix-run/react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Trash2Icon } from "lucide-react";
-import { ApiClient } from "@/data/ApiClient";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
 import { RecordConversion } from "@/data/interfaces/RecordConversion";
 
 export default function ConversionsGrid() {
-  const apiClient = new ApiClient();
+  const apiClient = new ApiClientProvider();
   const { toast } = useToast();
   const navigate = useNavigate();
   const data = useLoaderData() as Array<RecordConversion>;
 
   const handleDelete = async (sourceId: string, conversionId: string) => {
     try {
-      await apiClient.deleteConversion(sourceId, conversionId);
+      await apiClient.Conversions.deleteByIds(sourceId, conversionId);
       navigate(`/records/conversions`);
     } catch (error: any) {
       toast({
@@ -52,7 +51,9 @@ export default function ConversionsGrid() {
             <TableHead className={cn(["w-auto"])}>Template</TableHead>
             <TableHead className={cn(["w-auto"])}>Title</TableHead>
             <TableHead className={cn(["w-60"])}>Description</TableHead>
-            <TableHead className={cn(["w-auto", "border-l"])}>Template</TableHead>
+            <TableHead className={cn(["w-auto", "border-l"])}>
+              Template
+            </TableHead>
             <TableHead className={cn(["w-auto"])}>Title</TableHead>
             <TableHead className={cn(["w-60"])}>Description</TableHead>
             <TableHead className={cn(["w-auto", "border-l"])}></TableHead>

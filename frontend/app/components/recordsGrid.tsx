@@ -12,11 +12,11 @@ import { useToast } from "@/hooks/use-toast";
 import { Record } from "@/data/interfaces/Record";
 import { useNavigate } from "@remix-run/react";
 import { cn } from "@/lib/utils";
-import { ApiClient } from "@/data/ApiClient";
-import ActionButton from "./utils/actionButton";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
+import ActionButton from "@/components/utils/actionButton";
 
 export default function RecordsGrid() {
-  const apiClient = new ApiClient();
+  const apiClient = new ApiClientProvider();
   const data = useLoaderData() as Array<Record>;
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function RecordsGrid() {
 
   const handleDelete = async (id: string) => {
     try {
-      await apiClient.deleteRecord(id);
+      await apiClient.Records.delete(id);
       navigate(`/records`);
     } catch (error: any) {
       toast({

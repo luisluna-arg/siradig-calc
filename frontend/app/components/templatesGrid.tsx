@@ -8,18 +8,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import ActionButton from "./utils/actionButton";
+import ActionButton from "@/components/utils/actionButton";
 import { useToast } from "@/hooks/use-toast";
-import { Template } from "../data/interfaces/Template";
+import { Template } from "@/data/interfaces/Template";
 import { useNavigate } from "@remix-run/react";
 import { cn } from "@/lib/utils";
-import { ApiClient } from "@/data/ApiClient";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
 
 export default function TemplatesGrid() {
   const data = useLoaderData() as Array<Template>;
   const navigate = useNavigate();
   const { toast } = useToast();
-  const apiClient = new ApiClient();
+  const apiClient = new ApiClientProvider();
 
   const baseRoute = "/records/templates";
 
@@ -33,7 +33,7 @@ export default function TemplatesGrid() {
 
   const handleDelete = async (id: string) => {
     try {
-      await apiClient.deleteTemplate(id);
+      await apiClient.Templates.delete(id);
       navigate(`${baseRoute}`);
     } catch (error: any) {
       toast({

@@ -1,18 +1,18 @@
 import { MetaFunction, type LoaderFunction } from "@remix-run/node";
 import TemplateLinkForm from "@/components/templateLinkForm";
-import { ApiClient } from "@/data/ApiClient";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { leftTemplateId, rightTemplateId } = params;
-  let apiClient = new ApiClient();
-  return await apiClient.getTemplateLink(leftTemplateId!, rightTemplateId!);
+  let apiClient = new ApiClientProvider();
+  return await apiClient.TemplateLinks.getByIds(
+    leftTemplateId!,
+    rightTemplateId!
+  );
 };
 
-
 export const meta: MetaFunction = () => {
-  return [
-    { title: "Template Link" },
-  ];
+  return [{ title: "Template Link" }];
 };
 
 export default TemplateLinkForm;

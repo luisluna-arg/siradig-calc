@@ -4,14 +4,14 @@ import {
   MetaFunction,
   redirect,
 } from "@remix-run/node";
-import { ApiClient } from "@/data/ApiClient";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
 import { buildRecordSubmitData } from "@/utils/route/records";
 import { Catalog } from "@/data/interfaces/Catalog";
 import { Template } from "@/data/interfaces/Template";
 import RecordEditForm from "@/components/recordEditForm";
 
 export interface RecordsAddLoaderData {
-  templateCatalog: Array<Catalog>;
+  templateCatalog: Array<Catalog<string>>;
   template: Template;
 }
 
@@ -19,13 +19,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const templateId = url.searchParams.get("templateId") as string;
 
-  let apiClient = new ApiClient();
+  let apiClient = new ApiClientProvider();
 
   const queries = [];
-  queries.push(apiClient.getTemplateCatalog());
+  queries.push(apiClient.Catalogs.getTemplates());
 
   if (templateId) {
-    queries.push(apiClient.getTemplate(templateId));
+    queries.push(apiClient.Templates.get(templateId));
   }
 
   const [templateCatalog, template] = await Promise.all(queries);
@@ -41,9 +41,9 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const postData = buildRecordSubmitData(formData);
 
-  let apiClient = new ApiClient();
+  let apiClient = new ApiClientProvider();
 
-  await apiClient.postRecord(postData);
+  await apiClient.Records.post(postData);
 
   return redirect("/records");
 }

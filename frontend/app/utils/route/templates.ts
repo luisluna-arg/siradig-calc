@@ -2,7 +2,7 @@ import {
   TemplateFieldPostData,
   TemplatePostData,
   TemplateSectionPostData,
-} from "./interfaces/TemplatePostData";
+} from "@/utils/route/interfaces/TemplatePostData";
 
 export function buildTemplateSubmitData(formData: any) {
   let postData: TemplatePostData = {

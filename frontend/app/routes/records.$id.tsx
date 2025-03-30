@@ -5,7 +5,7 @@ import {
   redirect,
   type LoaderFunction,
 } from "@remix-run/node";
-import { ApiClient } from "@/data/ApiClient";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
 import { AxiosError } from "axios";
 import { buildRecordSubmitData } from "@/utils/route/records";
 import { Record } from "@/data/interfaces/Record";
@@ -20,18 +20,18 @@ export const loader: LoaderFunction = async ({
   const url = new URL(request.url);
   const searchParams = url.searchParams;
 
-  const apiClient = new ApiClient();
+  const apiClient = new ApiClientProvider();
 
   const queries = [];
 
   const isEdit = searchParams.get("edit") ?? false;
   const templateId = url.searchParams.get("templateId") as string;
 
-  queries.push(apiClient.getRecord(recordId!));
-  queries.push(apiClient.getTemplateCatalog());
+  queries.push(apiClient.Records.get(recordId!));
+  queries.push(apiClient.Catalogs.getTemplates());
 
   if (templateId) {
-    queries.push(apiClient.getTemplate(templateId));
+    queries.push(apiClient.Templates.get(templateId));
   }
 
   const [record, templateCatalog, template] = await Promise.all(queries);
@@ -50,13 +50,13 @@ export async function action({ request }: ActionFunctionArgs) {
   const recordId = formData.get("id");
   const submitData = buildRecordSubmitData(formData);
 
-  let apiClient = new ApiClient();
+  let apiClient = new ApiClientProvider();
 
   try {
     if (recordId) {
-      await apiClient.putRecord(recordId, submitData);
+      await apiClient.Records.put(recordId, submitData);
     } else {
-      await apiClient.postRecord(submitData);
+      await apiClient.Records.post(submitData);
     }
   } catch (error) {
     const axiosError = error as AxiosError;

@@ -10,7 +10,7 @@ import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 
 import "@/styles/tailwind.css";
 
-import tailwindStylesheetUrl from "./styles/tailwind.css?url";
+import tailwindStylesheetUrl from "@/styles/tailwind.css?url";
 
 import clsx from "clsx";
 import {
@@ -19,9 +19,9 @@ import {
   useTheme,
 } from "remix-themes";
 
-import { themeSessionResolver } from "./sessions.server";
-import { Toolbar } from "./components/toolbar";
-import { Toaster } from "./components/ui/toaster";
+import { themeSessionResolver } from "@/sessions.server";
+import { Toolbar } from "@/components/toolbar";
+import { Toaster } from "@/components/ui/toaster";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const { getTheme } = await themeSessionResolver(request);

@@ -1,15 +1,15 @@
 import { ActionFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
-import { ApiClient } from "@/data/ApiClient";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
 import TemplateEditForm from "@/components/templateEditForm";
 import { buildTemplateSubmitData } from "@/utils/route/templates";
 
 export interface TempplatesAddLoaderData {}
 
 export const loader = async () => {
-  let apiClient = new ApiClient();
+  let apiClient = new ApiClientProvider();
 
   const queries = [];
-  queries.push(apiClient.getFieldTypeCatalog());
+  queries.push(apiClient.Catalogs.getFieldTypes());
 
   const [fieldTypeCatalog] = await Promise.all(queries);
 
@@ -24,9 +24,9 @@ export async function action({ request }: ActionFunctionArgs) {
   const postData = buildTemplateSubmitData(formData);
 
   try {
-    let apiClient = new ApiClient();
+    let apiClient = new ApiClientProvider();
 
-    await apiClient.postTemplate(postData);
+    await apiClient.Templates.post(postData);
 
     return redirect("/records/templates");
   } catch (error: any) {

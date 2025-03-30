@@ -13,9 +13,9 @@ import { Label } from "@/components/ui/label";
 import { Record as DataRecord } from "@/data/interfaces/Record";
 import { Template } from "@/data/interfaces/Template";
 import { useToast } from "@/hooks/use-toast";
-import ActionButton from "./utils/actionButton";
-import ComboBox from "./utils/comboBox";
-import Hidden from "./utils/hidden";
+import ActionButton from "@/components/utils/actionButton";
+import ComboBox from "@/components/utils/comboBox";
+import Hidden from "@/components/utils/hidden";
 import { showToast } from "@/utils/route/form";
 
 /* TOOD There's an error here

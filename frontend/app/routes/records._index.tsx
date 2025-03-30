@@ -1,10 +1,10 @@
 import { MetaFunction, type LoaderFunction } from "@remix-run/node";
 import RecordsGrid from "@/components/recordsGrid";
-import { ApiClient } from "@/data/ApiClient";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
 
 export const loader: LoaderFunction = async () => {
-  let apiClient = new ApiClient();
-  return await apiClient.getRecords();
+  let apiClient = new ApiClientProvider();
+  return await apiClient.Records.get();
 };
 
 const metaData = { title: "Records" };

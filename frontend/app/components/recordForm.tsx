@@ -1,6 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
-import RecordDisplay from "./recordDisplay";
-import RecordEditForm from "./recordEditForm";
+import RecordDisplay from "@/components/recordDisplay";
+import RecordEditForm from "@/components/recordEditForm";
 
 export default function RecordForm() {
   const { isEdit } = useLoaderData() as {

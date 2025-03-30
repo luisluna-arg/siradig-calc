@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ComboBox from "@/components/utils/comboBox";
 import Hidden from "@/components/utils/hidden";
-import ActionButton from "./utils/actionButton";
+import ActionButton from "@/components/utils/actionButton";
 import { FieldTypeEnum } from "@/data/types/FieldType";
 
 interface LocalLinkProps {

@@ -1,6 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
-import TemplateEditForm from "./templateEditForm";
-import TemplateDisplay from "./templateDisplay";
+import TemplateEditForm from "@/components/templateEditForm";
+import TemplateDisplay from "@/components/templateDisplay";
 
 export default function TemplateForm() {
   const { isEdit } = useLoaderData() as {

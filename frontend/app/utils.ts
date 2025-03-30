@@ -1,4 +1,4 @@
-import { TypedRouteMatch } from "./types";
+import { TypedRouteMatch } from "@/types";
 
 export function hasHandleWithTitle(
   match: any
