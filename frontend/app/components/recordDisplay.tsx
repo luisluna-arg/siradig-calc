@@ -1,9 +1,10 @@
 import { useLoaderData } from "@remix-run/react";
 import { Record as DataRecord } from "@/data/interfaces/Record";
+import { TemplateSection } from "@/data/interfaces/TemplateSection";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { TemplateSection } from "@/data/interfaces/TemplateSection";
 
 export default function RecordDisplay() {
   const { record } = useLoaderData() as {
@@ -96,7 +97,7 @@ const Section = ({
 }: LocalLinkProps) => (
   <div className={className}>
     <h2>{section.name}</h2>
-    <hr className={cn(["pb-4"])} />
+    <Separator className={cn(["pb-4"])} />
     <table>
       <tbody>
         {section.fields.map((f, i) => {

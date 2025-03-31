@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { cn } from "@/lib/utils";
-import { showToast } from "@/utils/route/form";
-import { Catalog } from "@/data/interfaces/Catalog";
-import { Template } from "@/data/interfaces/Template";
-import { TemplateSection } from "@/data/interfaces/TemplateSection";
-import { RecordField } from "@/data/interfaces/RecordField";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ComboBox } from "@/components/utils/comboBox";
+import { Hidden } from "@/components/utils/hidden";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import ComboBox from "@/components/utils/comboBox";
-import Hidden from "@/components/utils/hidden";
+import { Separator } from "@/components/ui/separator";
+import { Catalog } from "@/data/interfaces/Catalog";
+import { RecordField } from "@/data/interfaces/RecordField";
+import { Template } from "@/data/interfaces/Template";
+import { TemplateSection } from "@/data/interfaces/TemplateSection";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+import { showToast } from "@/utils/route/form";
 
 interface LocalLinkProps {
   className?: string;
@@ -65,7 +66,7 @@ export default function TemplateDisplay() {
     <div className={cn(["flex", "justify-center", fontsClass])}>
       <Form ref={formRef} method={"post"}>
         <Hidden name={`id`} defaultValue={editingTemplate?.id} />
-        <hr />
+        <Separator />
         <div className={cn(twoColumnGridClass)}>
           <LabelInput
             id="name"
@@ -80,7 +81,7 @@ export default function TemplateDisplay() {
             defaultValue={editingTemplate?.description}
           />
         </div>
-        <hr />
+        <Separator />
         <div className={cn(verticalMargin4Class, titleClass)}>Sections</div>
         {editingTemplate?.sections.map((s, i) => {
           return (
@@ -167,7 +168,7 @@ const Field = ({
         name={getInputName("fieldType")}
         label={"Type"}
         fieldTypeCatalog={fieldTypeCatalog}
-        selectedType={field.fieldType}
+        selectedType={field.fieldType.id}
       />
     </div>
   );
@@ -216,7 +217,12 @@ const LabelCheckbox = ({
       className={cn("flex", "flex-col", "mt-2", "ml-4", gapClass, className)}
     >
       <Label htmlFor={name}>{label}</Label>
-      <Checkbox name={name} defaultChecked={checked} className={"mt-1"} disabled={true} />
+      <Checkbox
+        name={name}
+        defaultChecked={checked}
+        className={"mt-1"}
+        disabled={true}
+      />
     </div>
   );
 };

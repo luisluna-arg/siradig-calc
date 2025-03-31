@@ -5,17 +5,18 @@ import {
   useLoaderData,
   useNavigate,
 } from "@remix-run/react";
-import { cn } from "@/lib/utils";
-import { Catalog } from "@/data/interfaces/Catalog";
-import { TemplateSection } from "@/data/interfaces/TemplateSection";
+import { ActionButton } from "@/components/utils/actionButton";
+import { ComboBox } from "@/components/utils/comboBox";
+import { Hidden } from "@/components/utils/hidden";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Catalog } from "@/data/interfaces/Catalog";
 import { Record as DataRecord } from "@/data/interfaces/Record";
 import { Template } from "@/data/interfaces/Template";
+import { TemplateSection } from "@/data/interfaces/TemplateSection";
 import { useToast } from "@/hooks/use-toast";
-import ActionButton from "@/components/utils/actionButton";
-import ComboBox from "@/components/utils/comboBox";
-import Hidden from "@/components/utils/hidden";
+import { cn } from "@/lib/utils";
 import { showToast } from "@/utils/route/form";
 
 /* TOOD There's an error here
@@ -176,7 +177,7 @@ const Section = ({
   return (
     <div className={className}>
       <h2>{section.name}</h2>
-      <hr className={cn(["pb-4"])} />
+      <Separator className={cn(["pb-4"])} />
       <table>
         <tbody>
           {section.fields.map((f, i) => {

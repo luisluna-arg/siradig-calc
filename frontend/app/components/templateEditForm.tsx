@@ -1,20 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { cn } from "@/lib/utils";
-import { showToast } from "@/utils/route/form";
-import { Catalog } from "@/data/interfaces/Catalog";
-import { Template } from "@/data/interfaces/Template";
-import { TemplateSection } from "@/data/interfaces/TemplateSection";
-import { RecordField } from "@/data/interfaces/RecordField";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import ComboBox from "@/components/utils/comboBox";
-import Hidden from "@/components/utils/hidden";
-import ActionButton from "@/components/utils/actionButton";
+import { Separator } from "@/components/ui/separator";
+import { ActionButton } from "@/components/utils/actionButton";
+import { ComboBox } from "@/components/utils/comboBox";
+import { Hidden } from "@/components/utils/hidden";
+import { Catalog } from "@/data/interfaces/Catalog";
+import { Template } from "@/data/interfaces/Template";
+import { TemplateSection } from "@/data/interfaces/TemplateSection";
+import { RecordField } from "@/data/interfaces/RecordField";
 import { FieldTypeEnum } from "@/data/types/FieldType";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+import { showToast } from "@/utils/route/form";
 
 interface LocalLinkProps {
   className?: string;
@@ -121,7 +122,10 @@ export default function RecordEditForm() {
       id: `new-field-${Date.now()}`,
       label: "",
       isRequired: false,
-      fieldType: FieldTypeEnum.Text,
+      fieldType: {
+        id: FieldTypeEnum.Text,
+        name: "Text",
+      },
       links: [],
     };
 
@@ -185,7 +189,7 @@ export default function RecordEditForm() {
             <ActionButton type="submit" text="Submit" />
           </div>
         </div>
-        <hr />
+        <Separator />
         <div className={cn(twoColumnGridClass)}>
           <LabelInput
             id="name"
@@ -200,7 +204,7 @@ export default function RecordEditForm() {
             defaultValue={editingTemplate?.description}
           />
         </div>
-        <hr />
+        <Separator />
         <div className={cn(verticalMargin4Class, titleClass)}>Sections</div>
         {editingTemplate?.sections.map((s, i) => {
           return (
@@ -333,7 +337,7 @@ const Field = ({
         name={getInputName("fieldType")}
         label={"Type"}
         fieldTypeCatalog={fieldTypeCatalog}
-        selectedType={field.fieldType}
+        selectedType={field.fieldType.id}
       />
       <div className={cn(marginLeft2Class, "mt-8")}>
         <ActionButton
