@@ -196,7 +196,7 @@ const Section = ({
                   />
                   <Hidden
                     name={getInputName(i, `fieldId`)}
-                    defaultValue={fieldValue?.fieldId}
+                    defaultValue={f?.id}
                   />
                   <Input
                     type="text"
