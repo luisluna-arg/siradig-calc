@@ -408,7 +408,6 @@ const LabelComboBox = ({
   selectedType: number;
   fieldTypeCatalog: Array<Catalog<number>>;
 }) => {
-  console.log(selectedType);
   return (
     <div
       className={cn("flex", "flex-col", "mt-2", "ml-4", gapClass, className)}

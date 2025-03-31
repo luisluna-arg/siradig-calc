@@ -27,6 +27,7 @@ export interface ComboBoxProps<T extends Object> {
   placeholder: string;
   searchPlaceholder: string;
   className?: string | string[];
+  disabled?: boolean;
   onSelect?: (data?: Catalog<T> | null) => void;
 }
 
@@ -51,6 +52,7 @@ const ComboBox = <T extends Object>({
   className,
   placeholder = "Select...",
   searchPlaceholder = "Search...",
+  disabled = false,
   onSelect,
 }: ComboBoxProps<T>) => {
   const [open, setOpen] = React.useState(false);
@@ -84,6 +86,7 @@ const ComboBox = <T extends Object>({
             variant="outline"
             role="combobox"
             aria-expanded={open}
+            disabled={disabled}
             className="w-[200px] justify-between text-black dark:text-white dark:hover:text-black"
           >
             {findDataEntryByLabel(data, comboLabel)?.label ?? placeholder}
@@ -101,6 +104,7 @@ const ComboBox = <T extends Object>({
                     key={entry.id.toString()}
                     value={entry.label}
                     onSelect={privateOnSelect}
+                    disabled={disabled}
                   >
                     {entry.label}
                     <Check
