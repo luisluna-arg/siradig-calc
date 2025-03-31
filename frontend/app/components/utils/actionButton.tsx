@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import {
   CirclePlus,
   Eraser,
@@ -7,6 +5,8 @@ import {
   SendHorizonal,
   Trash2Icon,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export type ActionButtonType = "add" | "edit" | "delete" | "submit" | "clear";
 
@@ -39,7 +39,7 @@ export interface ActionButtonProps {
   text?: string;
 }
 
-const ActionButton = ({ type, text, onClick }: ActionButtonProps) => {
+export function ActionButton({ type, text, onClick }: ActionButtonProps) {
   const icon = icons[type];
 
   const classes = buttonClasses[type];
@@ -55,6 +55,4 @@ const ActionButton = ({ type, text, onClick }: ActionButtonProps) => {
       {icon} {text ?? ""}
     </Button>
   );
-};
-
-export default ActionButton;
+}

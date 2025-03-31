@@ -1,9 +1,6 @@
 "use client";
-
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -19,6 +16,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Catalog } from "@/data/interfaces/Catalog";
+import { cn } from "@/lib/utils";
 
 export interface ComboBoxProps<T extends Object> {
   data: Array<Catalog<T>>;
@@ -45,7 +43,7 @@ function findDataEntryByLabel<T extends Object>(
   return data.find((entry) => entry.label === label);
 }
 
-const ComboBox = <T extends Object>({
+export function ComboBox<T extends Object>({
   data,
   value,
   name,
@@ -54,7 +52,7 @@ const ComboBox = <T extends Object>({
   searchPlaceholder = "Search...",
   disabled = false,
   onSelect,
-}: ComboBoxProps<T>) => {
+}: ComboBoxProps<T>) {
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState<T | undefined>(
     value
@@ -127,6 +125,4 @@ const ComboBox = <T extends Object>({
       )}
     </div>
   );
-};
-
-export default ComboBox;
+}

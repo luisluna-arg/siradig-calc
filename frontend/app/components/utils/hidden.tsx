@@ -3,8 +3,6 @@ export interface ActionButtonProps {
   defaultValue?: string;
 }
 
-const Hidden = ({ name, defaultValue }: ActionButtonProps) => {
+export function Hidden({ name, defaultValue }: ActionButtonProps) {
   return <input type="hidden" name={name} defaultValue={defaultValue} />;
-};
-
-export default Hidden;
+}
