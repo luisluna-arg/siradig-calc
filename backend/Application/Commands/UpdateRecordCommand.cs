@@ -33,6 +33,11 @@ public class UpdateRecordCommandHandler(ISolutionDbContext dbContext)
             .Where(existing => !updatedValues.Any(updated => updated.Id == existing.Id))
             .ToList();
 
+        foreach (var value in valuesToDelete)
+        {
+            entity.Values.Remove(value);
+        }
+
         var tagsToAdd = updatedValues
             .Where(updated => updated.Id == Guid.Empty)
             .ToList();
