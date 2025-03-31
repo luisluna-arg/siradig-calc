@@ -1,10 +1,10 @@
-import { FieldTypeEnum } from "@/data/types/FieldType";
 import { FieldLink } from "@/data/interfaces/FieldLink";
+import { FieldType } from "@/data/types/FieldType";
 
 export interface RecordField {
   id: string;
   label: string;
-  fieldType: FieldTypeEnum;
+  fieldType: FieldType;
   isRequired: boolean;
   links: Array<FieldLink>;
   createdAt?: Date;
