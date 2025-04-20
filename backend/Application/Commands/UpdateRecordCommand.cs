@@ -27,10 +27,10 @@ public class UpdateRecordCommandHandler(ISolutionDbContext dbContext)
         entity.TemplateId = command.TemplateId;
         entity.Title = command.Title;
 
-        var updatedValues = command.Values ?? [];
+        var commandValues = command.Values ?? [];
 
         var valuesToDelete = entity.Values
-            .Where(existing => !updatedValues.Any(updated => updated.Id == existing.Id))
+            .Where(existing => !commandValues.Any(updated => updated.Id == existing.Id))
             .ToList();
 
         foreach (var value in valuesToDelete)
@@ -38,16 +38,17 @@ public class UpdateRecordCommandHandler(ISolutionDbContext dbContext)
             entity.Values.Remove(value);
         }
 
-        var tagsToAdd = updatedValues
-            .Where(updated => updated.Id == Guid.Empty)
-            .ToList();
+        foreach (var valueToAdd in commandValues.Where(newValue => newValue.Id == Guid.Empty))
+        {
+            entity.Values.Add(new() { FieldId = valueToAdd.FieldId, Value = valueToAdd.Value });
+        }
 
         foreach (var existingValue in entity.Values)
         {
-            var updatedTag = updatedValues.FirstOrDefault(updated => updated.Id == existingValue.Id);
-            if (updatedTag != null)
+            var updatedValue = commandValues.FirstOrDefault(updated => updated.Id == existingValue.Id);
+            if (updatedValue != null)
             {
-                existingValue.Value = updatedTag.Value;
+                existingValue.Value = updatedValue.Value;
             }
         }
 
