@@ -5,7 +5,7 @@ import {
   ActionFunctionArgs,
   redirect,
 } from "@remix-run/node";
-import Template from "@/components/templateForm";
+import Template from "@/components/forms/template/templateForm";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
 import { AxiosError } from "axios";
 import { buildTemplateSubmitData } from "@/utils/route/templates";

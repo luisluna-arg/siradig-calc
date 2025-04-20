@@ -12,7 +12,6 @@ import { ActionButton } from "@/components/utils/actionButton";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
 import { Template } from "@/data/interfaces/Template";
 import { useToast } from "@/hooks/use-toast";
-
 import { cn } from "@/lib/utils";
 
 export default function TemplatesGrid() {

@@ -1,9 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -11,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useNavigate } from "@remix-run/react";
-import { TemplateLinkReduced } from "../data/interfaces/TemplateLinkReduced";
+import { TemplateLinkReduced } from "@/data/interfaces/TemplateLinkReduced";
 import { cn } from "@/lib/utils";
 
 export default function TemplatesGrid() {

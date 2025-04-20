@@ -1,4 +1,3 @@
-import { TemplateLinkReduced } from "@/data/interfaces/TemplateLinkReduced";
 import { TemplateSection } from "@/data/interfaces/TemplateSection";
 
 export interface Template {

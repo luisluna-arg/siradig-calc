@@ -9,7 +9,7 @@ import { ApiClientProvider } from "@/data/ApiClientProvider";
 import { AxiosError } from "axios";
 import { buildRecordSubmitData } from "@/utils/route/records";
 import { Record } from "@/data/interfaces/Record";
-import RecordForm from "@/components/recordForm";
+import RecordForm from "@/components/forms/record/recordForm";
 
 export const loader: LoaderFunction = async ({
   params,

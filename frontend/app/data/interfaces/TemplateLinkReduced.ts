@@ -1,6 +1,6 @@
 import { Template } from "@/data/interfaces/Template";
 
-export interface TemplateLink {
+export interface TemplateLinkReduced {
   id: string;
   leftTemplate: Template;
   rightTemplate: Template;

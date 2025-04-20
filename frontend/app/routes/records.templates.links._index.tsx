@@ -1,5 +1,5 @@
 import { MetaFunction, type LoaderFunction } from "@remix-run/node";
-import TemplateLinksGrid from "@/components/templateLinksGrid";
+import TemplateLinksGrid from "@/components/grids/templateLinksGrid";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
 
 export const loader: LoaderFunction = async () => {

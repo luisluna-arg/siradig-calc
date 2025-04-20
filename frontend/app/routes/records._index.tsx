@@ -1,5 +1,5 @@
 import { MetaFunction, type LoaderFunction } from "@remix-run/node";
-import RecordsGrid from "@/components/recordsGrid";
+import RecordsGrid from "@/components/grids/recordsGrid";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
 
 export const loader: LoaderFunction = async () => {

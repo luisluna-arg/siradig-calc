@@ -1,5 +1,5 @@
 import { MetaFunction, type LoaderFunction } from "@remix-run/node";
-import RecordConversionForm from "@/components/recordConversionForm";
+import RecordConversionForm from "@/components/forms/recordConversion/recordConversionForm";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
 
 export const loader: LoaderFunction = async ({ params }) => {

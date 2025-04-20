@@ -1,6 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
 import { RecordFlat as DataRecordFlat } from "@/data/interfaces/Record";
-import { RecordValue } from "../data/interfaces/RecordValue";
+import { RecordValue } from "@/data/interfaces/RecordValue";
 import {
   Table,
   TableBody,

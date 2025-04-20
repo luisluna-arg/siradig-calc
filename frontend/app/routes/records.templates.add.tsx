@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
-import TemplateEditForm from "@/components/templateEditForm";
+import TemplateEditForm from "@/components/forms/template/templateEditForm";
 import { buildTemplateSubmitData } from "@/utils/route/templates";
 
 export interface TempplatesAddLoaderData {}
