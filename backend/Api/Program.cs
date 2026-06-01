@@ -1,8 +1,6 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.OpenApi.Models;
 using SiradigCalc.Api.Common;
 using SiradigCalc.ApiFramework.Core.Config;
@@ -85,11 +83,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ISolutionDbContext>();
-    var databaseCreator = dbContext.Database.GetService<IRelationalDatabaseCreator>();
-    if (!databaseCreator.Exists())
-    {
-        dbContext.Database.Migrate();
-    }
+    dbContext.Database.Migrate();
 }
 
 app.Run();
