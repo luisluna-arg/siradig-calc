@@ -64,6 +64,8 @@ See `backend/Infra/README.md` for the full migration reference including rollbac
 
 ## General Guidelines
 * Do not add "Co-Authored-By:" to commits or pull requests.
+* Refer to `docs/architecture.md` for the domain model and system design.
+* Refer to `docs/api.md` for the REST API endpoint reference.
 
 ## Agent Workflow
 * Before suggesting new frontend libraries, check `frontend/package.json` for existing dependencies and versions.
