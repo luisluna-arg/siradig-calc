@@ -14,12 +14,19 @@ import { Button } from "@/components/ui/button";
 import { Trash2Icon } from "lucide-react";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
 import { RecordConversion } from "@/data/interfaces/RecordConversion";
+import { ActionButton } from "../utils/actionButton";
 
 export default function ConversionsGrid() {
   const apiClient = new ApiClientProvider();
   const { toast } = useToast();
   const navigate = useNavigate();
   const data = useLoaderData() as Array<RecordConversion>;
+
+  const baseRoute = "/records/conversions";
+
+  const handleAdd = async () => {
+    navigate(`${baseRoute}/add`);
+  };
 
   const handleDelete = async (sourceId: string, conversionId: string) => {
     try {
@@ -56,7 +63,14 @@ export default function ConversionsGrid() {
             </TableHead>
             <TableHead className={cn(["w-auto"])}>Title</TableHead>
             <TableHead className={cn(["w-60"])}>Description</TableHead>
-            <TableHead className={cn(["w-auto", "border-l"])}></TableHead>
+            <TableHead className={cn(["w-auto", "border-l"])}>
+              <ActionButton
+                type="add"
+                onClick={async () => {
+                  await handleAdd();
+                }}
+              />
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
