@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using SiradigCalc.Api.Common;
 using SiradigCalc.ApiFramework.Core.Config;
 using SiradigCalc.Application.Validation;
