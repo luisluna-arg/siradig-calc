@@ -7,6 +7,10 @@ export class CatalogsApi extends EntityReadApi<any> {
     super(client, `${baseUrl}/catalog`);
   }
 
+  public async getRecords(): Promise<Catalog<string>> {
+    return await this.get(undefined, `records`);
+  }
+
   public async getTemplates(): Promise<Catalog<string>> {
     return await this.get(undefined, `templates`);
   }

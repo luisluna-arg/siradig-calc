@@ -25,6 +25,7 @@ export interface ComboBoxProps<T extends Object> {
   placeholder: string;
   searchPlaceholder: string;
   className?: string | string[];
+  buttonClassName?: string | string[];
   disabled?: boolean;
   onSelect?: (data?: Catalog<T> | null) => void;
 }
@@ -48,6 +49,7 @@ export function ComboBox<T extends Object>({
   value,
   name,
   className,
+  buttonClassName,
   placeholder = "Select...",
   searchPlaceholder = "Search...",
   disabled = false,
@@ -85,7 +87,13 @@ export function ComboBox<T extends Object>({
             role="combobox"
             aria-expanded={open}
             disabled={disabled}
-            className="w-[200px] justify-between text-black dark:text-white dark:hover:text-black"
+            className={cn([
+              "justify-between",
+              "text-black",
+              "dark:text-white",
+              "dark:hover:text-black",
+              buttonClassName,
+            ])}
           >
             {findDataEntryByLabel(data, comboLabel)?.label ?? placeholder}
             <ChevronsUpDown className="opacity-50" />
