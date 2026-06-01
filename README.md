@@ -16,12 +16,12 @@ Organizations use different salary receipt formats (e.g., UNPSJB payroll slips, 
 | Layer | Technology |
 |---|---|
 | Frontend | Remix · React 18 · TypeScript · Tailwind CSS · Radix UI · Axios |
-| Backend | ASP.NET Core 9 · C# · CQRS (MediatR) · FluentValidation |
-| Database | PostgreSQL · EF Core 9 |
+| Backend | ASP.NET Core 10 · C# · CQRS (MediatR) · FluentValidation |
+| Database | PostgreSQL · EF Core 10 |
 
 ## Prerequisites
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - [Node.js ≥ 20](https://nodejs.org/)
 - PostgreSQL instance
 
