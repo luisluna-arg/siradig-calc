@@ -20,7 +20,7 @@ const centerClass = cn("flex", "items-center");
 const columnGridClass = cn("grid", "items-center", "min-h-12", gapClass);
 const threeColumnGridClass = cn(columnGridClass, "grid-cols-3");
 
-export function TemplateLinkForm() {
+export function TemplateLinkEditForm() {
   const { templateLink, fieldTypeCatalog } = useLoaderData() as {
     templateLink: TemplateLink;
     fieldTypeCatalog: Array<Catalog<number>>;

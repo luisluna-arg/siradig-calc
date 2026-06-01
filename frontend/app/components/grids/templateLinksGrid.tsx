@@ -1,4 +1,7 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
+import { useToast } from "@/hooks/use-toast";
+import { ApiClientProvider } from "@/data/ApiClientProvider";
+import { ActionButton } from "@/components/utils/actionButton";
 import {
   Table,
   TableBody,
@@ -8,14 +11,37 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useNavigate } from "@remix-run/react";
 import { TemplateLinkReduced } from "@/data/interfaces/TemplateLinkReduced";
 import { cn } from "@/lib/utils";
 
 export default function TemplatesGrid() {
   const data = useLoaderData() as Array<TemplateLinkReduced>;
-
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const apiClient = new ApiClientProvider();
+
+  const baseRoute = "/records/templates/links";
+
+  const handleAdd = async () => {
+    navigate(`${baseRoute}/add`);
+  };
+
+  const handleEdit = async (leftTemplateId: string, rightTemplateId: string) => {
+    navigate(`${baseRoute}/${leftTemplateId}/to/${rightTemplateId}?edit=true`);
+  };
+
+  const handleDelete = async (leftTemplateId: string, rightTemplateId: string) => {
+    try {
+      await apiClient.TemplateLinks.deleteByIds(leftTemplateId, rightTemplateId);
+      navigate(`${baseRoute}`);
+    } catch (error: any) {
+      toast({
+        title: "Error deleting item",
+        description: error.response?.data?.message || error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="flex justify-center items-center py-6 px-20">
@@ -36,6 +62,14 @@ export default function TemplatesGrid() {
             <TableHead className={cn(["w-40", "text-right"])}>
               Description
             </TableHead>
+            <TableHead className={cn(["w-10", "text-right"])}>
+              <ActionButton
+                type="add"
+                onClick={async () => {
+                  await handleAdd();
+                }}
+              />
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -44,7 +78,7 @@ export default function TemplatesGrid() {
               key={link.id}
               onClick={() =>
                 navigate(
-                  `/records/templates/links/${link.leftTemplate.id}/to/${link.rightTemplate.id}`
+                  `${baseRoute}/${link.leftTemplate.id}/to/${link.rightTemplate.id}`
                 )
               }
               className="cursor-pointer"
@@ -60,6 +94,22 @@ export default function TemplatesGrid() {
               </TableCell>
               <TableCell className="font-medium">
                 {link.rightTemplate.description}
+              </TableCell>
+              <TableCell className="font-medium flex flex-row gap-2">
+                <ActionButton
+                  type="edit"
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    await handleEdit(link.leftTemplate.id, link.rightTemplate.id);
+                  }}
+                />
+                <ActionButton
+                  type="delete"
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    await handleDelete(link.leftTemplate.id, link.rightTemplate.id);
+                  }}
+                />
               </TableCell>
             </TableRow>
           ))}
