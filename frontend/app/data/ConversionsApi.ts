@@ -7,6 +7,15 @@ export class ConversionsApi extends EntityApi<RecordConversion, any> {
     super(client, `${baseUrl}/records/conversions`);
   }
 
+  public async convert(sourceId: string, targetTemplateId: string): Promise<RecordConversion> {
+    const result = await this.client.post(
+      `${this.baseURL}/${sourceId}/to/${targetTemplateId}`,
+      {},
+      await this.getAxiosConfig()
+    );
+    return result.data as RecordConversion;
+  }
+
   public async delete(_id?: string): Promise<any> {
     throw "Method not allow for Conversions";
   }
