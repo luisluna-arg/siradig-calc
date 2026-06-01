@@ -1,0 +1,18 @@
+# Git
+.git
+.gitignore
+
+# Backend build artifacts
+backend/*/bin/
+backend/*/obj/
+
+# Frontend build artifacts
+frontend/node_modules/
+frontend/build/
+frontend/.cache/
+
+# Local dev files
+backend/SamplesLocal/
+**/*.user
+**/.vs/
+**/launchSettings.json
