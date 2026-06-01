@@ -9,6 +9,10 @@ namespace SiradigCalc.Api.Controllers.Query;
 [ApiController]
 public class CatalogQueryController(IMediator mediator) : BaseController(mediator)
 {
+    [HttpGet("records")]
+    public async Task<IActionResult> GetRecords()
+        => Ok(await Mediator.Send(new GetRecordCatalogQuery()));
+
     [HttpGet("templates")]
     public async Task<IActionResult> GetTemplates()
         => Ok(await Mediator.Send(new GetTemplateCatalogQuery()));
