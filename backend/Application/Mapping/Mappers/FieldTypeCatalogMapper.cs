@@ -5,6 +5,8 @@ using SiradigCalc.Core.Entities.Enums;
 
 namespace SiradigCalc.Application.Mappers;
 
+public interface IFieldTypeCatalogMapper : IDtoMapper<FieldType, CatalogDto<short>>;
+
 public class FieldTypeCatalogMapper(IDtoMappingService dtoMapperManager)
     : BaseMapper<FieldType, CatalogDto<short>>(dtoMapperManager),
     IFieldTypeCatalogMapper
@@ -18,8 +20,4 @@ public class FieldTypeCatalogMapper(IDtoMappingService dtoMapperManager)
 
     public override IEnumerable<CatalogDto<short>> Map(IEnumerable<FieldType> source)
         => source.Select(Map).ToList();
-}
-
-public interface IFieldTypeCatalogMapper : IDtoMapper<FieldType, CatalogDto<short>>
-{
 }

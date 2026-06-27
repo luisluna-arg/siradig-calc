@@ -3,6 +3,12 @@ using SiradigCalc.Application.Mappers;
 
 namespace SiradigCalc.Application.Mapping;
 
+public interface IDtoMappingService
+{
+    TResult Map<TResult>(object source);
+    ICollection<TResult> Map<TResult>(IEnumerable<object> source);
+}
+
 public class DtoMappingService : IDtoMappingService
 {
     private readonly IEnumerable<IDtoMapper> _strategies;

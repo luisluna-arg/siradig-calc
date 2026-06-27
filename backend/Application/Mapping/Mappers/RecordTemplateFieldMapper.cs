@@ -5,6 +5,8 @@ using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Mappers;
 
+public interface IRecordTemplateFieldMapper : IDtoMapper<RecordTemplateField, RecordTemplateFieldDto>;
+
 public class RecordTemplateFieldMapper(IDtoMappingService dtoMapperManager)
     : BaseMapper<RecordTemplateField, RecordTemplateFieldDto>(dtoMapperManager),
     IRecordTemplateFieldMapper
@@ -17,8 +19,4 @@ public class RecordTemplateFieldMapper(IDtoMappingService dtoMapperManager)
             FieldType = DtoMappingService.Map<FieldTypeDto>(source.FieldType),
             IsRequired = source.IsRequired
         };
-}
-
-public interface IRecordTemplateFieldMapper : IDtoMapper<RecordTemplateField, RecordTemplateFieldDto>
-{
 }

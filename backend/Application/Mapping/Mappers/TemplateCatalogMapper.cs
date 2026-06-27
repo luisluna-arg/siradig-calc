@@ -5,6 +5,8 @@ using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Mappers;
 
+public interface ITemplateCatalogMapper : IDtoMapper<RecordTemplate, CatalogDto>;
+
 public class TemplateCatalogMapper(IDtoMappingService dtoMapperManager)
     : BaseMapper<RecordTemplate, CatalogDto>(dtoMapperManager),
     ITemplateCatalogMapper
@@ -18,8 +20,4 @@ public class TemplateCatalogMapper(IDtoMappingService dtoMapperManager)
 
     public override IEnumerable<CatalogDto> Map(IEnumerable<RecordTemplate> source)
         => source.Select(Map).ToList();
-}
-
-public interface ITemplateCatalogMapper : IDtoMapper<RecordTemplate, CatalogDto>
-{
 }

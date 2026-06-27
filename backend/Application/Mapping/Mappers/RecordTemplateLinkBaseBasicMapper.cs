@@ -5,6 +5,8 @@ using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Mappers;
 
+public interface IRecordTemplateLinkBasicMapper : IDtoMapper<RecordTemplateLink, RecordTemplateLinkBasicDto>;
+
 public class RecordTemplateLinkBaseBasicMapper(IDtoMappingService dtoMapperManager)
     : BaseMapper<RecordTemplateLink, RecordTemplateLinkBasicDto>(dtoMapperManager),
     IRecordTemplateLinkBasicMapper
@@ -16,8 +18,4 @@ public class RecordTemplateLinkBaseBasicMapper(IDtoMappingService dtoMapperManag
             SourceTemplateId = source.RightTemplateId,
             TargetTemplateId = source.LeftTemplateId,
         };
-}
-
-public interface IRecordTemplateLinkBasicMapper : IDtoMapper<RecordTemplateLink, RecordTemplateLinkBasicDto>
-{
 }

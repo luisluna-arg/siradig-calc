@@ -6,6 +6,8 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Converters.Strategies;
 
+public interface IRecordToRecordConverter : IRecordConverterStrategy;
+
 public class RecordToRecordConverter(ISolutionDbContext dbContext, IDecimalParser decimalParser) : IRecordToRecordConverter
 {
     private ISolutionDbContext _dbContext = dbContext;
@@ -93,8 +95,4 @@ public class RecordToRecordConverter(ISolutionDbContext dbContext, IDecimalParse
         var valueMergeStrategy = _valueMergeStrategyFactory.GetStrategy(rightField.FieldType)!;
         return (valueMergeStrategy.Reduce(leftFields, values) ?? 0).ToString()!;
     }
-}
-
-public interface IRecordToRecordConverter : IRecordConverterStrategy
-{
 }

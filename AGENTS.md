@@ -36,6 +36,8 @@
 * **Validation:** FluentValidation validators live in `backend/Application/Validation/`, co-located by feature.
 * **Persistence:** EF Core DbContext and entity configurations live in `backend/Infra`. All migrations go in `backend/Infra/Persistence/Migrations/`.
 * **DTOs:** Define request/response shapes in `backend/Application/Dtos/`. Map between entities and DTOs using AutoMapper profiles in `backend/Application/Mapping/`.
+* **Interface/class co-location:** When an interface `IFoo` is implemented by exactly one class `Foo`, place both in the same file named `Foo.cs`. The interface goes at the top, the class below.
+* **Empty interfaces:** Use the compact semicolon form — `public interface IFoo : IBar;` — instead of an empty brace body.
 
 ## Key Commands
 

@@ -2,6 +2,8 @@ using System.Globalization;
 
 namespace SiradigCalc.Application.Helpers.Reducers;
 
+public interface IDecimalParser : IParserStrategy<decimal>;
+
 public class DecimalParserStrategy : IDecimalParser
 {
     public decimal Parse(string input)
@@ -19,8 +21,4 @@ public class DecimalParserStrategy : IDecimalParser
             throw new FormatException($"Input '{input}' is not a valid number.");
         }
     }
-}
-
-public interface IDecimalParser : IParserStrategy<decimal>
-{
 }
