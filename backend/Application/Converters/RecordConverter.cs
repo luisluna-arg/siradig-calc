@@ -3,6 +3,11 @@ using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Converters;
 
+public interface IRecordConverter
+{
+    Task<Record> Convert(Record source, RecordTemplate target, CancellationToken cancellationToken);
+}
+
 public class RecordConverter : IRecordConverter
 {
     private readonly IEnumerable<IRecordConverterStrategy> _strategies;

@@ -8,6 +8,8 @@ using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Mappers;
 
+public interface IRecordTemplateConversionMapper : IDtoMapper<RecordConversion, RecordTemplateConversionDto>;
+
 public class RecordTemplateConversionMapper(IDtoMappingService dtoMappingService)
     : BaseMapper<RecordConversion, RecordTemplateConversionDto>(dtoMappingService),
     IRecordTemplateConversionMapper
@@ -74,8 +76,4 @@ public class RecordTemplateConversionMapper(IDtoMappingService dtoMappingService
         var valueMergeStrategy = _valueMergeStrategyFactory.GetStrategy(rightField.FieldType)!;
         return valueMergeStrategy.Reduce(leftFields, values);
     }
-}
-
-public interface IRecordTemplateConversionMapper : IDtoMapper<RecordConversion, RecordTemplateConversionDto>
-{
 }

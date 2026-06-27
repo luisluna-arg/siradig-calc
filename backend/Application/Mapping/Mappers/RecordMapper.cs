@@ -5,6 +5,8 @@ using SiradigCalc.Core.Entities;
 
 namespace SiradigCalc.Application.Mappers;
 
+public interface IRecordMapper : IDtoMapper<Record, RecordDto>;
+
 public class RecordMapper(IDtoMappingService dtoMapperManager)
     : BaseMapper<Record, RecordDto>(dtoMapperManager),
     IRecordMapper
@@ -19,8 +21,4 @@ public class RecordMapper(IDtoMappingService dtoMapperManager)
             RecordTemplateId = source.TemplateId,
             Values = DtoMappingService.Map<RecordValueDto>(source.Values)
         };
-}
-
-public interface IRecordMapper : IDtoMapper<Record, RecordDto>
-{
 }
