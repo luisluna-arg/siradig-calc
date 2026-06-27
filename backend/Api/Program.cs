@@ -26,6 +26,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<GetRecordQuery>();
 builder.Services.AddRecordConverters();
 builder.Services.AddParsers();
 builder.Services.AddDtoMappers();
+builder.Services.AddPdfReceiptParsing();
 builder.Services.EnableCors();
 
 builder.Services.AddSwaggerGen(c =>

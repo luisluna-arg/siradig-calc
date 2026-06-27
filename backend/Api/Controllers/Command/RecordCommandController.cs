@@ -13,6 +13,10 @@ public class RecordCommandController(IMediator mediator) : BaseController(mediat
     public async Task<IActionResult> CreateRecord(CreateRecordCommand command)
         => Ok(await Mediator.Send(command));
 
+    [HttpPost("import/pdf")]
+    public async Task<IActionResult> ImportFromPdf([FromForm] ImportRecordFromPdfCommand command)
+        => Ok(await Mediator.Send(command));
+
     [HttpPut("{recordId}")]
     public async Task<IActionResult> UpdateRecord(UpdateRecordCommand command, Guid recordId)
     {
