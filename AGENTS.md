@@ -52,6 +52,7 @@ Run from the `frontend/` directory:
 Run from the repo root:
 * **Run API:** `dotnet run --project backend/Api`
 * **Build solution:** `dotnet build backend/siradig-calc.sln`
+* **Test:** `dotnet test backend/siradig-calc.sln` (unit tests live in `backend/Tests`)
 
 ### Migrations
 Run from `backend/Infra/`:
