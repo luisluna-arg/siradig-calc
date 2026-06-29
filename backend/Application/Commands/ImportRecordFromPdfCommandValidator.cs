@@ -9,6 +9,10 @@ public class ImportRecordFromPdfCommandValidator : AbstractValidator<ImportRecor
 
     public ImportRecordFromPdfCommandValidator()
     {
+        RuleFor(c => c.TemplateId)
+            .NotEmpty()
+            .WithMessage("A template must be selected.");
+
         RuleFor(c => c.File)
             .Cascade(CascadeMode.Stop)
             .NotNull()

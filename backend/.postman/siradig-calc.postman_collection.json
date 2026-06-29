@@ -650,6 +650,39 @@
                   ]
                 }
               }
+            },
+            {
+              "name": "Import Record from PDF",
+              "request": {
+                "method": "POST",
+                "url": {
+                  "raw": "{{siradigCalcBaseUrl}}/api/records/import/pdf",
+                  "host": [
+                    "{{siradigCalcBaseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "records",
+                    "import",
+                    "pdf"
+                  ]
+                },
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": ""
+                    },
+                    {
+                      "key": "templateId",
+                      "type": "text",
+                      "value": "{{templateId}}"
+                    }
+                  ]
+                }
+              }
             }
           ]
         },

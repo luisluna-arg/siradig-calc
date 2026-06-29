@@ -92,6 +92,45 @@
         }
       }
     },
+    "/api/records/import/csv": {
+      "post": {
+        "tags": [
+          "RecordCommand"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "templateId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                },
+                "templateId": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/records/import/pdf": {
       "post": {
         "tags": [
@@ -103,21 +142,20 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "File": {
+                  "file": {
                     "type": "string",
                     "format": "binary"
                   },
-                  "TemplateId": {
-                    "type": "string",
-                    "format": "uuid"
+                  "generateTemplate": {
+                    "type": "boolean"
                   }
                 }
               },
               "encoding": {
-                "File": {
+                "file": {
                   "style": "form"
                 },
-                "TemplateId": {
+                "generateTemplate": {
                   "style": "form"
                 }
               }

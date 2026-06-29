@@ -1,6 +1,6 @@
 namespace SiradigCalc.Application.Dtos.Import;
 
-public class CsvFieldValueDto
+public class FieldImportValueDto
 {
     public Guid FieldId { get; set; }
     public string Label { get; set; } = string.Empty;

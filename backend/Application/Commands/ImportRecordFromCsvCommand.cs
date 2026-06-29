@@ -10,17 +10,17 @@ using SiradigCalc.Infra.Persistence.DbContexts;
 
 namespace SiradigCalc.Application.Commands;
 
-public class ImportRecordFromCsvCommand : IRequest<CsvRecordImportResultDto>
+public class ImportRecordFromCsvCommand : IRequest<RecordImportResultDto>
 {
     public IFormFile File { get; set; } = default!;
     public Guid TemplateId { get; set; }
 }
 
 public class ImportRecordFromCsvCommandHandler(ISolutionDbContext dbContext)
-    : IRequestHandler<ImportRecordFromCsvCommand, CsvRecordImportResultDto>
+    : IRequestHandler<ImportRecordFromCsvCommand, RecordImportResultDto>
 {
     private const char Separator = ';';
-    public async Task<CsvRecordImportResultDto> Handle(ImportRecordFromCsvCommand request, CancellationToken cancellationToken)
+    public async Task<RecordImportResultDto> Handle(ImportRecordFromCsvCommand request, CancellationToken cancellationToken)
     {
         var rows = await ParseCsv(request.File, cancellationToken);
 
@@ -36,14 +36,14 @@ public class ImportRecordFromCsvCommandHandler(ISolutionDbContext dbContext)
         if (template is null)
             throw new ValidationException([new ValidationFailure(nameof(request.TemplateId), $"Template '{request.TemplateId}' was not found.")]);
 
-        return new CsvRecordImportResultDto
+        return new RecordImportResultDto
         {
             TemplateId = template.Id,
-            Sections = template.Sections.Select(section => new CsvSectionImportResultDto
+            Sections = template.Sections.Select(section => new SectionImportResultDto
             {
                 SectionId = section.Id,
                 Name = section.Name,
-                Fields = section.Fields.Select(field => new CsvFieldValueDto
+                Fields = section.Fields.Select(field => new FieldImportValueDto
                 {
                     FieldId = field.Id,
                     Label = field.Label,

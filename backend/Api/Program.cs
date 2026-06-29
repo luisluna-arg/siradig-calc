@@ -24,6 +24,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<GetRecordQuery>();
 builder.Services.AddRecordConverters();
 builder.Services.AddParsers();
 builder.Services.AddDtoMappers();
+builder.Services.AddPdfReceiptParsing();
 builder.Services.EnableCors();
 
 var loggerFactory = LoggerFactory.Create(builder =>

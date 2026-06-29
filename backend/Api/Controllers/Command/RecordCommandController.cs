@@ -18,6 +18,11 @@ public class RecordCommandController(IMediator mediator) : BaseController(mediat
     public async Task<IActionResult> ImportFromCsv(IFormFile file, [FromForm] Guid templateId)
         => Ok(await Mediator.Send(new ImportRecordFromCsvCommand { File = file, TemplateId = templateId }));
 
+    [HttpPost("import/pdf")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> ImportFromPdf(IFormFile file, [FromForm] Guid templateId)
+        => Ok(await Mediator.Send(new ImportRecordFromPdfCommand { File = file, TemplateId = templateId }));
+
     [HttpPut("{recordId}")]
     public async Task<IActionResult> UpdateRecord(UpdateRecordCommand command, Guid recordId)
     {
