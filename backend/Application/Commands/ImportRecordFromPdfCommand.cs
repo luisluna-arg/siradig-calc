@@ -1,8 +1,10 @@
+using System.Globalization;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SiradigCalc.Application.Dtos;
 using SiradigCalc.Application.Dtos.Import;
 using SiradigCalc.Application.Helpers.Pdf;
 using SiradigCalc.Core.Entities;
@@ -34,21 +36,17 @@ public class ImportRecordFromPdfCommandHandler(
         var lines = await ExtractLines(request.File, cancellationToken);
         var valuesByLabel = MatchLabels(lines, template);
 
-        return new RecordImportResultDto
-        {
-            TemplateId = template.Id,
-            Sections = template.Sections.Select(section => new SectionImportResultDto
+        var values = template.Sections
+            .SelectMany(s => s.Fields)
+            .Where(field => valuesByLabel.ContainsKey(Normalize(field.Label)))
+            .Select(field => new CreateValueDto
             {
-                SectionId = section.Id,
-                Name = section.Name,
-                Fields = section.Fields.Select(field => new FieldImportValueDto
-                {
-                    FieldId = field.Id,
-                    Label = field.Label,
-                    Value = valuesByLabel.TryGetValue(Normalize(field.Label), out var v) ? v : null
-                }).ToList()
-            }).ToList()
-        };
+                FieldId = field.Id,
+                Value = valuesByLabel[Normalize(field.Label)].ToString(CultureInfo.InvariantCulture)
+            })
+            .ToList();
+
+        return new RecordImportResultDto { TemplateId = template.Id, Values = values };
     }
 
     private async Task<IReadOnlyList<string>> ExtractLines(IFormFile file, CancellationToken cancellationToken)

@@ -5,6 +5,7 @@ using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SiradigCalc.Application.Dtos;
 using SiradigCalc.Application.Dtos.Import;
 using SiradigCalc.Infra.Persistence.DbContexts;
 
@@ -36,21 +37,17 @@ public class ImportRecordFromCsvCommandHandler(ISolutionDbContext dbContext)
         if (template is null)
             throw new ValidationException([new ValidationFailure(nameof(request.TemplateId), $"Template '{request.TemplateId}' was not found.")]);
 
-        return new RecordImportResultDto
-        {
-            TemplateId = template.Id,
-            Sections = template.Sections.Select(section => new SectionImportResultDto
-            {
-                SectionId = section.Id,
-                Name = section.Name,
-                Fields = section.Fields.Select(field => new FieldImportValueDto
+        var values = template.Sections
+            .SelectMany(section => section.Fields
+                .Where(field => valuesByKey.TryGetValue((Normalize(section.Name), Normalize(field.Label)), out _))
+                .Select(field => new CreateValueDto
                 {
                     FieldId = field.Id,
-                    Label = field.Label,
-                    Value = valuesByKey.TryGetValue((Normalize(section.Name), Normalize(field.Label)), out var v) ? v : null
-                }).ToList()
-            }).ToList()
-        };
+                    Value = valuesByKey[(Normalize(section.Name), Normalize(field.Label))].ToString(CultureInfo.InvariantCulture)
+                }))
+            .ToList();
+
+        return new RecordImportResultDto { TemplateId = template.Id, Values = values };
     }
 
     private static async Task<IReadOnlyList<CsvRow>> ParseCsv(IFormFile file, CancellationToken cancellationToken)
