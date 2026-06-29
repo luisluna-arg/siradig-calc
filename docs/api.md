@@ -102,6 +102,61 @@ DELETE /api/records/value/{valueId}
 
 ---
 
+### Import from PDF
+
+```
+POST /api/records/import/pdf
+Content-Type: multipart/form-data
+```
+
+Parses a payroll receipt PDF with a two-column table layout (label on the left,
+amount on the right), extracting the monetary line items grouped by section.
+Section headers (rows without a numeric value) become section boundaries, and
+totals/subtotals — rows whose label contains `TOTAL`, `NETO`, or `SUBTOTAL`, or
+whose value equals the running sum of its section — are skipped.
+
+**Form fields**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | binary | yes | The PDF file |
+| `generateTemplate` | bool | no (default `false`) | Also create a `RecordTemplate` when no match exists |
+
+**Template matching** — the extracted field labels are compared (case-insensitive,
+trimmed) against every existing template's field set. A template matches when the
+extracted labels are a subset of (or equal to) its field labels.
+
+- When a template matches, it is returned in `templateMatch` and no template is created.
+- When `generateTemplate=true` and no template matches, a new `RecordTemplate` is
+  created from the extracted sections (all fields numeric) and returned.
+
+**Response**
+
+```json
+{
+  "templateMatch": {
+    "found": true,
+    "created": false,
+    "templateId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "templateName": "Template Name"
+  },
+  "sections": [
+    {
+      "name": "Section A",
+      "entries": [
+        { "label": "Line item 1", "value": 1000.00 },
+        { "label": "Line item 2", "value": 250.50 }
+      ]
+    }
+  ]
+}
+```
+
+`found` is `true` when an existing template matched; `created` is `true` when a
+new template was generated for this import.
+
+---
+
 ## Record Conversions
 
 Conversions transform a record's values into a different template's field structure using the field mappings defined in a template link.

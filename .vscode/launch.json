@@ -20,7 +20,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/backend/Api/bin/Debug/net9.0/api.dll",
+      "program": "${workspaceFolder}/backend/Api/bin/Debug/net10.0/api.dll",
       "args": [],
       "cwd": "${workspaceFolder}/backend/Api",
       "stopAtEntry": false,
