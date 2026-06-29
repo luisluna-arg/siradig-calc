@@ -10,7 +10,13 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "WebSearch",
-      "Bash(dotnet build *)"
+      "Bash(dotnet build *)",
+      "PowerShell(gh issue view *)",
+      "Bash(gh issue view *)",
+      "Bash(cd *)",
+      "PowerShell(cd *)",
+      "Bash(npx tsc *)",
+      "PowerShell(npx tsc *)"
     ]
   }
 }
