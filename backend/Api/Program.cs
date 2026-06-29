@@ -1,13 +1,11 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi;
+using Scalar.AspNetCore;
 using SiradigCalc.Api.Common;
 using SiradigCalc.ApiFramework.Core.Config;
 using SiradigCalc.Application.Validation;
 using SiradigCalc.Infra.Persistence.DbContexts;
-using System.Text.Json;
-using Swashbuckle.AspNetCore.Swagger;
 using SiradigCalc.Application.Queries;
 using SiradigCalc.ApiFramework.Config;
 
@@ -17,7 +15,7 @@ var programAssembly = typeof(Program).Assembly;
 var applicationAssembly = typeof(GetRecordQuery).Assembly;
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi(Constants.OPENAPI_VERSION_LABEL);
 builder.Services.AddMediatR(programAssembly);
 builder.Services.AddMediatR(applicationAssembly);
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
@@ -26,23 +24,12 @@ builder.Services.AddValidatorsFromAssemblyContaining<GetRecordQuery>();
 builder.Services.AddRecordConverters();
 builder.Services.AddParsers();
 builder.Services.AddDtoMappers();
-builder.Services.AddPdfReceiptParsing();
 builder.Services.EnableCors();
-
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc(Constants.OPENAPI_VERSION_LABEL, new OpenApiInfo
-    {
-        Title = Constants.OPEN_API_TITLE,
-        Version = Constants.OPENAPI_VERSION
-    });
-});
 
 var loggerFactory = LoggerFactory.Create(builder =>
 {
     builder.AddConsole().AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
 });
-
 
 builder.Services
     .AddDbContext<ISolutionDbContext, SolutionDbContext>(opt =>
@@ -57,22 +44,8 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
-    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "OpenApi", Constants.OPENAPI_SPEC_FILE_NAME);
-    Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
-
-    var swaggerProvider = app.Services.GetRequiredService<ISwaggerProvider>();
-    var swaggerDoc = swaggerProvider.GetSwagger(Constants.OPENAPI_VERSION_LABEL);
-
-    File.WriteAllText(filePath, JsonSerializer.Serialize(swaggerDoc, new JsonSerializerOptions
-    {
-        WriteIndented = true
-    }));
-
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint($"/swagger/{Constants.OPENAPI_VERSION_LABEL}/{Constants.SWAGGER_FILE_NAME}", Constants.OPEN_API_TITLE);
-    });
+    app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

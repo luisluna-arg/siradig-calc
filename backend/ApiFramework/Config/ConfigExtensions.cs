@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using SiradigCalc.ApiFramework.Common;
 using SiradigCalc.Application.Converters;
 using SiradigCalc.Application.Converters.Strategies;
-using SiradigCalc.Application.Helpers.Pdf;
 using SiradigCalc.Application.Helpers.Reducers;
 using SiradigCalc.Application.Mapping;
 using SiradigCalc.ApiFramework.Config;
@@ -70,12 +69,6 @@ public static class ConfigExtensions
     public static void AddDtoMappers(this IServiceCollection services)
     {
         services.AddScoped<IDtoMappingService, DtoMappingService>();
-    }
-
-    public static void AddPdfReceiptParsing(this IServiceCollection services)
-    {
-        services.AddScoped<IReceiptPdfTextExtractor, PdfPigReceiptTextExtractor>();
-        services.AddScoped<IReceiptDocumentParser, ReceiptDocumentParser>();
     }
 
     public static void EnableCors(this IServiceCollection services)
