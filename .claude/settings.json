@@ -1,22 +1,28 @@
 {
   "permissions": {
     "allow": [
-      "Read",
-      "Write",
       "Edit",
-      "Bash(uv run:*)",
-      "Bash(git checkout:*)",
-      "Bash(git branch:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
+      "Read",
       "WebSearch",
-      "Bash(dotnet build *)",
-      "PowerShell(gh issue view *)",
-      "Bash(gh issue view *)",
+      "Write",
       "Bash(cd *)",
       "PowerShell(cd *)",
+      "Bash(dotnet build *)",
+      "PowerShell(dotnet build *)",
+      "Bash(gh issue view *)",
+      "PowerShell(gh issue view *)",
+      "Bash(git add:*)",
+      "PowerShell(git add:*)",
+      "Bash(git branch:*)",
+      "PowerShell(git branch:*)",
+      "Bash(git checkout:*)",
+      "PowerShell(git checkout:*)",
+      "Bash(git commit:*)",
+      "PowerShell(git commit:*)",
       "Bash(npx tsc *)",
-      "PowerShell(npx tsc *)"
+      "PowerShell(npx tsc *)",
+      "Bash(uv run:*)",
+      "PowerShell(uv run:*)"
     ]
   }
 }
