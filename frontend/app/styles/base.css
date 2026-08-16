@@ -1,11 +1,8 @@
 @layer base {
     body {
-      background-color: #ffffff;
-      color: #222222;
-  
-      @variant dark {
-        background-color: #262626;
-        color: #fafafa;
-      }
+      background-color: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-size: 14px;
+      line-height: 26.4px;
     }
   }
