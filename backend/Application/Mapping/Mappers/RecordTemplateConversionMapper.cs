@@ -45,13 +45,26 @@ public class RecordTemplateConversionMapper(IDtoMappingService dtoMappingService
                 var rightField = g.First().RightField;
                 var leftFields = g.Select(g1 => g1.LeftField).ToArray();
 
-                return new FieldValueDto()
+                var sourceFields = leftFields
+                    .Select(leftField => new FieldValueDto()
+                    {
+                        FieldId = leftField.Id,
+                        Label = leftField.Label,
+                        FieldType = leftField.FieldType,
+                        IsRequired = leftField.IsRequired,
+                        Value = recordSource!.Values.FirstOrDefault(v => v.FieldId == leftField.Id)?.Value ?? string.Empty
+                    })
+                    .OrderBy(fv => fv.Label)
+                    .ToArray();
+
+                return new FieldCompositionDto()
                 {
                     FieldId = rightField.Id,
                     Label = rightField.Label,
                     FieldType = rightField.FieldType,
                     IsRequired = rightField.IsRequired,
-                    Value = ProcessValues(rightField, leftFields, recordSource!.Values)
+                    Value = ProcessValues(rightField, leftFields, recordSource!.Values),
+                    SourceFields = sourceFields
                 };
             })
             .OrderBy(fv => fv.Label)
