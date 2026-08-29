@@ -1,6 +1,8 @@
 using System.Text.Json;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace SiradigCalc.Application.Validation;
 
@@ -28,6 +30,18 @@ public class ExceptionHandlingMiddleware
             {
                 Message = "Validation failed.",
                 Errors = ex.Errors.Select(e => new { property = e.PropertyName, error = e.ErrorMessage })
+            };
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is PostgresException { SqlState: "23503" })
+        {
+            context.Response.StatusCode = StatusCodes.Status409Conflict;
+            context.Response.ContentType = "application/json";
+
+            var errorResponse = new
+            {
+                Message = "No se puede eliminar el elemento porque está siendo utilizado por otro registro.",
             };
 
             await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
