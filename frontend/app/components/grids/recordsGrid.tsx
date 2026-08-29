@@ -11,19 +11,36 @@ import {
 } from "@/components/ui/table";
 import { ActionButton } from "@/components/utils/actionButton";
 import { Button } from "@/components/ui/button";
+import { ComboBox } from "@/components/utils/comboBox";
 import { Upload } from "lucide-react";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
+import { Catalog } from "@/data/interfaces/Catalog";
 import { Record } from "@/data/interfaces/Record";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import ImportRecordModal from "@/components/forms/record/ImportRecordModal";
 
+const ALL_TEMPLATES_ID = "";
+
 export default function RecordsGrid() {
   const apiClient = new ApiClientProvider();
-  const data = useLoaderData() as Array<Record>;
+  const { records, templateCatalog } = useLoaderData() as {
+    records: Array<Record>;
+    templateCatalog: Array<Catalog<string>>;
+  };
   const { toast } = useToast();
   const navigate = useNavigate();
   const [importOpen, setImportOpen] = useState(false);
+  const [templateFilter, setTemplateFilter] = useState(ALL_TEMPLATES_ID);
+
+  const templateFilterOptions: Array<Catalog<string>> = [
+    { id: ALL_TEMPLATES_ID, label: "Todos" },
+    ...templateCatalog,
+  ];
+
+  const data = templateFilter
+    ? records.filter((record) => record.templateId === templateFilter)
+    : records;
 
   const handleAdd = async () => {
     navigate(`/records/add`);
@@ -47,7 +64,18 @@ export default function RecordsGrid() {
   };
 
   return (
-    <div className="flex justify-center items-center py-6 px-20">
+    <div className="flex flex-col items-center gap-4 py-6 px-20">
+      <div className="flex items-center gap-2 self-start">
+        <span className="text-sm font-medium">Template:</span>
+        <ComboBox
+          placeholder="Todos"
+          searchPlaceholder="Buscar template..."
+          buttonClassName="min-w-60"
+          data={templateFilterOptions}
+          value={templateFilter}
+          onSelect={(entry) => setTemplateFilter(entry?.id ?? ALL_TEMPLATES_ID)}
+        />
+      </div>
       <Table>
         <TableHeader>
           <TableRow>

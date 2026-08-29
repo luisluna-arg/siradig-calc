@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLoaderData } from "@remix-run/react";
 import {
   Table,
@@ -13,14 +14,36 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Trash2Icon } from "lucide-react";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
+import { Catalog } from "@/data/interfaces/Catalog";
 import { RecordConversion } from "@/data/interfaces/RecordConversion";
 import { ActionButton } from "../utils/actionButton";
+import { ComboBox } from "../utils/comboBox";
+
+const ALL_TEMPLATES_ID = "";
 
 export default function ConversionsGrid() {
   const apiClient = new ApiClientProvider();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const data = useLoaderData() as Array<RecordConversion>;
+  const { conversions, templateCatalog } = useLoaderData() as {
+    conversions: Array<RecordConversion>;
+    templateCatalog: Array<Catalog<string>>;
+  };
+  const [sourceTemplateFilter, setSourceTemplateFilter] = useState(ALL_TEMPLATES_ID);
+  const [targetTemplateFilter, setTargetTemplateFilter] = useState(ALL_TEMPLATES_ID);
+
+  const templateFilterOptions: Array<Catalog<string>> = [
+    { id: ALL_TEMPLATES_ID, label: "Todos" },
+    ...templateCatalog,
+  ];
+
+  const data = conversions.filter(
+    (conversion) =>
+      (!sourceTemplateFilter ||
+        conversion.source.recordTemplateId === sourceTemplateFilter) &&
+      (!targetTemplateFilter ||
+        conversion.target.recordTemplateId === targetTemplateFilter)
+  );
 
   const baseRoute = "/records/conversions";
 
@@ -42,7 +65,35 @@ export default function ConversionsGrid() {
   };
 
   return (
-    <div className="flex justify-center items-center py-6 px-20">
+    <div className="flex flex-col items-center gap-4 py-6 px-20">
+      <div className="flex items-center gap-6 self-start">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Template origen:</span>
+          <ComboBox
+            placeholder="Todos"
+            searchPlaceholder="Buscar template..."
+            buttonClassName="min-w-60"
+            data={templateFilterOptions}
+            value={sourceTemplateFilter}
+            onSelect={(entry) =>
+              setSourceTemplateFilter(entry?.id ?? ALL_TEMPLATES_ID)
+            }
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Template destino:</span>
+          <ComboBox
+            placeholder="Todos"
+            searchPlaceholder="Buscar template..."
+            buttonClassName="min-w-60"
+            data={templateFilterOptions}
+            value={targetTemplateFilter}
+            onSelect={(entry) =>
+              setTargetTemplateFilter(entry?.id ?? ALL_TEMPLATES_ID)
+            }
+          />
+        </div>
+      </div>
       <Table>
         <TableHeader>
           <TableRow>

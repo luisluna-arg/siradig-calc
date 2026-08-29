@@ -4,7 +4,13 @@ import { ApiClientProvider } from "@/data/ApiClientProvider";
 
 export const loader: LoaderFunction = async () => {
   let apiClient = new ApiClientProvider();
-  return await apiClient.Conversions.get();
+
+  const [conversions, templateCatalog] = await Promise.all([
+    apiClient.Conversions.get(),
+    apiClient.Catalogs.getTemplates(),
+  ]);
+
+  return { conversions, templateCatalog };
 };
 
 const metaData = { title: "Conversiones" };
