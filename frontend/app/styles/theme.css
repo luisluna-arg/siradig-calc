@@ -19,6 +19,7 @@
     --radius: 0rem;
     --table-header: 240 5.3% 96.3%;
     --table-row-alt: 0 0% 97.6%;
+    --table-row-hover: 0 0% 89%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -49,6 +50,7 @@
     --ring: 203.5 100% 26.1%;
     --table-header: 210 15% 20%;
     --table-row-alt: 210 18% 15%;
+    --table-row-hover: 210 15% 28%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;

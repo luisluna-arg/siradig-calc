@@ -60,6 +60,7 @@ export default {
         ring: "hsl(var(--ring))",
         "table-header": "hsl(var(--table-header))",
         "table-row-alt": "hsl(var(--table-row-alt))",
+        "table-row-hover": "hsl(var(--table-row-hover))",
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",
