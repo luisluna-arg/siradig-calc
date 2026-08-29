@@ -1,5 +1,5 @@
 import { RecordFlat } from "@/data/interfaces/RecordFlat";
-import { RecordValue } from "@/data/interfaces/RecordValue";
+import { FieldComposition } from "@/data/interfaces/FieldComposition";
 import { RecordTemplateLink } from "@/data/interfaces/RecordTemplateLink";
 
 export interface RecordConversion {
@@ -8,7 +8,7 @@ export interface RecordConversion {
     retenciones: number,
     neto: number,
     recordTemplateLink: RecordTemplateLink,
-    values: Array<RecordValue>,
+    values: Array<FieldComposition>,
     source: RecordFlat,
     target: RecordFlat,
 }

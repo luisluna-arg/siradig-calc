@@ -8,6 +8,7 @@ export interface LabelInputProps {
   className?: string;
   type?: string;
   defaultValue?: string;
+  disabled?: boolean;
 }
 
 export function LabelInput({
@@ -16,6 +17,7 @@ export function LabelInput({
   type = "text",
   className,
   defaultValue,
+  disabled = false,
 }: LabelInputProps) {
   return (
     <div className={cn(className)}>
@@ -25,7 +27,7 @@ export function LabelInput({
         type={type}
         defaultValue={defaultValue}
         className={"mt-2"}
-        disabled={true}
+        disabled={disabled}
       />
     </div>
   );

@@ -8,5 +8,5 @@ public class RecordTemplateConversionDto : RecordConversionBaseDto
     public required decimal Haberes { get; set; }
     public required decimal Retenciones { get; set; }
     public required decimal Neto { get; set; }
-    public required FieldValueDto[] Values { get; set; }
+    public required FieldCompositionDto[] Values { get; set; }
 }

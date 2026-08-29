@@ -24,9 +24,13 @@ public class GetRecordTemplateLinkQueryHandler(ISolutionDbContext dbContext, IDt
         var templateLink = await dbContext.RecordTemplateLinks
             .AsNoTracking()
             .Include(l => l.RightTemplate)
+                .ThenInclude(t => t.Sections)
+                    .ThenInclude(s => s.Fields)
             .Include(l => l.LeftTemplate)
+                .ThenInclude(t => t.Sections)
+                    .ThenInclude(s => s.Fields)
             .FirstAsync(l => l.LeftTemplateId == request.LeftTemplateId &&
-                l.LeftTemplateId == request.LeftTemplateId, cancellationToken);
+                l.RightTemplateId == request.RightTemplateId, cancellationToken);
 
         templateLink.RecordFieldLinks = await dbContext.RecordFieldLinks
             .AsNoTracking()

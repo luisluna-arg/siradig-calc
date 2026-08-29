@@ -9,6 +9,7 @@ export interface LabelComboBoxProps {
   className?: string;
   selectedType: number;
   fieldTypeCatalog: Array<Catalog<number>>;
+  disabled?: boolean;
 }
 
 export function LabelComboBox({
@@ -17,6 +18,7 @@ export function LabelComboBox({
   className,
   selectedType,
   fieldTypeCatalog,
+  disabled = false,
 }: LabelComboBoxProps) {
   return (
     <div className={cn("flex", "flex-col", "mt-2", className)}>
@@ -30,7 +32,7 @@ export function LabelComboBox({
         data={fieldTypeCatalog}
         value={selectedType ?? undefined}
         name={name}
-        disabled={true}
+        disabled={disabled}
       />
     </div>
   );
