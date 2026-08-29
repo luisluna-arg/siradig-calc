@@ -37,9 +37,10 @@ export interface ActionButtonProps {
   type: ActionButtonType;
   onClick?: (e?: any) => Promise<void>;
   text?: string;
+  disabled?: boolean;
 }
 
-export function ActionButton({ type, text, onClick }: ActionButtonProps) {
+export function ActionButton({ type, text, onClick, disabled }: ActionButtonProps) {
   const icon = icons[type];
 
   const classes = buttonClasses[type];
@@ -51,6 +52,7 @@ export function ActionButton({ type, text, onClick }: ActionButtonProps) {
       className={cn(classes)}
       onClick={onClick}
       type={type === "submit" ? type : "button"}
+      disabled={disabled}
     >
       {icon} {text ?? ""}
     </Button>
