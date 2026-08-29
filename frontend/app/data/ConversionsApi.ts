@@ -3,8 +3,11 @@ import { AxiosInstance } from "axios";
 import { RecordConversion } from "@/data/interfaces/RecordConversion";
 
 export class ConversionsApi extends EntityApi<RecordConversion, any> {
+  private recordsBaseURL: string;
+
   constructor(client: AxiosInstance, baseUrl: string) {
     super(client, `${baseUrl}/records/conversions`);
+    this.recordsBaseURL = `${baseUrl}/records`;
   }
 
   public async convert(sourceId: string, targetTemplateId: string): Promise<RecordConversion> {
@@ -22,8 +25,12 @@ export class ConversionsApi extends EntityApi<RecordConversion, any> {
 
   public async deleteByIds(
     sourceId: string,
-    targetTemplateId: string
+    conversionId: string
   ): Promise<any> {
-    return super.delete(`${sourceId}/to/${targetTemplateId}`);
+    const result = await this.client.delete(
+      `${this.recordsBaseURL}/${sourceId}/conversions/${conversionId}`,
+      await this.getAxiosConfig()
+    );
+    return result.data;
   }
 }
