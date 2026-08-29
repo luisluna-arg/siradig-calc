@@ -31,4 +31,30 @@ export class TemplateLinksApi extends EntityReadApi<TemplateLinkReduced> {
       await this.getAxiosConfig()
     );
   }
+
+  public async linkField(
+    leftTemplateId: string,
+    rightTemplateId: string,
+    leftFieldId: string,
+    rightFieldId: string
+  ): Promise<string> {
+    const result = await this.client.post(
+      `${this.linkBaseUrl}/${leftTemplateId}/to/${rightTemplateId}/${leftFieldId}/to/${rightFieldId}`,
+      {},
+      await this.getAxiosConfig()
+    );
+    return result.data as string;
+  }
+
+  public async unlinkField(
+    leftTemplateId: string,
+    rightTemplateId: string,
+    leftFieldId: string,
+    rightFieldId: string
+  ): Promise<void> {
+    await this.client.delete(
+      `${this.linkBaseUrl}/${leftTemplateId}/to/${rightTemplateId}/${leftFieldId}/to/${rightFieldId}`,
+      await this.getAxiosConfig()
+    );
+  }
 }

@@ -34,6 +34,7 @@ export function TemplateLinkFormDisplay() {
             label="Template izquierdo"
             type="text"
             defaultValue={templateLink?.leftTemplate.name}
+            disabled={true}
           />
           <Label className={cn(centerClass, "justify-center", "mt-8")}>
             A
@@ -43,6 +44,7 @@ export function TemplateLinkFormDisplay() {
             label="Template derecho"
             type="text"
             defaultValue={templateLink.rightTemplate.name}
+            disabled={true}
           />
         </div>
         <div className={cn(verticalMargin4Class)}>Campos</div>
@@ -91,6 +93,7 @@ const FieldLink = ({ link, linkIndex, fieldTypeCatalog }: FieldLinkProps) => {
               label="Etiqueta"
               defaultValue={link.rightField.label}
               className={cn(marginBottom2Class)}
+              disabled={true}
             />
             <LabelComboBox
               name={getInputName("fieldType")}
@@ -98,6 +101,7 @@ const FieldLink = ({ link, linkIndex, fieldTypeCatalog }: FieldLinkProps) => {
               label={"Tipo"}
               fieldTypeCatalog={fieldTypeCatalog}
               selectedType={link.rightField.fieldType.id}
+              disabled={true}
             />
           </div>
           <div className={cn("col-span-2", "flex-col")}>
@@ -121,12 +125,14 @@ const FieldLink = ({ link, linkIndex, fieldTypeCatalog }: FieldLinkProps) => {
                     label="Etiqueta"
                     defaultValue={lf.label}
                     className={"my-0"}
+                    disabled={true}
                   />
                   <LabelComboBox
                     name={getLeftInputName("fieldType")}
                     label={"Tipo"}
                     fieldTypeCatalog={fieldTypeCatalog}
                     selectedType={lf.fieldType.id}
+                    disabled={true}
                   />
                 </div>
               );
