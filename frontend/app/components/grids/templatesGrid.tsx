@@ -36,7 +36,7 @@ export default function TemplatesGrid() {
       navigate(`${baseRoute}`);
     } catch (error: any) {
       toast({
-        title: "Error deleting item",
+        title: "Error al eliminar el elemento",
         description: error.response?.data?.message || error.message,
         variant: "destructive",
       });
@@ -48,10 +48,10 @@ export default function TemplatesGrid() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className={cn(["w-80"])}>Name</TableHead>
-            <TableHead className={cn(["w-auto"])}>Description</TableHead>
+            <TableHead className={cn(["w-80"])}>Nombre</TableHead>
+            <TableHead className={cn(["w-auto"])}>Descripción</TableHead>
             <TableHead className={cn(["w-40", "text-right"])}>
-              Section count
+              Cantidad de secciones
             </TableHead>
             <TableHead className={cn(["w-10", "text-right"])}>
               <ActionButton
@@ -100,7 +100,7 @@ export default function TemplatesGrid() {
           <TableRow>
             <TableCell
               colSpan={4}
-            >{`Total templates: ${data.length}`}</TableCell>
+            >{`Total de templates: ${data.length}`}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

@@ -49,7 +49,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Add new record" }];
+  return [{ title: "Agregar registro" }];
 };
 
 export default RecordEditForm;

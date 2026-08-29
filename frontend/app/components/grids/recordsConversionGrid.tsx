@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLoaderData } from "@remix-run/react";
 import {
   Table,
@@ -13,14 +14,43 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Trash2Icon } from "lucide-react";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
+import { Catalog } from "@/data/interfaces/Catalog";
 import { RecordConversion } from "@/data/interfaces/RecordConversion";
 import { ActionButton } from "../utils/actionButton";
+import { ComboBox } from "../utils/comboBox";
+import { Input } from "@/components/ui/input";
+
+const ALL_TEMPLATES_ID = "";
 
 export default function ConversionsGrid() {
   const apiClient = new ApiClientProvider();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const data = useLoaderData() as Array<RecordConversion>;
+  const { conversions, templateCatalog } = useLoaderData() as {
+    conversions: Array<RecordConversion>;
+    templateCatalog: Array<Catalog<string>>;
+  };
+  const [sourceTemplateFilter, setSourceTemplateFilter] = useState(ALL_TEMPLATES_ID);
+  const [targetTemplateFilter, setTargetTemplateFilter] = useState(ALL_TEMPLATES_ID);
+  const [sourceTitleFilter, setSourceTitleFilter] = useState("");
+  const [targetTitleFilter, setTargetTitleFilter] = useState("");
+
+  const templateFilterOptions: Array<Catalog<string>> = [
+    { id: ALL_TEMPLATES_ID, label: "Todos" },
+    ...templateCatalog,
+  ];
+
+  const data = conversions.filter(
+    (conversion) =>
+      (!sourceTemplateFilter ||
+        conversion.source.recordTemplateId === sourceTemplateFilter) &&
+      (!targetTemplateFilter ||
+        conversion.target.recordTemplateId === targetTemplateFilter) &&
+      (!sourceTitleFilter ||
+        conversion.source.title.toLowerCase().includes(sourceTitleFilter.toLowerCase())) &&
+      (!targetTitleFilter ||
+        conversion.target.title.toLowerCase().includes(targetTitleFilter.toLowerCase()))
+  );
 
   const baseRoute = "/records/conversions";
 
@@ -34,7 +64,7 @@ export default function ConversionsGrid() {
       navigate(`/records/conversions`);
     } catch (error: any) {
       toast({
-        title: "Error deleting item",
+        title: "Error al eliminar el elemento",
         description: error.response?.data?.message || error.message,
         variant: "destructive",
       });
@@ -42,27 +72,73 @@ export default function ConversionsGrid() {
   };
 
   return (
-    <div className="flex justify-center items-center py-6 px-20">
+    <div className="flex flex-col items-center gap-4 py-6 px-20">
+      <div className="flex flex-wrap items-center gap-6 self-start">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Template origen:</span>
+          <ComboBox
+            placeholder="Todos"
+            searchPlaceholder="Buscar template..."
+            buttonClassName="min-w-60"
+            data={templateFilterOptions}
+            value={sourceTemplateFilter}
+            onSelect={(entry) =>
+              setSourceTemplateFilter(entry?.id ?? ALL_TEMPLATES_ID)
+            }
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Template destino:</span>
+          <ComboBox
+            placeholder="Todos"
+            searchPlaceholder="Buscar template..."
+            buttonClassName="min-w-60"
+            data={templateFilterOptions}
+            value={targetTemplateFilter}
+            onSelect={(entry) =>
+              setTargetTemplateFilter(entry?.id ?? ALL_TEMPLATES_ID)
+            }
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Título origen:</span>
+          <Input
+            className="min-w-60"
+            placeholder="Buscar por título..."
+            value={sourceTitleFilter}
+            onChange={(e) => setSourceTitleFilter(e.target.value)}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Título destino:</span>
+          <Input
+            className="min-w-60"
+            placeholder="Buscar por título..."
+            value={targetTitleFilter}
+            onChange={(e) => setTargetTitleFilter(e.target.value)}
+          />
+        </div>
+      </div>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead className={cn(["text-center"])} colSpan={3}>
-              Source
+              Origen
             </TableHead>
             <TableHead className={cn(["text-center", "border-l"])} colSpan={3}>
-              Target
+              Destino
             </TableHead>
             <TableHead className={cn(["text-center", "border-l"])}></TableHead>
           </TableRow>
           <TableRow>
             <TableHead className={cn(["w-auto"])}>Template</TableHead>
-            <TableHead className={cn(["w-auto"])}>Title</TableHead>
-            <TableHead className={cn(["w-60"])}>Description</TableHead>
+            <TableHead className={cn(["w-auto"])}>Título</TableHead>
+            <TableHead className={cn(["w-60"])}>Descripción</TableHead>
             <TableHead className={cn(["w-auto", "border-l"])}>
               Template
             </TableHead>
-            <TableHead className={cn(["w-auto"])}>Title</TableHead>
-            <TableHead className={cn(["w-60"])}>Description</TableHead>
+            <TableHead className={cn(["w-auto"])}>Título</TableHead>
+            <TableHead className={cn(["w-60"])}>Descripción</TableHead>
             <TableHead className={cn(["w-auto", "border-l"])}>
               <ActionButton
                 type="add"

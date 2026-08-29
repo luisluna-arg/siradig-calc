@@ -36,7 +36,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Add new template" }];
+  return [{ title: "Agregar template" }];
 };
 
 export default TemplateEditForm;

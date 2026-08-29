@@ -4,10 +4,16 @@ import { ApiClientProvider } from "@/data/ApiClientProvider";
 
 export const loader: LoaderFunction = async () => {
   let apiClient = new ApiClientProvider();
-  return await apiClient.Records.get();
+
+  const [records, templateCatalog] = await Promise.all([
+    apiClient.Records.get(),
+    apiClient.Catalogs.getTemplates(),
+  ]);
+
+  return { records, templateCatalog };
 };
 
-const metaData = { title: "Records" };
+const metaData = { title: "Registros" };
 
 export const meta: MetaFunction = () => {
   return [metaData];

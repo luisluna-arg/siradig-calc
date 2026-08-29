@@ -26,7 +26,7 @@ export async function action({ request }: ActionFunctionArgs) {
   );
 }
 
-const metaData = { title: "Add Template Link" };
+const metaData = { title: "Agregar vínculo de template" };
 
 export const meta: MetaFunction = () => {
   return [metaData];

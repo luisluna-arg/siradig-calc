@@ -9,7 +9,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Conversion" }];
+  return [{ title: "Conversión" }];
 };
 
 export default RecordConversionForm;

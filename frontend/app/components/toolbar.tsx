@@ -36,11 +36,10 @@ export function Toolbar() {
         "flex-row",
         "w-full",
         "border-solid",
-        "background-card",
         "p-2",
         "items-center",
-        "bg-card",
-        "text-foreground",
+        "bg-primary",
+        "text-primary-foreground",
         "border-b",
       ])}
     >
@@ -58,8 +57,8 @@ export function Toolbar() {
                 className={cn([
                   "px-1 py-2 rounded-md transition-colors",
                   location.pathname === tab.route
-                    ? "text-primary"
-                    : "hover:text-primary",
+                    ? "bg-primary-foreground/15 text-primary-foreground"
+                    : "text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground",
                 ])}
               >
                 <LocalLink to={tab.route}>{tab.label}</LocalLink>

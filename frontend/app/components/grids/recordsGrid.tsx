@@ -11,19 +11,41 @@ import {
 } from "@/components/ui/table";
 import { ActionButton } from "@/components/utils/actionButton";
 import { Button } from "@/components/ui/button";
+import { ComboBox } from "@/components/utils/comboBox";
+import { Input } from "@/components/ui/input";
 import { Upload } from "lucide-react";
 import { ApiClientProvider } from "@/data/ApiClientProvider";
+import { Catalog } from "@/data/interfaces/Catalog";
 import { Record } from "@/data/interfaces/Record";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import ImportRecordModal from "@/components/forms/record/ImportRecordModal";
 
+const ALL_TEMPLATES_ID = "";
+
 export default function RecordsGrid() {
   const apiClient = new ApiClientProvider();
-  const data = useLoaderData() as Array<Record>;
+  const { records, templateCatalog } = useLoaderData() as {
+    records: Array<Record>;
+    templateCatalog: Array<Catalog<string>>;
+  };
   const { toast } = useToast();
   const navigate = useNavigate();
   const [importOpen, setImportOpen] = useState(false);
+  const [templateFilter, setTemplateFilter] = useState(ALL_TEMPLATES_ID);
+  const [titleFilter, setTitleFilter] = useState("");
+
+  const templateFilterOptions: Array<Catalog<string>> = [
+    { id: ALL_TEMPLATES_ID, label: "Todos" },
+    ...templateCatalog,
+  ];
+
+  const data = records.filter(
+    (record) =>
+      (!templateFilter || record.templateId === templateFilter) &&
+      (!titleFilter ||
+        record.title.toLowerCase().includes(titleFilter.toLowerCase()))
+  );
 
   const handleAdd = async () => {
     navigate(`/records/add`);
@@ -39,7 +61,7 @@ export default function RecordsGrid() {
       navigate(`/records`);
     } catch (error: any) {
       toast({
-        title: "Error deleting item",
+        title: "Error al eliminar el elemento",
         description: error.response?.data?.message || error.message,
         variant: "destructive",
       });
@@ -47,14 +69,36 @@ export default function RecordsGrid() {
   };
 
   return (
-    <div className="flex justify-center items-center py-6 px-20">
+    <div className="flex flex-col items-center gap-4 py-6 px-20">
+      <div className="flex items-center gap-6 self-start">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Template:</span>
+          <ComboBox
+            placeholder="Todos"
+            searchPlaceholder="Buscar template..."
+            buttonClassName="min-w-60"
+            data={templateFilterOptions}
+            value={templateFilter}
+            onSelect={(entry) => setTemplateFilter(entry?.id ?? ALL_TEMPLATES_ID)}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Título:</span>
+          <Input
+            className="min-w-60"
+            placeholder="Buscar por título..."
+            value={titleFilter}
+            onChange={(e) => setTitleFilter(e.target.value)}
+          />
+        </div>
+      </div>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead className={cn(["w-80"])}>Template</TableHead>
-            <TableHead className={cn(["w-80"])}>Title</TableHead>
-            <TableHead className={cn(["w-auto"])}>Description</TableHead>
-            <TableHead className={cn(["w-40"])}>Section count</TableHead>
+            <TableHead className={cn(["w-80"])}>Título</TableHead>
+            <TableHead className={cn(["w-auto"])}>Descripción</TableHead>
+            <TableHead className={cn(["w-40"])}>Cantidad de secciones</TableHead>
             <TableHead className={cn(["w-24", "text-right"])}>
               <div className="flex justify-end gap-1">
                 <Button
@@ -124,7 +168,7 @@ export default function RecordsGrid() {
           <TableRow>
             <TableCell
               colSpan={4}
-            >{`Total templates: ${data.length}`}</TableCell>
+            >{`Total de registros: ${data.length}`}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

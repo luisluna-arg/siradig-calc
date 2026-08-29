@@ -180,32 +180,32 @@ export default function RecordEditForm() {
           >
             <ActionButton
               type="clear"
-              text="Clear"
+              text="Limpiar"
               onClick={async (e) => {
                 e.preventDefault;
                 await handleClear();
               }}
             />
-            <ActionButton type="submit" text="Submit" />
+            <ActionButton type="submit" text="Enviar" />
           </div>
         </div>
         <Separator />
         <div className={cn(twoColumnGridClass)}>
           <LabelInput
             id="name"
-            label="Name"
+            label="Nombre"
             type="text"
             defaultValue={editingTemplate?.name}
           />
           <LabelInput
             id={"description"}
-            label="Description"
+            label="Descripción"
             type="text"
             defaultValue={editingTemplate?.description}
           />
         </div>
         <Separator />
-        <div className={cn(verticalMargin4Class, titleClass)}>Sections</div>
+        <div className={cn(verticalMargin4Class, titleClass)}>Secciones</div>
         {editingTemplate?.sections.map((s, i) => {
           return (
             <Section
@@ -230,7 +230,7 @@ export default function RecordEditForm() {
         >
           <ActionButton
             type="add"
-            text="Add section"
+            text="Agregar sección"
             onClick={async (e) => {
               e.preventDefault;
               await handleAddSection();
@@ -268,7 +268,7 @@ const Section = ({
           <Hidden name={getInputName("id")} defaultValue={section?.id} />
           <LabelInput
             id={getInputName("name")}
-            label={"Name"}
+            label={"Nombre"}
             defaultValue={section?.name}
           />
           <div className={cn(twoColumnGridClass, "")}>
@@ -289,7 +289,7 @@ const Section = ({
           <div className={cn([centerEndClass, gapClass, fontsClass])}>
             <ActionButton
               type="add"
-              text="Add field"
+              text="Agregar campo"
               onClick={async (e) => {
                 e.preventDefault;
                 handleAddField(section.id);
@@ -324,18 +324,18 @@ const Field = ({
       <Hidden name={getInputName("id")} defaultValue={field?.id} />
       <LabelInput
         id={getInputName("label")}
-        label="Label"
+        label="Etiqueta"
         defaultValue={field.label}
         className={"my-0"}
       />
       <LabelCheckbox
         name={getInputName("isRequired")}
-        label={"Required"}
+        label={"Requerido"}
         checked={field.isRequired}
       />
       <LabelComboBox
         name={getInputName("fieldType")}
-        label={"Type"}
+        label={"Tipo"}
         fieldTypeCatalog={fieldTypeCatalog}
         selectedType={field.fieldType.id}
       />
@@ -418,8 +418,8 @@ const LabelComboBox = ({
     >
       <Label htmlFor={name}>{label}</Label>
       <ComboBox
-        placeholder={"Select field type..."}
-        searchPlaceholder={"Search field type..."}
+        placeholder={"Seleccionar tipo de campo..."}
+        searchPlaceholder={"Buscar tipo de campo..."}
         data={fieldTypeCatalog}
         value={selectedType ?? undefined}
         name={name}
