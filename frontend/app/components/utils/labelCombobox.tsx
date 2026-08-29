@@ -25,8 +25,8 @@ export function LabelComboBox({
       </Label>
       <ComboBox
         className={cn("mt-2")}
-        placeholder={"Select field type..."}
-        searchPlaceholder={"Search field type..."}
+        placeholder={"Seleccionar tipo de campo..."}
+        searchPlaceholder={"Buscar tipo de campo..."}
         data={fieldTypeCatalog}
         value={selectedType ?? undefined}
         name={name}

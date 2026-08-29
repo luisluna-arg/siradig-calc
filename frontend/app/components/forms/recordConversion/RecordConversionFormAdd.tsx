@@ -18,8 +18,8 @@ export default function RecordConversionFormAdd() {
     <Form ref={formRef} method={"post"}>
       <div className={cn(["grid", "grid-cols-2", "gap-6", "justify-between"])}>
         <ComboBox
-          placeholder={"Select record..."}
-          searchPlaceholder={"Search record..."}
+          placeholder={"Seleccionar registro..."}
+          searchPlaceholder={"Buscar registro..."}
           className={cn("ml-auto")}
           buttonClassName={cn(comboButtonClass)}
           data={recordCatalog}
@@ -27,8 +27,8 @@ export default function RecordConversionFormAdd() {
           name={"recordId"}
         />
         <ComboBox
-          placeholder={"Select template..."}
-          searchPlaceholder={"Search template..."}
+          placeholder={"Seleccionar template..."}
+          searchPlaceholder={"Buscar template..."}
           className={cn("mr-auto")}
           buttonClassName={cn(comboButtonClass)}
           data={templateCatalog}
@@ -36,7 +36,7 @@ export default function RecordConversionFormAdd() {
           name={"templateId"}
         />
         <div className={cn(["flex", "flex-row", "justify-end", "col-span-2"])}>
-          <ActionButton type="submit" text="Submit" />
+          <ActionButton type="submit" text="Enviar" />
         </div>
       </div>
     </Form>

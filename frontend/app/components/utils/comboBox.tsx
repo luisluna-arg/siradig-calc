@@ -49,8 +49,8 @@ export function ComboBox<T extends Object>({
   name,
   className,
   buttonClassName,
-  placeholder = "Select...",
-  searchPlaceholder = "Search...",
+  placeholder = "Seleccionar...",
+  searchPlaceholder = "Buscar...",
   disabled = false,
   onSelect,
 }: ComboBoxProps<T>) {
@@ -102,7 +102,7 @@ export function ComboBox<T extends Object>({
           <Command>
             <CommandInput placeholder={searchPlaceholder} className="h-9" />
             <CommandList>
-              <CommandEmpty>No entry found.</CommandEmpty>
+              <CommandEmpty>No se encontraron resultados.</CommandEmpty>
               <CommandGroup>
                 {data.map((entry) => (
                   <CommandItem

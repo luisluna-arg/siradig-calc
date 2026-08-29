@@ -39,7 +39,7 @@ export default function RecordsGrid() {
       navigate(`/records`);
     } catch (error: any) {
       toast({
-        title: "Error deleting item",
+        title: "Error al eliminar el elemento",
         description: error.response?.data?.message || error.message,
         variant: "destructive",
       });
@@ -52,9 +52,9 @@ export default function RecordsGrid() {
         <TableHeader>
           <TableRow>
             <TableHead className={cn(["w-80"])}>Template</TableHead>
-            <TableHead className={cn(["w-80"])}>Title</TableHead>
-            <TableHead className={cn(["w-auto"])}>Description</TableHead>
-            <TableHead className={cn(["w-40"])}>Section count</TableHead>
+            <TableHead className={cn(["w-80"])}>Título</TableHead>
+            <TableHead className={cn(["w-auto"])}>Descripción</TableHead>
+            <TableHead className={cn(["w-40"])}>Cantidad de secciones</TableHead>
             <TableHead className={cn(["w-24", "text-right"])}>
               <div className="flex justify-end gap-1">
                 <Button
@@ -124,7 +124,7 @@ export default function RecordsGrid() {
           <TableRow>
             <TableCell
               colSpan={4}
-            >{`Total templates: ${data.length}`}</TableCell>
+            >{`Total de registros: ${data.length}`}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

@@ -103,8 +103,8 @@ export default function RecordEditForm() {
             ])}
           >
             <ComboBox
-              placeholder={"Select template..."}
-              searchPlaceholder={"Search template..."}
+              placeholder={"Seleccionar template..."}
+              searchPlaceholder={"Buscar template..."}
               data={templateCatalog}
               value={selectedTemplate ?? undefined}
               name={"templateId"}
@@ -114,13 +114,13 @@ export default function RecordEditForm() {
           <div className={cn(["gap-6", "flex", "justify-between", "gap-4"])}>
             <ActionButton
               type="clear"
-              text="Clear"
+              text="Limpiar"
               onClick={async (e) => {
                 e.preventDefault;
                 await handleClear();
               }}
             />
-            <ActionButton type="submit" text="Submit" />
+            <ActionButton type="submit" text="Enviar" />
           </div>
         </div>
         <div
@@ -136,7 +136,7 @@ export default function RecordEditForm() {
             <tbody>
               <tr className={cn(["h-12"])}>
                 <td className={"w-80"}>
-                  <Label htmlFor={`title`}>Title</Label>
+                  <Label htmlFor={`title`}>Título</Label>
                 </td>
                 <td className={"w-80"}>
                   <Input

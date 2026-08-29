@@ -31,21 +31,21 @@ export function TemplateLinkFormDisplay() {
         <div className={cn(threeColumnGridClass)}>
           <LabelInput
             id="leftTemplate.name"
-            label="Left Template"
+            label="Template izquierdo"
             type="text"
             defaultValue={templateLink?.leftTemplate.name}
           />
           <Label className={cn(centerClass, "justify-center", "mt-8")}>
-            To
+            A
           </Label>
           <LabelInput
             id="rightTemplate.name"
-            label="Right Template"
+            label="Template derecho"
             type="text"
             defaultValue={templateLink.rightTemplate.name}
           />
         </div>
-        <div className={cn(verticalMargin4Class)}>Fields</div>
+        <div className={cn(verticalMargin4Class)}>Campos</div>
         <Separator className={cn(marginBottom4Class)} />
         <div>
           {templateLink.recordTemplateFieldLinks.map(
@@ -78,24 +78,24 @@ const FieldLink = ({ link, linkIndex, fieldTypeCatalog }: FieldLinkProps) => {
       <CardContent className={cn("p-4")}>
         <div className={cn(threeColumnGridClass)}>
           <div>
-            <Label>{"Right field"}</Label>
+            <Label>{"Campo derecho"}</Label>
           </div>
           <div className={cn("col-span-2")}>
-            <Label>{"Left fields"}</Label>
+            <Label>{"Campos izquierdos"}</Label>
           </div>
         </div>
         <div className={cn(threeColumnGridClass)}>
           <div className={cn("flex", "flex-col", "items-start", "h-full")}>
             <LabelInput
               id={getInputName("rightField.label")}
-              label="Label"
+              label="Etiqueta"
               defaultValue={link.rightField.label}
               className={cn(marginBottom2Class)}
             />
             <LabelComboBox
               name={getInputName("fieldType")}
               className={cn(["ml-auto", "mr-auto", "mt-2"])}
-              label={"Type"}
+              label={"Tipo"}
               fieldTypeCatalog={fieldTypeCatalog}
               selectedType={link.rightField.fieldType.id}
             />
@@ -118,13 +118,13 @@ const FieldLink = ({ link, linkIndex, fieldTypeCatalog }: FieldLinkProps) => {
                 >
                   <LabelInput
                     id={getLeftInputName("label")}
-                    label="Label"
+                    label="Etiqueta"
                     defaultValue={lf.label}
                     className={"my-0"}
                   />
                   <LabelComboBox
                     name={getLeftInputName("fieldType")}
-                    label={"Type"}
+                    label={"Tipo"}
                     fieldTypeCatalog={fieldTypeCatalog}
                     selectedType={lf.fieldType.id}
                   />

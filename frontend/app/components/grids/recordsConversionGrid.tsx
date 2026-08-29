@@ -34,7 +34,7 @@ export default function ConversionsGrid() {
       navigate(`/records/conversions`);
     } catch (error: any) {
       toast({
-        title: "Error deleting item",
+        title: "Error al eliminar el elemento",
         description: error.response?.data?.message || error.message,
         variant: "destructive",
       });
@@ -47,22 +47,22 @@ export default function ConversionsGrid() {
         <TableHeader>
           <TableRow>
             <TableHead className={cn(["text-center"])} colSpan={3}>
-              Source
+              Origen
             </TableHead>
             <TableHead className={cn(["text-center", "border-l"])} colSpan={3}>
-              Target
+              Destino
             </TableHead>
             <TableHead className={cn(["text-center", "border-l"])}></TableHead>
           </TableRow>
           <TableRow>
             <TableHead className={cn(["w-auto"])}>Template</TableHead>
-            <TableHead className={cn(["w-auto"])}>Title</TableHead>
-            <TableHead className={cn(["w-60"])}>Description</TableHead>
+            <TableHead className={cn(["w-auto"])}>Título</TableHead>
+            <TableHead className={cn(["w-60"])}>Descripción</TableHead>
             <TableHead className={cn(["w-auto", "border-l"])}>
               Template
             </TableHead>
-            <TableHead className={cn(["w-auto"])}>Title</TableHead>
-            <TableHead className={cn(["w-60"])}>Description</TableHead>
+            <TableHead className={cn(["w-auto"])}>Título</TableHead>
+            <TableHead className={cn(["w-60"])}>Descripción</TableHead>
             <TableHead className={cn(["w-auto", "border-l"])}>
               <ActionButton
                 type="add"

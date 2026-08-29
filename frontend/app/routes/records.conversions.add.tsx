@@ -27,7 +27,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Conversion" }];
+  return [{ title: "Conversión" }];
 };
 
 export default RecordConversionFormAdd;

@@ -7,7 +7,7 @@ export const loader: LoaderFunction = async () => {
   return await apiClient.Records.get();
 };
 
-const metaData = { title: "Records" };
+const metaData = { title: "Registros" };
 
 export const meta: MetaFunction = () => {
   return [metaData];

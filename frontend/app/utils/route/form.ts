@@ -24,7 +24,7 @@ export function showToast(toast: any, actionData: any) {
     )}`;
   }
   toast({
-    title: "Error during Submit operation",
+    title: "Error al enviar el formulario",
     description: description,
     variant: "destructive",
     duration: Infinity,

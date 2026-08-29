@@ -15,8 +15,8 @@ export default function TemplateLinkAddForm() {
     <Form method="post">
       <div className={cn(["grid", "grid-cols-2", "gap-6", "justify-between"])}>
         <ComboBox
-          placeholder={"Select left template..."}
-          searchPlaceholder={"Search template..."}
+          placeholder={"Seleccionar template izquierda..."}
+          searchPlaceholder={"Buscar template..."}
           className={cn("ml-auto")}
           buttonClassName={comboButtonClass}
           data={templateCatalog}
@@ -24,8 +24,8 @@ export default function TemplateLinkAddForm() {
           name={"leftTemplateId"}
         />
         <ComboBox
-          placeholder={"Select right template..."}
-          searchPlaceholder={"Search template..."}
+          placeholder={"Seleccionar template derecha..."}
+          searchPlaceholder={"Buscar template..."}
           className={cn("mr-auto")}
           buttonClassName={comboButtonClass}
           data={templateCatalog}
@@ -33,7 +33,7 @@ export default function TemplateLinkAddForm() {
           name={"rightTemplateId"}
         />
         <div className={cn(["flex", "flex-row", "justify-end", "col-span-2"])}>
-          <ActionButton type="submit" text="Create Link" />
+          <ActionButton type="submit" text="Crear vínculo" />
         </div>
       </div>
     </Form>

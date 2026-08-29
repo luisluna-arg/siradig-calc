@@ -57,7 +57,7 @@ export default function RecordDisplay() {
       </div>
       <div className={inputContainerClasses}>
         <Label htmlFor={`title`} className={inputLabelClasses}>
-          Title
+          Título
         </Label>
         <Input
           id={`title`}

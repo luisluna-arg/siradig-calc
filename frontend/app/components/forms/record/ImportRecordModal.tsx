@@ -43,7 +43,7 @@ export default function ImportRecordModal({ open, onClose, onSaved }: ImportReco
     const apiClient = new ApiClientProvider();
     apiClient.Catalogs.getTemplates()
       .then((data) => setTemplateCatalog(data as unknown as Catalog<string>[]))
-      .catch(() => setError("Failed to load templates"));
+      .catch(() => setError("Error al cargar los templates"));
   }, [open]);
 
   useEffect(() => {
@@ -83,9 +83,9 @@ export default function ImportRecordModal({ open, onClose, onSaved }: ImportReco
       setTitle(result.title || template.name);
       setStep(2);
     } catch (err: any) {
-      const msg = err.response?.data?.message ?? err.message ?? "Import failed";
+      const msg = err.response?.data?.message ?? err.message ?? "Error al importar";
       setError(msg);
-      toast({ title: "Import error", description: msg, variant: "destructive" });
+      toast({ title: "Error de importación", description: msg, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -108,9 +108,9 @@ export default function ImportRecordModal({ open, onClose, onSaved }: ImportReco
       onSaved();
       onClose();
     } catch (err: any) {
-      const msg = err.response?.data?.message ?? err.message ?? "Failed to save record";
+      const msg = err.response?.data?.message ?? err.message ?? "Error al guardar el registro";
       setError(msg);
-      toast({ title: "Save error", description: msg, variant: "destructive" });
+      toast({ title: "Error al guardar", description: msg, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -124,7 +124,7 @@ export default function ImportRecordModal({ open, onClose, onSaved }: ImportReco
       <DialogContent className={cn("max-w-3xl max-h-[90vh] overflow-y-auto")}>
         <DialogHeader>
           <DialogTitle>
-            {step === 1 ? "Import record from file" : "Review & save record"}
+            {step === 1 ? "Importar registro desde archivo" : "Revisar y guardar registro"}
           </DialogTitle>
         </DialogHeader>
 
@@ -133,15 +133,15 @@ export default function ImportRecordModal({ open, onClose, onSaved }: ImportReco
             <div className="flex flex-col gap-2">
               <Label>Template</Label>
               <ComboBox
-                placeholder="Select template..."
-                searchPlaceholder="Search template..."
+                placeholder="Seleccionar template..."
+                searchPlaceholder="Buscar template..."
                 data={templateCatalog}
                 value={selectedTemplateId ?? undefined}
                 onSelect={(entry) => setSelectedTemplateId(entry?.id ?? null)}
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="import-file">File (.pdf or .csv)</Label>
+              <Label htmlFor="import-file">Archivo (.pdf o .csv)</Label>
               <input
                 id="import-file"
                 ref={fileInputRef}
@@ -154,7 +154,7 @@ export default function ImportRecordModal({ open, onClose, onSaved }: ImportReco
             {error && <p className="text-sm text-destructive">{error}</p>}
             <div className="flex justify-end">
               <Button onClick={handleImport} disabled={!canImport}>
-                {loading ? "Importing..." : "Import"}
+                {loading ? "Importando..." : "Importar"}
               </Button>
             </div>
           </div>
@@ -163,13 +163,13 @@ export default function ImportRecordModal({ open, onClose, onSaved }: ImportReco
         {step === 2 && fullTemplate && (
           <div className="flex flex-col gap-6 pt-2">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="import-title">Title</Label>
+              <Label htmlFor="import-title">Título</Label>
               <Input
                 id="import-title"
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Record title"
+                placeholder="Título del registro"
               />
             </div>
             <div className="grid grid-cols-2 gap-6">
@@ -200,10 +200,10 @@ export default function ImportRecordModal({ open, onClose, onSaved }: ImportReco
             {error && <p className="text-sm text-destructive">{error}</p>}
             <div className="flex justify-between pt-2">
               <Button variant="outline" onClick={() => setStep(1)} disabled={loading}>
-                Back
+                Atrás
               </Button>
               <Button onClick={handleSave} disabled={!canSave}>
-                {loading ? "Saving..." : "Save"}
+                {loading ? "Guardando..." : "Guardar"}
               </Button>
             </div>
           </div>

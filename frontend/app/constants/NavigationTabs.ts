@@ -1,12 +1,12 @@
 const NavigationTabs = [
-    { id: "records-tab", label: "Records", route: "/records" },
+    { id: "records-tab", label: "Registros", route: "/records" },
     { id: "templates-tab", label: "Templates", route: "/records/templates" },
     {
       id: "conversions-tab",
-      label: "Conversions",
+      label: "Conversiones",
       route: "/records/conversions",
     },
-    { id: "links-tab", label: "Links", route: "/records/templates/links" },
+    { id: "links-tab", label: "Vínculos", route: "/records/templates/links" },
   ];
 
 export default NavigationTabs;

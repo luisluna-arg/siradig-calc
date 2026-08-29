@@ -70,19 +70,19 @@ export default function TemplateDisplay() {
         <div className={cn(twoColumnGridClass)}>
           <LabelInput
             id="name"
-            label="Name"
+            label="Nombre"
             type="text"
             defaultValue={editingTemplate?.name}
           />
           <LabelInput
             id={"description"}
-            label="Description"
+            label="Descripción"
             type="text"
             defaultValue={editingTemplate?.description}
           />
         </div>
         <Separator />
-        <div className={cn(verticalMargin4Class, titleClass)}>Sections</div>
+        <div className={cn(verticalMargin4Class, titleClass)}>Secciones</div>
         {editingTemplate?.sections.map((s, i) => {
           return (
             <Section
@@ -113,7 +113,7 @@ const Section = ({
           <Hidden name={getInputName("id")} defaultValue={section?.id} />
           <LabelInput
             id={getInputName("name")}
-            label={"Name"}
+            label={"Nombre"}
             defaultValue={section?.name}
           />
           <div className={cn(twoColumnGridClass, "")}>
@@ -155,18 +155,18 @@ const Field = ({
       <Hidden name={getInputName("id")} defaultValue={field?.id} />
       <LabelInput
         id={getInputName("label")}
-        label="Label"
+        label="Etiqueta"
         defaultValue={field.label}
         className={"my-0"}
       />
       <LabelCheckbox
         name={getInputName("isRequired")}
-        label={"Required"}
+        label={"Requerido"}
         checked={field.isRequired}
       />
       <LabelComboBox
         name={getInputName("fieldType")}
-        label={"Type"}
+        label={"Tipo"}
         fieldTypeCatalog={fieldTypeCatalog}
         selectedType={field.fieldType.id}
       />
@@ -246,8 +246,8 @@ const LabelComboBox = ({
     >
       <Label htmlFor={name}>{label}</Label>
       <ComboBox
-        placeholder={"Select field type..."}
-        searchPlaceholder={"Search field type..."}
+        placeholder={"Seleccionar tipo de campo..."}
+        searchPlaceholder={"Buscar tipo de campo..."}
         data={fieldTypeCatalog}
         value={selectedType ?? undefined}
         name={name}

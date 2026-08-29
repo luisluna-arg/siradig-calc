@@ -7,7 +7,7 @@ export const loader: LoaderFunction = async () => {
   return await apiClient.TemplateLinks.get();
 };
 
-const metaData = { title: "Template Links" };
+const metaData = { title: "Vínculos de templates" };
 
 export const meta: MetaFunction = () => {
   return [metaData];

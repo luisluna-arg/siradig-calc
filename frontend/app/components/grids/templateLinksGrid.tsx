@@ -36,7 +36,7 @@ export default function TemplatesGrid() {
       navigate(`${baseRoute}`);
     } catch (error: any) {
       toast({
-        title: "Error deleting item",
+        title: "Error al eliminar el elemento",
         description: error.response?.data?.message || error.message,
         variant: "destructive",
       });
@@ -49,18 +49,18 @@ export default function TemplatesGrid() {
         <TableHeader>
           <TableRow>
             <TableHead className={cn(["w-2", "text-center"])} colSpan={2}>
-              Left
+              Izquierda
             </TableHead>
             <TableHead className={cn(["w-2", "text-center"])} colSpan={2}>
-              Right
+              Derecha
             </TableHead>
           </TableRow>
           <TableRow>
-            <TableHead className={cn(["w-80"])}>Name</TableHead>
-            <TableHead className={cn(["w-80"])}>Description</TableHead>
-            <TableHead className={cn(["w-auto"])}>Name</TableHead>
+            <TableHead className={cn(["w-80"])}>Nombre</TableHead>
+            <TableHead className={cn(["w-80"])}>Descripción</TableHead>
+            <TableHead className={cn(["w-auto"])}>Nombre</TableHead>
             <TableHead className={cn(["w-40", "text-right"])}>
-              Description
+              Descripción
             </TableHead>
             <TableHead className={cn(["w-10", "text-right"])}>
               <ActionButton
@@ -116,7 +116,7 @@ export default function TemplatesGrid() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={4}>{`Total links: ${data.length}`}</TableCell>
+            <TableCell colSpan={4}>{`Total de vínculos: ${data.length}`}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

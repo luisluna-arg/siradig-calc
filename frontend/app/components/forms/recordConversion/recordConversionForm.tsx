@@ -61,11 +61,11 @@ export default function RecordConversionForm() {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className={cn(["w-20"])}>Title</TableCell>
+              <TableCell className={cn(["w-20"])}>Título</TableCell>
               <TableCell className={cn("font-medium")}>{title}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className={cn(["w-20"])}>Description</TableCell>
+              <TableCell className={cn(["w-20"])}>Descripción</TableCell>
               <TableCell className={cn("font-medium")}>{description}</TableCell>
             </TableRow>
           </TableBody>
@@ -92,8 +92,8 @@ export default function RecordConversionForm() {
             </TableHead>
           </TableRow>
           <TableRow>
-            <TableHead>Item</TableHead>
-            <TableHead className="text-right">Value</TableHead>
+            <TableHead>Ítem</TableHead>
+            <TableHead className="text-right">Valor</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -113,27 +113,27 @@ export default function RecordConversionForm() {
   return (
     <div className="flex flex-row">
       <div className="flex flex-col border-r p-5 max-w-50">
-        <h2 className="text-xl font-semibold mb-4">Details</h2>
+        <h2 className="text-xl font-semibold mb-4">Detalles</h2>
         <HeaderTable
-          tableHeader={"Source"}
+          tableHeader={"Origen"}
           description={data.source.description}
           templateName={data.source.name}
           title={data.source.title}
           className={"mb-5"}
         />
         <HeaderTable
-          tableHeader={"Target"}
+          tableHeader={"Destino"}
           description={data.target.description}
           templateName={data.target.name}
           title={data.target.title}
         />
       </div>
       <div className="flex flex-col p-5">
-        <h2 className="text-xl font-semibold mb-4">Conversion</h2>
+        <h2 className="text-xl font-semibold mb-4">Conversión</h2>
         <div className="flex flex-row mb-5">
           <div className="space-y-3">
             <ConversionTable
-              tableHeader="Origin"
+              tableHeader="Origen"
               values={[
                 { label: "Haberes", value: data.haberes },
                 { label: "Retenciones", value: data.retenciones },
@@ -153,10 +153,10 @@ export default function RecordConversionForm() {
             />
           </div>
         </div>
-        <h2 className="text-xl font-semibold mb-4">Values</h2>
+        <h2 className="text-xl font-semibold mb-4">Valores</h2>
         <div className={"flex flex-row"}>
-          <ConversionTable tableHeader="Source" values={data.source.values} />
-          <ConversionTable tableHeader="Target" values={data.target.values} />
+          <ConversionTable tableHeader="Origen" values={data.source.values} />
+          <ConversionTable tableHeader="Destino" values={data.target.values} />
         </div>
       </div>
     </div>

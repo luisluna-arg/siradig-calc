@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-const metaData = { title: "Template Links" };
+const metaData = { title: "Vínculos de templates" };
 
 export const meta: MetaFunction = () => {
   return [metaData];
