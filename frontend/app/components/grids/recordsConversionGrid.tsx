@@ -18,6 +18,7 @@ import { Catalog } from "@/data/interfaces/Catalog";
 import { RecordConversion } from "@/data/interfaces/RecordConversion";
 import { ActionButton } from "../utils/actionButton";
 import { ComboBox } from "../utils/comboBox";
+import { Input } from "@/components/ui/input";
 
 const ALL_TEMPLATES_ID = "";
 
@@ -31,6 +32,8 @@ export default function ConversionsGrid() {
   };
   const [sourceTemplateFilter, setSourceTemplateFilter] = useState(ALL_TEMPLATES_ID);
   const [targetTemplateFilter, setTargetTemplateFilter] = useState(ALL_TEMPLATES_ID);
+  const [sourceTitleFilter, setSourceTitleFilter] = useState("");
+  const [targetTitleFilter, setTargetTitleFilter] = useState("");
 
   const templateFilterOptions: Array<Catalog<string>> = [
     { id: ALL_TEMPLATES_ID, label: "Todos" },
@@ -42,7 +45,11 @@ export default function ConversionsGrid() {
       (!sourceTemplateFilter ||
         conversion.source.recordTemplateId === sourceTemplateFilter) &&
       (!targetTemplateFilter ||
-        conversion.target.recordTemplateId === targetTemplateFilter)
+        conversion.target.recordTemplateId === targetTemplateFilter) &&
+      (!sourceTitleFilter ||
+        conversion.source.title.toLowerCase().includes(sourceTitleFilter.toLowerCase())) &&
+      (!targetTitleFilter ||
+        conversion.target.title.toLowerCase().includes(targetTitleFilter.toLowerCase()))
   );
 
   const baseRoute = "/records/conversions";
@@ -66,7 +73,7 @@ export default function ConversionsGrid() {
 
   return (
     <div className="flex flex-col items-center gap-4 py-6 px-20">
-      <div className="flex items-center gap-6 self-start">
+      <div className="flex flex-wrap items-center gap-6 self-start">
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium">Template origen:</span>
           <ComboBox
@@ -91,6 +98,24 @@ export default function ConversionsGrid() {
             onSelect={(entry) =>
               setTargetTemplateFilter(entry?.id ?? ALL_TEMPLATES_ID)
             }
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Título origen:</span>
+          <Input
+            className="min-w-60"
+            placeholder="Buscar por título..."
+            value={sourceTitleFilter}
+            onChange={(e) => setSourceTitleFilter(e.target.value)}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Título destino:</span>
+          <Input
+            className="min-w-60"
+            placeholder="Buscar por título..."
+            value={targetTitleFilter}
+            onChange={(e) => setTargetTitleFilter(e.target.value)}
           />
         </div>
       </div>
